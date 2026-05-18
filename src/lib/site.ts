@@ -30,5 +30,5 @@ export const SITE = {
   // Cuando crees tu cuenta en https://ko-fi.com sustituye '' por tu
   // username. Si lo dejas vacío, el botón "Buy Me a Coffee" NO aparece.
   // Cuando lo rellenes, push y Vercel redespliega automáticamente.
-  kofiUsername: '', // ej: 'cristiiaanlp'
+  kofiUsername: 'cristiiaanlp', // ej: 'cristiiaanlp'
 } as const;
