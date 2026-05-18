@@ -6,6 +6,7 @@ import { MobileNav } from '@/components/layout/MobileNav';
 import { BottomTabBar } from '@/components/layout/BottomTabBar';
 import { Footer } from '@/components/layout/Footer';
 import { SITE } from '@/lib/site';
+import { AuthProvider } from '@/components/auth/AuthProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -92,11 +93,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Saltar al contenido
         </a>
-        <Navbar />
-        <MobileNav />
-        <main id="main" className="pb-24 lg:pb-0">{children}</main>
-        <BottomTabBar />
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <MobileNav />
+          <main id="main" className="pb-24 lg:pb-0">{children}</main>
+          <BottomTabBar />
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -8,6 +8,7 @@ import { NAV_LINKS } from './NavLinks';
 import { XIcon, ArrowRight } from '@/components/ui/Icon';
 import { useUIStore } from '@/stores/uiStore';
 import { cn } from '@/lib/utils';
+import { UserMenu } from '@/components/auth/UserMenu';
 
 export function MobileNav() {
   const open = useUIStore((s) => s.mobileNavOpen);
@@ -72,13 +73,7 @@ export function MobileNav() {
               })}
             </nav>
             <div className="p-3 border-t border-white/[0.06]">
-              <Link
-                href="/login"
-                onClick={() => setOpen(false)}
-                className="block text-center text-sm font-semibold h-11 inline-flex items-center justify-center w-full rounded-xl bg-brand text-white shadow-glow"
-              >
-                Iniciar sesión
-              </Link>
+              <UserMenu variant="mobile" />
             </div>
           </motion.aside>
         </>

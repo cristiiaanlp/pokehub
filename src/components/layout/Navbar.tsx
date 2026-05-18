@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { MenuIcon, ArrowRight } from '@/components/ui/Icon';
 import { useUIStore } from '@/stores/uiStore';
 import { cn } from '@/lib/utils';
+import { UserMenu } from '@/components/auth/UserMenu';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -48,17 +49,15 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link href="/login" className="hidden md:block">
-            <Button variant="ghost" size="sm">
-              Iniciar sesión
-            </Button>
-          </Link>
           <Link href="/pokedex" className="hidden sm:block">
             <Button variant="primary" size="sm">
               Explorar
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
+          <div className="hidden md:block">
+            <UserMenu variant="desktop" />
+          </div>
           <button
             aria-label="Abrir menú"
             onClick={() => setMobileNavOpen(true)}
