@@ -21,7 +21,10 @@ import {
   SparklesIcon,
 } from '@/components/ui/Icon';
 
-export const revalidate = 86400; // 24h
+// Server-rendered on demand (not at build time). The fetch to Pikalytics still
+// caches for 24h via fetchPokemonData → fetch(..., { next: { revalidate: 86400 } }).
+// Failure falls back to curated data — never blocks the build or the response.
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Pokémon Champions · Meta · PokéHub',
