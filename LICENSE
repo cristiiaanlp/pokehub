@@ -1,0 +1,111 @@
+PokéHub — Source-Available License
+Copyright (c) 2026 Cristian López
+
+═════════════════════════════════════════════════════════════════════════
+                                  TLDR
+═════════════════════════════════════════════════════════════════════════
+✓  You may view and fork this code for personal study and learning.
+✓  You may submit pull requests and contribute improvements.
+✓  You may run a personal copy for non-commercial use.
+✗  You may NOT host a commercial version of this app.
+✗  You may NOT remove attribution to the original author.
+✗  You may NOT resell or sublicense the code or assets.
+═════════════════════════════════════════════════════════════════════════
+
+
+1. DEFINITIONS
+
+"Software" means the source code, configuration, documentation, design
+assets and any other materials contained in this repository.
+
+"Author" means Cristian López (GitHub: @cristiiaanlp), the original
+copyright holder.
+
+"You" means the individual or legal entity exercising rights under this
+license.
+
+"Commercial Use" means any use intended for or directed toward commercial
+advantage or monetary compensation, including but not limited to:
+displaying paid advertisements on a deployment of the Software, charging
+fees for access, or incorporating the Software into a paid product or
+service.
+
+
+2. GRANT OF RIGHTS
+
+Subject to the terms below, the Author grants You a non-exclusive,
+worldwide, royalty-free, revocable license to:
+
+  a) Read and study the source code.
+  b) Fork the repository on GitHub.
+  c) Run a personal copy of the Software on Your own infrastructure
+     for non-commercial use (private hosting, personal portfolio,
+     educational demonstrations).
+  d) Submit Pull Requests proposing changes back to the original
+     repository.
+
+
+3. RESTRICTIONS
+
+You may NOT:
+
+  a) Use the Software, in whole or in part, for Commercial Use without
+     prior written permission from the Author.
+  b) Publicly host or distribute a copy of the Software that competes
+     with or substitutes the official PokéHub deployment.
+  c) Remove, hide, or alter the attribution to the Author in the
+     footer, the metadata, the LICENSE file, or any other place where
+     it appears.
+  d) Sublicense, sell, or otherwise transfer the rights granted by this
+     license.
+  e) Use the Author's name, trademark, or branding to endorse or
+     promote derivative works without prior written permission.
+
+
+4. POKÉMON INTELLECTUAL PROPERTY
+
+Pokémon and all related names, characters, sprites, designs and
+trademarks are © Nintendo, Game Freak and The Pokémon Company.
+PokéHub is an unofficial fan project with no affiliation with or
+endorsement from those entities.
+
+Pokémon data is sourced from publicly available APIs (PokéAPI, Smogon,
+Pikalytics). Sprite images are served from PokéAPI's CDN. This license
+covers only the code authored by the Author of PokéHub; it does not
+grant any rights to Pokémon intellectual property.
+
+If You operate a deployment of the Software, You are solely responsible
+for compliance with applicable copyright and trademark law in Your
+jurisdiction.
+
+
+5. CONTRIBUTIONS
+
+By submitting a Pull Request, You agree that Your contribution will be
+licensed to the Author under the same terms as this license, and that
+You have the legal right to make the contribution.
+
+
+6. NO WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+
+7. COMMERCIAL LICENSING
+
+To request a commercial license, contact the Author through the GitHub
+profile linked above.
+
+
+8. TERMINATION
+
+Any breach of this license automatically terminates Your rights under
+it. Upon termination, You must cease all use, distribution and hosting
+of the Software.

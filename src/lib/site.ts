@@ -23,5 +23,12 @@ export const SITE = {
     'TypeMaster',
   ],
   locale: 'es_ES',
-  author: 'PokéHub Team',
+  author: 'Cristian López',
+  authorGithub: 'https://github.com/cristiiaanlp',
+  repo: 'https://github.com/cristiiaanlp/pokehub',
+  // ─── DONACIONES ──────────────────────────────────────────────────────
+  // Cuando crees tu cuenta en https://ko-fi.com sustituye '' por tu
+  // username. Si lo dejas vacío, el botón "Buy Me a Coffee" NO aparece.
+  // Cuando lo rellenes, push y Vercel redespliega automáticamente.
+  kofiUsername: '', // ej: 'cristiiaanlp'
 } as const;

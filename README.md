@@ -117,6 +117,25 @@ npm run start    # serve production build
 npm run lint     # eslint
 ```
 
+## ☕ Soporte
+
+Si esta app te resulta útil y quieres apoyar el desarrollo, puedes invitarme a un café:
+
+- [Ko-fi · cristiiaanlp](https://ko-fi.com/cristiiaanlp) *(activo cuando el username esté configurado en `src/lib/site.ts`)*
+- ⭐ Una estrella en el [repo de GitHub](https://github.com/cristiiaanlp/pokehub) también ayuda
+
 ## 📄 Licencia
 
-Pokémon y todas las marcas relacionadas son © Nintendo / Game Freak. PokéHub es un proyecto fan no oficial con fines educativos y de community.
+PokéHub está bajo una **Source-Available License** personalizada. Resumen:
+
+- ✓ Puedes leer, estudiar, forkear y correr una copia personal no comercial
+- ✓ Puedes contribuir vía Pull Request
+- ✗ NO puedes hostear una versión comercial sin permiso escrito
+- ✗ NO puedes quitar la atribución al autor
+- ✗ NO puedes revender ni sublicenciar el código
+
+Lee la [LICENSE completa](LICENSE) para detalles. Para licencias comerciales contacta a través de [GitHub](https://github.com/cristiiaanlp).
+
+### Sobre Pokémon
+
+Pokémon y todas las marcas relacionadas son © Nintendo / Game Freak / The Pokémon Company. PokéHub es un proyecto fan no oficial, sin afiliación con esas entidades. Los datos provienen de fuentes públicas (PokéAPI, Smogon, Pikalytics).
