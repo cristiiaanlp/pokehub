@@ -7,11 +7,13 @@ import {
   CHAMPIONS_CORE_PAIRS,
   CHAMPIONS_SAMPLE_TEAMS,
   CHAMPIONS_UPCOMING,
+  type ChampionsUsage,
 } from '@/lib/champions/data';
 import { TeamCard } from '@/components/meta/TeamCard';
 import { LiveBadge } from '@/components/meta/LiveBadge';
 import { getLiveChampionsMeta } from '@/lib/pikalytics/aggregate';
 import { liveTeamToSampleTeam } from '@/lib/pikalytics/adapter';
+import { fetchLiveChampionsUsage } from '@/lib/champions/scraper';
 import {
   GamepadIcon,
   FireIcon,
@@ -42,21 +44,42 @@ const PIVOT_POKEMON = [
 ];
 
 export default async function ChampionsPage() {
-  const live = await getLiveChampionsMeta({
-    format: 'championspreview',
-    pivotPokemon: PIVOT_POKEMON,
-    maxTeams: 8,
-  });
+  // Fetch in parallel: aggregated partners/teams + scraped format-level top usage
+  const [live, liveUsage] = await Promise.all([
+    getLiveChampionsMeta({
+      format: 'championspreview',
+      pivotPokemon: PIVOT_POKEMON,
+      maxTeams: 8,
+    }),
+    fetchLiveChampionsUsage('championspreview', 15),
+  ]);
 
   // Choose data sources with fallback
   const sampleTeams = live
     ? live.topTeams.slice(0, 6).map((t) => liveTeamToSampleTeam(t))
     : CHAMPIONS_SAMPLE_TEAMS;
 
-  const usageWithIds = CHAMPIONS_TOP_USAGE.map((u) => ({
-    ...u,
-    speciesId: resolveSmogonName(u.name),
-  }));
+  // Merge scraped live top usage with curated win rates (curated may have WR data
+  // that the scraped page doesn't expose). Fall back to curated entirely if
+  // scraping failed.
+  const curatedByName = new Map<string, ChampionsUsage>(
+    CHAMPIONS_TOP_USAGE.map((u) => [u.name.toLowerCase(), u])
+  );
+  const topUsage: (ChampionsUsage & { speciesId: number | null })[] = liveUsage
+    ? liveUsage.entries.slice(0, 10).map((e) => {
+        const curated = curatedByName.get(e.name.toLowerCase());
+        return {
+          name: e.name,
+          usagePct: e.usagePct,
+          winRatePct: curated?.winRatePct,
+          speciesId: resolveSmogonName(e.name),
+        };
+      })
+    : CHAMPIONS_TOP_USAGE.map((u) => ({
+        ...u,
+        speciesId: resolveSmogonName(u.name),
+      }));
+  const usageWithIds = topUsage;
 
   const coreWithIds = CHAMPIONS_CORE_PAIRS.map((c) => ({
     ...c,
@@ -137,7 +160,17 @@ export default async function ChampionsPage() {
               <FireIcon className="w-5 h-5 text-accent-red" />
               Top Usage
             </h2>
-            <span className="text-xs text-ink-faint">Reg M-A actual</span>
+            {liveUsage ? (
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-accent-green">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-accent-green opacity-75 animate-ping" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent-green" />
+                </span>
+                Live · Pikalytics
+              </span>
+            ) : (
+              <span className="text-xs text-ink-faint">Snapshot Reg M-A</span>
+            )}
           </div>
           <div className="card-base p-3 space-y-1.5">
             {usageWithIds.map((u, i) => (
