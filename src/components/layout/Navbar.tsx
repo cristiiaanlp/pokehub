@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Logo } from './Logo';
 import { NAV_LINKS } from './NavLinks';
 import { Button } from '@/components/ui/Button';
-import { MenuIcon, ArrowRight } from '@/components/ui/Icon';
+import { MenuIcon, ArrowRight, SearchIcon } from '@/components/ui/Icon';
 import { useUIStore } from '@/stores/uiStore';
 import { cn } from '@/lib/utils';
 import { UserMenu } from '@/components/auth/UserMenu';
@@ -49,7 +49,27 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link href="/pokedex" className="hidden sm:block">
+          <button
+            onClick={() => {
+              // Trigger Cmd+K palette via synthetic keyboard event
+              const ev = new KeyboardEvent('keydown', {
+                key: 'k',
+                ctrlKey: true,
+                bubbles: true,
+              });
+              window.dispatchEvent(ev);
+            }}
+            aria-label="Buscar"
+            className="hidden sm:inline-flex items-center gap-2 h-9 px-3 rounded-lg glass hover:bg-white/[0.06] text-sm text-ink-dim hover:text-ink"
+            title="Buscar · Ctrl+K"
+          >
+            <SearchIcon className="w-4 h-4" />
+            <span className="hidden lg:inline">Buscar</span>
+            <kbd className="hidden lg:inline text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.06]">
+              ⌘K
+            </kbd>
+          </button>
+          <Link href="/pokedex" className="hidden md:block">
             <Button variant="primary" size="sm">
               Explorar
               <ArrowRight className="w-4 h-4" />

@@ -8,6 +8,7 @@ interface FavoritesState {
   toggle: (id: number) => void;
   has: (id: number) => boolean;
   clear: () => void;
+  setIds: (ids: number[]) => void;
 }
 
 export const useFavoritesStore = create<FavoritesState>()(
@@ -22,6 +23,7 @@ export const useFavoritesStore = create<FavoritesState>()(
         })),
       has: (id) => get().ids.includes(id),
       clear: () => set({ ids: [] }),
+      setIds: (ids) => set({ ids: Array.from(new Set(ids)) }),
     }),
     { name: 'pokehub-favorites' }
   )

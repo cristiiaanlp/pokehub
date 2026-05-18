@@ -7,6 +7,8 @@ import { BottomTabBar } from '@/components/layout/BottomTabBar';
 import { Footer } from '@/components/layout/Footer';
 import { SITE } from '@/lib/site';
 import { AuthProvider } from '@/components/auth/AuthProvider';
+import { SyncManager } from '@/components/auth/SyncManager';
+import { CommandPalette } from '@/components/common/CommandPalette';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -94,6 +96,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Saltar al contenido
         </a>
         <AuthProvider>
+          <SyncManager />
+          <CommandPalette />
           <Navbar />
           <MobileNav />
           <main id="main" className="pb-24 lg:pb-0">{children}</main>

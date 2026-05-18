@@ -11,6 +11,9 @@ export interface SavedTeam {
   format?: string;
   createdAt: number;
   updatedAt: number;
+  // Cloud sync extras (filled when user is authenticated)
+  isPublic?: boolean;
+  shareSlug?: string;
 }
 
 interface TeamState {
@@ -19,9 +22,13 @@ interface TeamState {
   setSlot: (index: number, member: TeamMember | null) => void;
   updateSlot: (index: number, patch: Partial<TeamMember>) => void;
   clearTeam: () => void;
-  saveTeam: (name: string) => void;
+  saveTeam: (name: string) => SavedTeam;
   loadTeam: (id: string) => void;
   deleteTeam: (id: string) => void;
+  /** Replace the saved list wholesale (used by SyncManager). */
+  setSaved: (teams: SavedTeam[]) => void;
+  /** Update a single saved team's fields (used after cloud upsert returns slug). */
+  patchSaved: (id: string, patch: Partial<SavedTeam>) => void;
 }
 
 const emptyTeam = (): (TeamMember | null)[] => [null, null, null, null, null, null];
@@ -48,7 +55,6 @@ export const useTeamStore = create<TeamState>()(
       clearTeam: () => set({ current: emptyTeam() }),
       saveTeam: (name) => {
         const current = get().current.filter(Boolean) as TeamMember[];
-        if (current.length === 0) return;
         const now = Date.now();
         const team: SavedTeam = {
           id: `t_${now}_${Math.random().toString(36).slice(2, 7)}`,
@@ -58,6 +64,7 @@ export const useTeamStore = create<TeamState>()(
           updatedAt: now,
         };
         set((s) => ({ saved: [team, ...s.saved] }));
+        return team;
       },
       loadTeam: (id) => {
         const t = get().saved.find((x) => x.id === id);
@@ -68,6 +75,11 @@ export const useTeamStore = create<TeamState>()(
       },
       deleteTeam: (id) =>
         set((s) => ({ saved: s.saved.filter((t) => t.id !== id) })),
+      setSaved: (teams) => set({ saved: teams }),
+      patchSaved: (id, patch) =>
+        set((s) => ({
+          saved: s.saved.map((t) => (t.id === id ? { ...t, ...patch } : t)),
+        })),
     }),
     { name: 'pokehub-teams' }
   )
