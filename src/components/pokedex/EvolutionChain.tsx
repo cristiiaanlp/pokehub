@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import type { PokemonEvolution } from '@/types/pokemon';
 import { ChevronRight } from '@/components/ui/Icon';
 import { formatPokemonName, padId } from '@/lib/utils';

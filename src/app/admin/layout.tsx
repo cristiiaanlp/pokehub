@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import Link from 'next/link';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { isAdminEmail, getAdminEmails } from '@/lib/admin';
@@ -13,6 +14,9 @@ import {
   BoltIcon,
   ClockIcon,
 } from '@/components/ui/Icon';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const display = Space_Grotesk({ subsets: ['latin'], variable: '--font-display', display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Admin · PokéHub',
@@ -31,11 +35,23 @@ const NAV = [
   { href: '/admin/cache', label: 'Caché', Icon: ShieldIcon },
 ];
 
+// Admin tiene su propio <html>/<body> porque está fuera de [locale].
+// El panel es internal-only y siempre en español.
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  return (
+    <html lang="es" className={`${inter.variable} ${display.variable}`}>
+      <body className="font-sans antialiased">
+        <AdminInner>{children}</AdminInner>
+      </body>
+    </html>
+  );
+}
+
+async function AdminInner({ children }: { children: React.ReactNode }) {
   const sb = getSupabaseServer();
   if (!sb) {
     return (

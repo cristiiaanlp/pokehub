@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
 import { ArrowRight, GamepadIcon, SparklesIcon } from '@/components/ui/Icon';
 import { artworkFor } from '@/lib/pokeapi';

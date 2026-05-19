@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { artworkFor, TOTAL_POKEMON } from '@/lib/pokeapi';
 import { TypeBadge } from '@/components/ui/TypeBadge';

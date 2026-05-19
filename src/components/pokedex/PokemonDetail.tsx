@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
 import type { PokemonDetail, TeamMember } from '@/types/pokemon';
 import { TypeBadge, TYPE_HEX } from '@/components/ui/TypeBadge';

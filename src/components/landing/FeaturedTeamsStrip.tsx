@@ -1,7 +1,7 @@
 // Featured teams strip — rendered on the landing. SSR with 5min revalidate.
 // Uses the anon client gated by the RLS "anyone reads featured teams" policy.
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { artworkFor } from '@/lib/pokeapi';
 import { TrophyIcon, ArrowRight } from '@/components/ui/Icon';

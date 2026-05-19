@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { useAuth } from './AuthProvider';
 import { artworkFor } from '@/lib/pokeapi';
 import { CheckIcon, ArrowRight } from '@/components/ui/Icon';

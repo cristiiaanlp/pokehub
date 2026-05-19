@@ -1,11 +1,13 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight } from '@/components/ui/Icon';
 
 export function CTA() {
+  const t = useTranslations('Landing');
   return (
     <section className="relative py-20 lg:py-24">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
@@ -22,23 +24,21 @@ export function CTA() {
 
           <div className="relative">
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight max-w-2xl mx-auto">
-              ¿Listo para convertirte en{' '}
-              <span className="gradient-text">campeón</span>?
+              {t('ctaTitle')}
             </h2>
             <p className="text-ink-soft mt-4 text-lg max-w-xl mx-auto">
-              Empieza a construir tu próximo equipo en segundos. Sin registro
-              obligatorio.
+              {t('ctaSubtitle')}
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link href="/team-builder">
                 <Button size="lg" variant="gradient">
-                  Crear mi primer equipo
+                  {t('heroBuild')}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
               <Link href="/pokedex">
                 <Button size="lg" variant="secondary">
-                  Explorar Pokédex
+                  {t('ctaButton')}
                 </Button>
               </Link>
             </div>

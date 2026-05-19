@@ -1,16 +1,45 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, usePathname } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Logo } from './Logo';
-import { NAV_LINKS } from './NavLinks';
-import { XIcon, ArrowRight } from '@/components/ui/Icon';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import {
+  XIcon,
+  ArrowRight,
+  GridIcon,
+  UsersIcon,
+  TrendingUpIcon,
+  SparklesIcon,
+  HeartIcon,
+  HomeIcon,
+  GamepadIcon,
+  BookOpenIcon,
+} from '@/components/ui/Icon';
+import type { ComponentType, SVGProps } from 'react';
 import { useUIStore } from '@/stores/uiStore';
 import { cn } from '@/lib/utils';
 import { UserMenu } from '@/components/auth/UserMenu';
 
+const NAV_LINKS: {
+  href: string;
+  labelKey: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+  badge?: string;
+}[] = [
+  { href: '/', labelKey: 'home', Icon: HomeIcon },
+  { href: '/pokedex', labelKey: 'pokedex', Icon: GridIcon },
+  { href: '/typemaster', labelKey: 'typemaster', Icon: GamepadIcon, badge: 'NEW' },
+  { href: '/team-builder', labelKey: 'teamBuilder', Icon: UsersIcon },
+  { href: '/meta', labelKey: 'metaHub', Icon: TrendingUpIcon },
+  { href: '/guides', labelKey: 'guides', Icon: BookOpenIcon, badge: 'NEW' },
+  { href: '/casual', labelKey: 'casual', Icon: SparklesIcon },
+  { href: '/favorites', labelKey: 'favorites', Icon: HeartIcon },
+];
+
 export function MobileNav() {
+  const t = useTranslations('Nav');
   const open = useUIStore((s) => s.mobileNavOpen);
   const setOpen = useUIStore((s) => s.setMobileNavOpen);
   const pathname = usePathname();
@@ -61,7 +90,7 @@ export function MobileNav() {
                     )}
                   >
                     <link.Icon className="w-5 h-5" />
-                    <span className="flex-1">{link.label}</span>
+                    <span className="flex-1">{t(link.labelKey)}</span>
                     {link.badge && (
                       <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-brand text-white">
                         {link.badge}
@@ -72,7 +101,13 @@ export function MobileNav() {
                 );
               })}
             </nav>
-            <div className="p-3 border-t border-white/[0.06]">
+            <div className="p-3 border-t border-white/[0.06] space-y-3">
+              <div>
+                <div className="text-[10px] uppercase tracking-widest text-ink-faint font-semibold mb-2">
+                  {t('language')}
+                </div>
+                <LanguageSwitcher variant="mobile" />
+              </div>
               <UserMenu variant="mobile" />
             </div>
           </motion.aside>

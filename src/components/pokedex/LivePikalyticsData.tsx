@@ -1,7 +1,7 @@
 import type { EnrichedPikalyticsData } from '@/lib/pikalytics/enrich';
 import { artworkFor } from '@/lib/pokeapi';
 import { LiveBadge } from '@/components/meta/LiveBadge';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { TeamCard } from '@/components/meta/TeamCard';
 
 interface Props {

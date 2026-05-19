@@ -1,18 +1,50 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import { Logo } from './Logo';
-import { NAV_LINKS } from './NavLinks';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { Button } from '@/components/ui/Button';
-import { MenuIcon, ArrowRight, SearchIcon } from '@/components/ui/Icon';
+import {
+  MenuIcon,
+  ArrowRight,
+  SearchIcon,
+  GridIcon,
+  UsersIcon,
+  TrendingUpIcon,
+  SparklesIcon,
+  HeartIcon,
+  HomeIcon,
+  GamepadIcon,
+  BookOpenIcon,
+} from '@/components/ui/Icon';
+import type { ComponentType, SVGProps } from 'react';
 import { useUIStore } from '@/stores/uiStore';
 import { cn } from '@/lib/utils';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { NotificationsBell } from '@/components/auth/NotificationsBell';
 
+interface NavLink {
+  href: string;
+  labelKey: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+  badge?: string;
+}
+
+const NAV_LINKS: NavLink[] = [
+  { href: '/', labelKey: 'home', Icon: HomeIcon },
+  { href: '/pokedex', labelKey: 'pokedex', Icon: GridIcon },
+  { href: '/typemaster', labelKey: 'typemaster', Icon: GamepadIcon, badge: 'NEW' },
+  { href: '/team-builder', labelKey: 'teamBuilder', Icon: UsersIcon },
+  { href: '/meta', labelKey: 'metaHub', Icon: TrendingUpIcon },
+  { href: '/guides', labelKey: 'guides', Icon: BookOpenIcon, badge: 'NEW' },
+  { href: '/casual', labelKey: 'casual', Icon: SparklesIcon },
+  { href: '/favorites', labelKey: 'favorites', Icon: HeartIcon },
+];
+
 export function Navbar() {
   const pathname = usePathname();
+  const t = useTranslations('Nav');
   const setMobileNavOpen = useUIStore((s) => s.setMobileNavOpen);
 
   return (
@@ -37,7 +69,7 @@ export function Navbar() {
                   )}
                 >
                   <link.Icon className="w-4 h-4" />
-                  {link.label}
+                  {t(link.labelKey)}
                   {link.badge && (
                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-brand text-white">
                       {link.badge}
@@ -52,7 +84,6 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => {
-              // Trigger Cmd+K palette via synthetic keyboard event
               const ev = new KeyboardEvent('keydown', {
                 key: 'k',
                 ctrlKey: true,
@@ -60,22 +91,25 @@ export function Navbar() {
               });
               window.dispatchEvent(ev);
             }}
-            aria-label="Buscar"
+            aria-label={t('search')}
             className="hidden sm:inline-flex items-center gap-2 h-9 px-3 rounded-lg glass hover:bg-white/[0.06] text-sm text-ink-dim hover:text-ink"
-            title="Buscar · Ctrl+K"
+            title={`${t('search')} · Ctrl+K`}
           >
             <SearchIcon className="w-4 h-4" />
-            <span className="hidden lg:inline">Buscar</span>
+            <span className="hidden lg:inline">{t('search')}</span>
             <kbd className="hidden lg:inline text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.06]">
               ⌘K
             </kbd>
           </button>
           <Link href="/pokedex" className="hidden md:block">
             <Button variant="primary" size="sm">
-              Explorar
+              {t('explore')}
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
+          <div className="hidden md:block">
+            <LanguageSwitcher variant="desktop" />
+          </div>
           <div className="hidden md:block">
             <NotificationsBell />
           </div>
@@ -83,7 +117,7 @@ export function Navbar() {
             <UserMenu variant="desktop" />
           </div>
           <button
-            aria-label="Abrir menú"
+            aria-label={t('openMenu')}
             onClick={() => setMobileNavOpen(true)}
             className="lg:hidden h-10 w-10 inline-flex items-center justify-center rounded-lg glass hover:bg-white/[0.08] text-ink"
           >

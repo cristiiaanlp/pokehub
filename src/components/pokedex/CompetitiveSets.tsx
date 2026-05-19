@@ -6,7 +6,7 @@ import { getSetsFor, getPartnersFor, type PokemonSet } from '@/lib/meta/sets';
 import { Button } from '@/components/ui/Button';
 import { CheckIcon, SaveIcon, BookOpenIcon } from '@/components/ui/Icon';
 import { artworkFor } from '@/lib/pokeapi';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 interface Props {
   speciesId: number;

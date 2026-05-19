@@ -1,19 +1,38 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { NAV_LINKS } from './NavLinks';
+import { Link, usePathname } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
+import {
+  GridIcon,
+  UsersIcon,
+  TrendingUpIcon,
+  HomeIcon,
+  GamepadIcon,
+} from '@/components/ui/Icon';
+import type { ComponentType, SVGProps } from 'react';
 import { cn } from '@/lib/utils';
 
+const TABS: {
+  href: string;
+  labelKey: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+}[] = [
+  { href: '/', labelKey: 'home', Icon: HomeIcon },
+  { href: '/pokedex', labelKey: 'pokedex', Icon: GridIcon },
+  { href: '/typemaster', labelKey: 'typemaster', Icon: GamepadIcon },
+  { href: '/team-builder', labelKey: 'teamBuilder', Icon: UsersIcon },
+  { href: '/meta', labelKey: 'metaHub', Icon: TrendingUpIcon },
+];
+
 export function BottomTabBar() {
+  const t = useTranslations('Nav');
   const pathname = usePathname();
-  const items = NAV_LINKS.slice(0, 5);
 
   return (
     <nav className="fixed bottom-0 inset-x-0 z-30 lg:hidden">
       <div className="mx-auto max-w-md px-3 pb-3">
         <div className="glass-strong rounded-2xl flex items-center justify-around p-2 shadow-card-hover">
-          {items.map((l) => {
+          {TABS.map((l) => {
             const active =
               pathname === l.href ||
               (l.href !== '/' && pathname.startsWith(l.href));
@@ -28,7 +47,7 @@ export function BottomTabBar() {
               >
                 <l.Icon className="w-5 h-5" />
                 <span className="text-[10px] font-semibold leading-none">
-                  {l.label}
+                  {t(l.labelKey)}
                 </span>
               </Link>
             );

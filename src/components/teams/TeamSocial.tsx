@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { HeartIcon, TrashIcon } from '@/components/ui/Icon';
 import { artworkFor } from '@/lib/pokeapi';

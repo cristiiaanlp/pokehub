@@ -1,6 +1,7 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight, SparklesIcon } from '@/components/ui/Icon';
@@ -14,6 +15,7 @@ const FEATURED = [
 ];
 
 export function Hero() {
+  const t = useTranslations('Landing');
   return (
     <section className="relative overflow-hidden">
       {/* Background grid + glows */}
@@ -34,7 +36,7 @@ export function Hero() {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse" />
               <SparklesIcon className="w-3.5 h-3.5 text-accent-yellow" />
-              v1 · La nueva forma de jugar Pokémon
+              {t('heroEyebrow')}
             </motion.div>
 
             <motion.h1
@@ -43,9 +45,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight"
             >
-              La plataforma{' '}
-              <span className="gradient-text">definitiva</span> para
-              entrenadores Pokémon
+              {t('heroTitle')}
             </motion.h1>
 
             <motion.p
@@ -54,9 +54,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg text-ink-soft max-w-xl leading-relaxed"
             >
-              Pokédex, Team Builder, meta competitivo y herramientas
-              inteligentes en una sola app. Todo lo que necesitas — sin tabs ni
-              wikis.
+              {t('heroSubtitle')}
             </motion.p>
 
             <motion.div
@@ -67,13 +65,13 @@ export function Hero() {
             >
               <Link href="/pokedex">
                 <Button size="lg" variant="gradient">
-                  Explorar PokéHub
+                  {t('heroExplore')}
                   <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
               <Link href="/team-builder">
                 <Button size="lg" variant="secondary">
-                  Probar Team Builder
+                  {t('heroBuild')}
                 </Button>
               </Link>
             </motion.div>

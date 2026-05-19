@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
 import { TypeBadge, TYPE_HEX } from '@/components/ui/TypeBadge';
 import { HeartIcon } from '@/components/ui/Icon';
