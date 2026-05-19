@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pokedex',
     '/team-builder',
     '/tools/speed-tier',
+    '/tools/damage-calc',
     '/typemaster',
     '/typemaster/play',
     '/typemaster/learn',

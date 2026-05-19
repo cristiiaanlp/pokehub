@@ -44,6 +44,7 @@ const ACTIONS: Action[] = [
   { id: 'pokedex', label: 'Pokédex', Icon: GridIcon, href: '/pokedex', keywords: 'lista pokemon', section: 'Navegación' },
   { id: 'team-builder', label: 'Team Builder', Icon: UsersIcon, href: '/team-builder', keywords: 'equipos crear amenazas heatmap', section: 'Navegación' },
   { id: 'speed-tier', label: 'Speed Tier Visualizer', Icon: BoltIcon, href: '/tools/speed-tier', keywords: 'velocidad ev nature scarf', section: 'Navegación' },
+  { id: 'damage-calc', label: 'Damage Calculator', Icon: FireIcon, href: '/tools/damage-calc', keywords: 'damage calc calculadora ohko 2hko', section: 'Navegación' },
   { id: 'favorites', label: 'Favoritos', Icon: HeartIcon, href: '/favorites', section: 'Navegación' },
   { id: 'meta', label: 'Meta Hub', Icon: TrendingUpIcon, href: '/meta', keywords: 'smogon usage', section: 'Meta' },
   { id: 'champions', label: 'Pokémon Champions', Icon: FireIcon, href: '/meta/champions', keywords: 'reg ma', section: 'Meta' },
