@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { grantBadge } from '@/lib/profiles';
+import { rateLimit, getRateLimitKey } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 
@@ -35,12 +36,21 @@ export async function GET(_req: Request, ctx: { params: { id: string } }) {
   return NextResponse.json({ count: count ?? 0, liked });
 }
 
-export async function POST(_req: Request, ctx: { params: { id: string } }) {
+export async function POST(req: Request, ctx: { params: { id: string } }) {
   const sb = getSupabaseServer();
   if (!sb) return NextResponse.json({ error: 'supabase_not_configured' }, { status: 503 });
   const { data: userData } = await sb.auth.getUser();
   const user = userData.user;
   if (!user) return NextResponse.json({ error: 'unauthenticated' }, { status: 401 });
+
+  // Max 30 likes/min per user (toggles count too) — más que suficiente para uso normal
+  const rl = rateLimit(`likes:${getRateLimitKey(req, user.id)}`, 30, 60);
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: `Demasiados likes. Espera ${rl.resetIn}s.` },
+      { status: 429, headers: { 'retry-after': String(rl.resetIn) } }
+    );
+  }
 
   const teamId = ctx.params.id;
 

@@ -15,11 +15,22 @@ import {
 import { getSupabaseBrowser, isSupabaseConfigured } from '@/lib/supabase-browser';
 import { useAuth } from '@/components/auth/AuthProvider';
 
+// Solo permitimos paths relativos al propio dominio para prevenir open redirects.
+// Bloqueamos: "//evil.com", "https://evil.com", "javascript:...", "data:...".
+function sanitizeNext(raw: string | null): string {
+  if (!raw) return '/';
+  if (!raw.startsWith('/')) return '/';
+  if (raw.startsWith('//')) return '/';
+  // Bloquea cualquier protocolo embebido por si acaso
+  if (/^\/+\w+:/.test(raw)) return '/';
+  return raw;
+}
+
 function LoginInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, isLoading: authLoading } = useAuth();
-  const next = searchParams.get('next') ?? '/';
+  const next = sanitizeNext(searchParams.get('next'));
   const initialMode = (searchParams.get('mode') as 'login' | 'signup') ?? 'login';
 
   const [mode, setMode] = useState<'login' | 'signup'>(initialMode);

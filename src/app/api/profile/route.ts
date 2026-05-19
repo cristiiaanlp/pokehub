@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { validateUsername } from '@/lib/profiles';
+import { rateLimit, getRateLimitKey } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 
@@ -24,6 +25,15 @@ export async function PATCH(req: Request) {
   const { data: userData } = await sb.auth.getUser();
   const user = userData.user;
   if (!user) return NextResponse.json({ error: 'unauthenticated' }, { status: 401 });
+
+  // 20 profile updates / 5 min — uso normal son 1-2, evita ataques de username squatting
+  const rl = rateLimit(`profile:${getRateLimitKey(req, user.id)}`, 20, 300);
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: `Demasiadas actualizaciones de perfil. Espera ${rl.resetIn}s.` },
+      { status: 429, headers: { 'retry-after': String(rl.resetIn) } }
+    );
+  }
 
   let body: PatchBody;
   try {

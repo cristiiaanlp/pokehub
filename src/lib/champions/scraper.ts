@@ -36,6 +36,9 @@ export async function fetchLiveChampionsUsage(
   try {
     const res = await fetch(url, {
       next: { revalidate: REVALIDATE_24H },
+      // Timeout duro: si Pikalytics tarda más de 8s, cortamos.
+      // No vale la pena bloquear toda la página por un scrape.
+      signal: AbortSignal.timeout(8000),
       headers: {
         'user-agent':
           'PokeHub/1.0 (https://pokehub.app) competitive-data-aggregator',

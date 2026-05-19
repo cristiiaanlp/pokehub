@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabase-server';
 
+// Only allow same-origin paths to prevent open redirects.
+function sanitizeNext(raw: string | null): string {
+  if (!raw) return '/';
+  if (!raw.startsWith('/')) return '/';
+  if (raw.startsWith('//')) return '/';
+  if (/^\/+\w+:/.test(raw)) return '/';
+  return raw;
+}
+
 /**
  * OAuth + email confirmation callback. Supabase redirects here after the user
  * clicks the confirmation link in their email (or after social login). We
@@ -10,7 +19,7 @@ import { getSupabaseServer } from '@/lib/supabase-server';
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/';
+  const next = sanitizeNext(searchParams.get('next'));
   const errorDescription = searchParams.get('error_description');
 
   if (errorDescription) {

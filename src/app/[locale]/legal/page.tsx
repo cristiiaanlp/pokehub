@@ -1,104 +1,145 @@
 import { Link } from '@/i18n/routing';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SITE } from '@/lib/site';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Licencia y aviso legal',
-  description:
-    'Información sobre licencia del código, derechos de Pokémon y fuentes de datos usadas por PokéHub.',
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: 'Legal' });
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
-export default function LegalPage() {
+export default async function LegalPage({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  setRequestLocale(params.locale);
+  const t = await getTranslations('Legal');
+
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-10 lg:py-16 space-y-8 text-sm leading-relaxed">
       <div>
         <div className="text-xs uppercase tracking-[0.25em] text-brand-glow font-semibold mb-2">
-          Información legal
+          {t('eyebrow')}
         </div>
         <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">
-          Licencia y créditos
+          {t('title')}
         </h1>
         <p className="text-ink-dim mt-3">
-          PokéHub es un proyecto fan no oficial creado por{' '}
-          <a
-            href={SITE.authorGithub}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-brand-glow hover:text-brand-hover"
-          >
-            {SITE.author}
-          </a>
-          . Sin afiliación con Nintendo, Game Freak, ni The Pokémon Company.
+          {t.rich('intro', {
+            author: (chunks) => (
+              <a
+                href={SITE.authorGithub}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-glow hover:text-brand-hover"
+              >
+                {chunks}
+              </a>
+            ),
+          })}
         </p>
       </div>
 
       <section className="card-base p-6 space-y-3">
-        <h2 className="font-display text-xl font-bold">
-          Propiedad intelectual de Pokémon
-        </h2>
+        <h2 className="font-display text-xl font-bold">{t('ipTitle')}</h2>
+        <p className="text-ink-soft">{t('ipBody1')}</p>
         <p className="text-ink-soft">
-          Pokémon y todas sus marcas, personajes, nombres, sprites y diseños
-          son © Nintendo · Game Freak · The Pokémon Company. PokéHub no
-          reclama ningún derecho sobre esa propiedad intelectual.
-        </p>
-        <p className="text-ink-soft">
-          Las imágenes y los datos básicos de Pokémon se consumen desde{' '}
-          <a
-            href="https://pokeapi.co"
-            target="_blank"
-            rel="noreferrer"
-            className="text-brand-glow hover:text-brand-hover"
-          >
-            PokéAPI
-          </a>
-          , una API pública de fans para fans.
+          {t.rich('ipBody2', {
+            pokeapi: (chunks) => (
+              <a
+                href="https://pokeapi.co"
+                target="_blank"
+                rel="noreferrer"
+                className="text-brand-glow hover:text-brand-hover"
+              >
+                {chunks}
+              </a>
+            ),
+          })}
         </p>
       </section>
 
       <section className="card-base p-6 space-y-3">
-        <h2 className="font-display text-xl font-bold">
-          Licencia del código (PokéHub)
-        </h2>
-        <p className="text-ink-soft">
-          El código fuente de PokéHub es <strong>source-available</strong>{' '}
-          bajo una licencia personalizada. Puedes:
-        </p>
+        <h2 className="font-display text-xl font-bold">{t('privacyTitle')}</h2>
+        <p className="text-ink-soft">{t('privacyIntro')}</p>
+
+        <h3 className="font-display font-bold text-base mt-4">
+          {t('privacyDataTitle')}
+        </h3>
         <ul className="space-y-1 text-ink-soft pl-5 list-disc">
-          <li>Leer y estudiar el código.</li>
-          <li>Forkearlo en GitHub.</li>
-          <li>Correr una copia personal para uso no comercial.</li>
-          <li>Contribuir vía Pull Request.</li>
+          <li>{t('privacyData1')}</li>
+          <li>{t('privacyData2')}</li>
+          <li>{t('privacyData3')}</li>
         </ul>
-        <p className="text-ink-soft mt-3">No puedes:</p>
+
+        <h3 className="font-display font-bold text-base mt-4">
+          {t('privacyCookiesTitle')}
+        </h3>
+        <p className="text-ink-soft">{t('privacyCookiesBody')}</p>
         <ul className="space-y-1 text-ink-soft pl-5 list-disc">
-          <li>Hostear una versión comercial sin permiso escrito.</li>
-          <li>Quitar la atribución al autor.</li>
-          <li>Revender o sublicenciar el código.</li>
+          <li>{t('privacyCookies1')}</li>
+          <li>{t('privacyCookies2')}</li>
+          <li>{t('privacyCookies3')}</li>
+        </ul>
+
+        <h3 className="font-display font-bold text-base mt-4">
+          {t('privacyRightsTitle')}
+        </h3>
+        <p className="text-ink-soft">{t('privacyRightsBody')}</p>
+      </section>
+
+      <section className="card-base p-6 space-y-3">
+        <h2 className="font-display text-xl font-bold">{t('licenseTitle')}</h2>
+        <p className="text-ink-soft">{t('licenseIntro')}</p>
+        <p className="text-ink-soft font-semibold">{t('licenseCan')}</p>
+        <ul className="space-y-1 text-ink-soft pl-5 list-disc">
+          <li>{t('licenseCan1')}</li>
+          <li>{t('licenseCan2')}</li>
+          <li>{t('licenseCan3')}</li>
+          <li>{t('licenseCan4')}</li>
+        </ul>
+        <p className="text-ink-soft font-semibold mt-3">{t('licenseCant')}</p>
+        <ul className="space-y-1 text-ink-soft pl-5 list-disc">
+          <li>{t('licenseCant1')}</li>
+          <li>{t('licenseCant2')}</li>
+          <li>{t('licenseCant3')}</li>
         </ul>
         <p className="text-ink-faint text-xs pt-3 border-t border-white/[0.05]">
-          Lee la licencia completa en{' '}
-          <a
-            href={`${SITE.repo}/blob/main/LICENSE`}
-            target="_blank"
-            rel="noreferrer"
-            className="text-brand-glow hover:text-brand-hover"
-          >
-            LICENSE
-          </a>
-          . Para licencias comerciales:{' '}
-          <a
-            href={SITE.authorGithub}
-            target="_blank"
-            rel="noreferrer"
-            className="text-brand-glow hover:text-brand-hover"
-          >
-            contacta al autor
-          </a>
-          .
+          {t.rich('licenseFooter', {
+            license: (chunks) => (
+              <a
+                href={`${SITE.repo}/blob/main/LICENSE`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-brand-glow hover:text-brand-hover"
+              >
+                {chunks}
+              </a>
+            ),
+            contact: (chunks) => (
+              <a
+                href={SITE.authorGithub}
+                target="_blank"
+                rel="noreferrer"
+                className="text-brand-glow hover:text-brand-hover"
+              >
+                {chunks}
+              </a>
+            ),
+          })}
         </p>
       </section>
 
       <section className="card-base p-6 space-y-3">
-        <h2 className="font-display text-xl font-bold">Fuentes de datos</h2>
+        <h2 className="font-display text-xl font-bold">{t('sourcesTitle')}</h2>
         <ul className="space-y-2 text-ink-soft">
           <li>
             <a
@@ -109,7 +150,7 @@ export default function LegalPage() {
             >
               PokéAPI ↗
             </a>{' '}
-            — Datos generales, sprites, evoluciones, stats base.
+            — {t('sourcesPokeapi')}
           </li>
           <li>
             <a
@@ -120,7 +161,7 @@ export default function LegalPage() {
             >
               Smogon Stats ↗
             </a>{' '}
-            — Usage stats mensuales del meta competitivo SV.
+            — {t('sourcesSmogon')}
           </li>
           <li>
             <a
@@ -131,33 +172,19 @@ export default function LegalPage() {
             >
               Pikalytics ↗
             </a>{' '}
-            — Top teams y stats por Pokémon en Pokémon Champions y VGC.
+            — {t('sourcesPikalytics')}
           </li>
         </ul>
       </section>
 
-      <section className="card-base p-6 space-y-3">
-        <h2 className="font-display text-xl font-bold">Privacidad</h2>
-        <p className="text-ink-soft">
-          PokéHub no recopila datos personales identificables. Tus equipos,
-          favoritos y progreso de TypeMaster viven en el{' '}
-          <code className="bg-white/[0.05] px-1.5 py-0.5 rounded text-ink">
-            localStorage
-          </code>{' '}
-          de tu navegador. Si conectas tu cuenta Supabase, los datos quedan en
-          tu propia base de datos.
-        </p>
-        <p className="text-ink-soft">
-          No usamos cookies de tracking ni analítica de terceros por defecto.
-        </p>
+      <section className="card-base p-6 space-y-2 text-xs text-ink-faint">
+        <p>{t('updated', { date: '2026-05-19' })}</p>
+        <p>{t('contact')}</p>
       </section>
 
       <div className="text-center pt-4">
-        <Link
-          href="/"
-          className="text-sm text-brand-glow hover:text-brand-hover"
-        >
-          ← Volver al inicio
+        <Link href="/" className="text-sm text-brand-glow hover:text-brand-hover">
+          ← {t('backHome')}
         </Link>
       </div>
     </div>

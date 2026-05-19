@@ -70,7 +70,18 @@ export async function upsertCloudTeam(
     .select('share_slug')
     .maybeSingle();
   if (error) {
-    console.warn('[cloud-teams] upsert failed', error);
+    // Errores comunes que merecen un mensaje específico:
+    //  - 22P02: id no es un UUID (cliente antiguo). Lo solucionamos en
+    //    teamStore.migrate, pero si llegase aquí lo anunciamos claro.
+    if (error.code === '22P02') {
+      console.error(
+        `[cloud-teams] El ID del equipo "${team.id}" no es un UUID válido. ` +
+        `Borra el equipo y vuelve a guardarlo para que se genere uno nuevo.`,
+        error
+      );
+    } else {
+      console.warn('[cloud-teams] upsert failed', error);
+    }
     return null;
   }
   return { shareSlug: (data as { share_slug: string | null } | null)?.share_slug ?? undefined };

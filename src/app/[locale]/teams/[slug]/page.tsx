@@ -10,7 +10,7 @@ import { fetchPublicTeamBySlug } from '@/lib/sync/cloud';
 import type { SavedTeam } from '@/stores/teamStore';
 import type { SampleTeam, SampleTeamMember } from '@/lib/champions/data';
 import { artworkFor } from '@/lib/pokeapi';
-import { useTeamStore } from '@/stores/teamStore';
+import { useTeamStore, makeTeamId } from '@/stores/teamStore';
 import { Button } from '@/components/ui/Button';
 import {
   ArrowRight,
@@ -67,7 +67,7 @@ export default function PublicTeamPage() {
     }
     const copy: SavedTeam = {
       ...team,
-      id: `t_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+      id: makeTeamId(),
       name: `${team.name} (importado)`,
       isPublic: false,
       shareSlug: undefined,

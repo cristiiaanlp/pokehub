@@ -33,6 +33,28 @@ interface TeamState {
 
 const emptyTeam = (): (TeamMember | null)[] => [null, null, null, null, null, null];
 
+// UUID v4 compatible con la columna `teams.id uuid` de Supabase.
+// `crypto.randomUUID()` existe en todos los browsers modernos + Node 19+.
+// Fallback manual para entornos antiguos.
+export function makeTeamId(): string {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID();
+  }
+  // Fallback RFC4122 v4
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export function isValidUuid(s: string): boolean {
+  return UUID_RE.test(s);
+}
+
 export const useTeamStore = create<TeamState>()(
   persist(
     (set, get) => ({
@@ -57,7 +79,7 @@ export const useTeamStore = create<TeamState>()(
         const current = get().current.filter(Boolean) as TeamMember[];
         const now = Date.now();
         const team: SavedTeam = {
-          id: `t_${now}_${Math.random().toString(36).slice(2, 7)}`,
+          id: makeTeamId(),
           name,
           members: current,
           createdAt: now,
@@ -81,6 +103,20 @@ export const useTeamStore = create<TeamState>()(
           saved: s.saved.map((t) => (t.id === id ? { ...t, ...patch } : t)),
         })),
     }),
-    { name: 'pokehub-teams' }
+    {
+      name: 'pokehub-teams',
+      version: 2,
+      // Migración: la v1 usaba IDs tipo "t_1234_abc" que no son UUIDs y
+      // Postgres los rechaza al sync con Supabase. Los regeneramos.
+      migrate: (persisted: any) => {
+        if (!persisted) return persisted;
+        if (Array.isArray(persisted.saved)) {
+          persisted.saved = persisted.saved.map((t: SavedTeam) =>
+            isValidUuid(t.id) ? t : { ...t, id: makeTeamId() }
+          );
+        }
+        return persisted;
+      },
+    }
   )
 );

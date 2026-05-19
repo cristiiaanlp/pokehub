@@ -22,11 +22,16 @@ const STYLES: Record<Item['severity'], string> = {
 };
 
 const DISMISSED_KEY = 'pokehub:announcements:dismissed';
+// Solo guardamos los últimos 50 dismissed para que el localStorage no crezca
+// infinito (si publicas 1000 anuncios, la lista no llega a 1MB).
+const MAX_DISMISSED = 50;
 
 function getDismissed(): Set<string> {
   if (typeof window === 'undefined') return new Set();
   try {
-    return new Set(JSON.parse(localStorage.getItem(DISMISSED_KEY) ?? '[]'));
+    const parsed = JSON.parse(localStorage.getItem(DISMISSED_KEY) ?? '[]');
+    if (!Array.isArray(parsed)) return new Set();
+    return new Set(parsed.slice(-MAX_DISMISSED));
   } catch {
     return new Set();
   }
@@ -35,7 +40,9 @@ function getDismissed(): Set<string> {
 function setDismissed(ids: Set<string>) {
   if (typeof window === 'undefined') return;
   try {
-    localStorage.setItem(DISMISSED_KEY, JSON.stringify([...ids]));
+    // Mantén solo los últimos N (Set preserva insertion order)
+    const trimmed = [...ids].slice(-MAX_DISMISSED);
+    localStorage.setItem(DISMISSED_KEY, JSON.stringify(trimmed));
   } catch {
     /* full disk, private mode, etc — silently skip */
   }

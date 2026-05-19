@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { useAuth } from './AuthProvider';
 import { artworkFor } from '@/lib/pokeapi';
@@ -10,6 +11,8 @@ import { CheckIcon, ArrowRight } from '@/components/ui/Icon';
 const SUGGESTED_AVATARS = [25, 6, 150, 9, 3, 448, 149, 282, 445, 658];
 
 export function OnboardingModal() {
+  const t = useTranslations('Onboarding');
+  const tCommon = useTranslations('Common');
   const { user } = useAuth();
   const router = useRouter();
   const [needs, setNeeds] = useState(false);
@@ -19,7 +22,6 @@ export function OnboardingModal() {
   const [usernameErr, setUsernameErr] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  // Check si el user necesita onboarding (profile.onboarded_at IS NULL)
   useEffect(() => {
     if (!user) {
       setNeeds(false);
@@ -37,14 +39,12 @@ export function OnboardingModal() {
 
   const next = async () => {
     if (step === 0) {
-      // Validate username
       const u = username.trim().toLowerCase();
       if (!/^[a-z0-9_-]{3,20}$/.test(u)) {
-        setUsernameErr('3-20 chars, solo letras/números/_-');
+        setUsernameErr(t('usernameInvalid'));
         return;
       }
       setUsernameErr(null);
-      // Probar disponibilidad
       setSaving(true);
       try {
         const res = await fetch('/api/profile', {
@@ -62,7 +62,6 @@ export function OnboardingModal() {
         setSaving(false);
       }
     } else if (step === 1) {
-      // Save avatar (opcional)
       if (avatarId) {
         setSaving(true);
         try {
@@ -77,7 +76,6 @@ export function OnboardingModal() {
       }
       setStep(2);
     } else if (step === 2) {
-      // Finalize
       setSaving(true);
       try {
         await fetch('/api/profile', {
@@ -93,12 +91,20 @@ export function OnboardingModal() {
     }
   };
 
+  const finishOnboarding = () => {
+    setNeeds(false);
+    fetch('/api/profile', {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ onboarded_at: new Date().toISOString() }),
+    }).catch(() => {});
+  };
+
   return (
     <div className="fixed inset-0 z-[80] bg-bg-950/80 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="card-base p-6 sm:p-8 max-w-lg w-full relative overflow-hidden">
         <div className="absolute -top-16 -right-16 w-44 h-44 rounded-full bg-brand/20 blur-3xl pointer-events-none" />
         <div className="relative">
-          {/* Progress */}
           <div className="flex items-center gap-2 mb-5">
             {[0, 1, 2].map((i) => (
               <div
@@ -113,15 +119,12 @@ export function OnboardingModal() {
           {step === 0 && (
             <>
               <div className="text-[10px] uppercase tracking-[0.3em] text-brand-glow font-bold mb-1">
-                Paso 1 de 3
+                {t('step', { current: 1, total: 3 })}
               </div>
               <h2 className="font-display text-2xl font-bold mb-2">
-                ¡Bienvenido a PokéHub! 🎉
+                {t('welcomeTitle')} 🎉
               </h2>
-              <p className="text-sm text-ink-dim mb-5">
-                Elige un username único — los demás te verán como{' '}
-                <code>/u/&lt;username&gt;</code>.
-              </p>
+              <p className="text-sm text-ink-dim mb-5">{t('welcomeBody')}</p>
               <input
                 value={username}
                 onChange={(e) =>
@@ -140,14 +143,12 @@ export function OnboardingModal() {
           {step === 1 && (
             <>
               <div className="text-[10px] uppercase tracking-[0.3em] text-brand-glow font-bold mb-1">
-                Paso 2 de 3
+                {t('step', { current: 2, total: 3 })}
               </div>
               <h2 className="font-display text-2xl font-bold mb-2">
-                Elige tu avatar
+                {t('avatarTitle')}
               </h2>
-              <p className="text-sm text-ink-dim mb-5">
-                Tu Pokémon favorito te representará en perfiles y comentarios.
-              </p>
+              <p className="text-sm text-ink-dim mb-5">{t('avatarBody')}</p>
               <div className="grid grid-cols-5 gap-2 mb-3">
                 {SUGGESTED_AVATARS.map((id) => (
                   <button
@@ -171,7 +172,7 @@ export function OnboardingModal() {
                 onClick={() => setAvatarId(null)}
                 className="text-[11px] text-ink-faint hover:text-ink"
               >
-                Saltar este paso
+                {t('skipStep')}
               </button>
             </>
           )}
@@ -179,34 +180,25 @@ export function OnboardingModal() {
           {step === 2 && (
             <>
               <div className="text-[10px] uppercase tracking-[0.3em] text-accent-green font-bold mb-1">
-                Paso 3 de 3
+                {t('step', { current: 3, total: 3 })}
               </div>
               <h2 className="font-display text-2xl font-bold mb-2">
-                ¡Listo, entrenador! 🚀
+                {t('readyTitle')} 🚀
               </h2>
-              <p className="text-sm text-ink-dim mb-5">
-                Tu perfil está activo. Aquí tienes algunas ideas para empezar:
-              </p>
+              <p className="text-sm text-ink-dim mb-5">{t('readyBody')}</p>
               <div className="space-y-2 mb-2">
                 <Link
                   href="/team-builder"
                   className="card-base card-hover p-3 flex items-center gap-3 group"
-                  onClick={() => {
-                    setNeeds(false);
-                    fetch('/api/profile', {
-                      method: 'PATCH',
-                      headers: { 'content-type': 'application/json' },
-                      body: JSON.stringify({ onboarded_at: new Date().toISOString() }),
-                    }).catch(() => {});
-                  }}
+                  onClick={finishOnboarding}
                 >
                   <span className="text-2xl">⚔️</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-display font-bold text-sm">
-                      Crea tu primer equipo
+                      {t('buildTeam')}
                     </div>
                     <div className="text-[11px] text-ink-dim">
-                      Team Builder con import/export Showdown
+                      {t('buildTeamDesc')}
                     </div>
                   </div>
                   <ArrowRight className="w-4 h-4 text-ink-faint group-hover:translate-x-1 transition-transform" />
@@ -214,22 +206,15 @@ export function OnboardingModal() {
                 <Link
                   href="/typemaster"
                   className="card-base card-hover p-3 flex items-center gap-3 group"
-                  onClick={() => {
-                    setNeeds(false);
-                    fetch('/api/profile', {
-                      method: 'PATCH',
-                      headers: { 'content-type': 'application/json' },
-                      body: JSON.stringify({ onboarded_at: new Date().toISOString() }),
-                    }).catch(() => {});
-                  }}
+                  onClick={finishOnboarding}
                 >
                   <span className="text-2xl">🎯</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-display font-bold text-sm">
-                      Juega a TypeMaster
+                      {t('playTypeMaster')}
                     </div>
                     <div className="text-[11px] text-ink-dim">
-                      Test de tipos con leaderboard global
+                      {t('playTypeMasterDesc')}
                     </div>
                   </div>
                   <ArrowRight className="w-4 h-4 text-ink-faint group-hover:translate-x-1 transition-transform" />
@@ -237,22 +222,15 @@ export function OnboardingModal() {
                 <Link
                   href="/community/teams"
                   className="card-base card-hover p-3 flex items-center gap-3 group"
-                  onClick={() => {
-                    setNeeds(false);
-                    fetch('/api/profile', {
-                      method: 'PATCH',
-                      headers: { 'content-type': 'application/json' },
-                      body: JSON.stringify({ onboarded_at: new Date().toISOString() }),
-                    }).catch(() => {});
-                  }}
+                  onClick={finishOnboarding}
                 >
                   <span className="text-2xl">🌍</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-display font-bold text-sm">
-                      Explora la comunidad
+                      {t('exploreCommunity')}
                     </div>
                     <div className="text-[11px] text-ink-dim">
-                      Equipos compartidos de otros entrenadores
+                      {t('exploreCommunityDesc')}
                     </div>
                   </div>
                   <ArrowRight className="w-4 h-4 text-ink-faint group-hover:translate-x-1 transition-transform" />
@@ -267,7 +245,7 @@ export function OnboardingModal() {
                 onClick={() => setStep(step - 1)}
                 className="text-xs text-ink-faint hover:text-ink"
               >
-                ← Atrás
+                ← {tCommon('back')}
               </button>
             ) : (
               <span />
@@ -277,21 +255,19 @@ export function OnboardingModal() {
               disabled={saving || (step === 0 && !username.trim())}
               className="h-11 px-5 rounded-lg bg-brand text-white text-xs font-bold uppercase tracking-widest shadow-glow hover:bg-brand-hover disabled:opacity-50 inline-flex items-center gap-2"
             >
-              {saving
-                ? 'Guardando…'
-                : step === 2
-                ? (
-                  <>
-                    <CheckIcon className="w-4 h-4" />
-                    ¡Empezar a entrenar!
-                  </>
-                )
-                : (
-                  <>
-                    Siguiente
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </>
-                )}
+              {saving ? (
+                tCommon('loading')
+              ) : step === 2 ? (
+                <>
+                  <CheckIcon className="w-4 h-4" />
+                  {t('start')}
+                </>
+              ) : (
+                <>
+                  {tCommon('next')}
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </>
+              )}
             </button>
           </div>
         </div>

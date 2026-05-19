@@ -3,6 +3,7 @@
 
 import { NextResponse } from 'next/server';
 import { parseReplay } from '@/lib/replay-parser';
+import { rateLimit, getRateLimitKey } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 // 1h cache — los replays son inmutables
@@ -21,6 +22,15 @@ function normalizeUrl(input: string): string | null {
 }
 
 export async function GET(req: Request) {
+  // 20 replays / 5 min por IP — el parser hace un fetch externo, así que limitamos abusos.
+  const rl = rateLimit(`replay:${getRateLimitKey(req)}`, 20, 300);
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: `Demasiadas peticiones. Espera ${rl.resetIn}s.` },
+      { status: 429, headers: { 'retry-after': String(rl.resetIn) } }
+    );
+  }
+
   const url = new URL(req.url).searchParams.get('url');
   if (!url) return NextResponse.json({ error: 'missing url' }, { status: 400 });
 
