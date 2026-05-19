@@ -3,7 +3,16 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { isAdminEmail, getAdminEmails } from '@/lib/admin';
-import { ChartIcon, GridIcon, TrophyIcon, ShieldIcon } from '@/components/ui/Icon';
+import {
+  ChartIcon,
+  GridIcon,
+  TrophyIcon,
+  ShieldIcon,
+  UsersIcon,
+  SparklesIcon,
+  BoltIcon,
+  ClockIcon,
+} from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
   title: 'Admin · PokéHub',
@@ -13,7 +22,12 @@ export const metadata: Metadata = {
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', Icon: ChartIcon },
+  { href: '/admin/users', label: 'Usuarios', Icon: UsersIcon },
   { href: '/admin/teams', label: 'Teams públicos', Icon: GridIcon },
+  { href: '/admin/featured', label: 'Destacados', Icon: TrophyIcon },
+  { href: '/admin/announcements', label: 'Anuncios', Icon: SparklesIcon },
+  { href: '/admin/audit', label: 'Audit log', Icon: ClockIcon },
+  { href: '/admin/system', label: 'Sistema', Icon: BoltIcon },
   { href: '/admin/cache', label: 'Caché', Icon: ShieldIcon },
 ];
 

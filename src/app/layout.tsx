@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { MobileNav } from '@/components/layout/MobileNav';
 import { BottomTabBar } from '@/components/layout/BottomTabBar';
 import { Footer } from '@/components/layout/Footer';
+import { AnnouncementBanner } from '@/components/layout/AnnouncementBanner';
 import { SITE } from '@/lib/site';
 import { AuthProvider } from '@/components/auth/AuthProvider';
 import { SyncManager } from '@/components/auth/SyncManager';
@@ -98,6 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <SyncManager />
           <CommandPalette />
+          <AnnouncementBanner />
           <Navbar />
           <MobileNav />
           <main id="main" className="pb-24 lg:pb-0">{children}</main>
