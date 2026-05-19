@@ -9,6 +9,7 @@ import { AnnouncementBanner } from '@/components/layout/AnnouncementBanner';
 import { SITE } from '@/lib/site';
 import { AuthProvider } from '@/components/auth/AuthProvider';
 import { SyncManager } from '@/components/auth/SyncManager';
+import { OnboardingModal } from '@/components/auth/OnboardingModal';
 import { CommandPalette } from '@/components/common/CommandPalette';
 
 const inter = Inter({
@@ -98,6 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <AuthProvider>
           <SyncManager />
+          <OnboardingModal />
           <CommandPalette />
           <AnnouncementBanner />
           <Navbar />

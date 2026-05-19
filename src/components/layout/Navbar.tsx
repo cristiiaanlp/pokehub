@@ -9,6 +9,7 @@ import { MenuIcon, ArrowRight, SearchIcon } from '@/components/ui/Icon';
 import { useUIStore } from '@/stores/uiStore';
 import { cn } from '@/lib/utils';
 import { UserMenu } from '@/components/auth/UserMenu';
+import { NotificationsBell } from '@/components/auth/NotificationsBell';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -75,6 +76,9 @@ export function Navbar() {
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
+          <div className="hidden md:block">
+            <NotificationsBell />
+          </div>
           <div className="hidden md:block">
             <UserMenu variant="desktop" />
           </div>

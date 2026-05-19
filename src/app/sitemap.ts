@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/site';
+import { GUIDES } from '@/lib/guides';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -9,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/team-builder',
     '/tools/speed-tier',
     '/tools/damage-calc',
+    '/tools/replay-analyzer',
     '/typemaster',
     '/typemaster/play',
     '/typemaster/meta-daily',
@@ -24,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/casual/randomizer',
     '/casual/nuzlocke',
     '/favorites',
+    '/guides',
     '/legal',
     '/login',
     '/support',
@@ -49,5 +52,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...pokemonEntries];
+  const guideEntries: MetadataRoute.Sitemap = GUIDES.map((g) => ({
+    url: `${SITE.url}/guides/${g.slug}`,
+    lastModified: new Date(g.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
+  return [...staticEntries, ...pokemonEntries, ...guideEntries];
 }

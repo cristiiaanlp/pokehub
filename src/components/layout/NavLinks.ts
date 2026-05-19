@@ -6,6 +6,7 @@ import {
   HeartIcon,
   HomeIcon,
   GamepadIcon,
+  BookOpenIcon,
 } from '@/components/ui/Icon';
 import type { ComponentType, SVGProps } from 'react';
 
@@ -22,6 +23,7 @@ export const NAV_LINKS: NavItem[] = [
   { href: '/typemaster', label: 'TypeMaster', Icon: GamepadIcon, badge: 'NEW' },
   { href: '/team-builder', label: 'Team Builder', Icon: UsersIcon },
   { href: '/meta', label: 'Meta Hub', Icon: TrendingUpIcon },
+  { href: '/guides', label: 'Guías', Icon: BookOpenIcon, badge: 'NEW' },
   { href: '/casual', label: 'Casual', Icon: SparklesIcon },
   { href: '/favorites', label: 'Favoritos', Icon: HeartIcon },
 ];

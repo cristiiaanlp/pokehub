@@ -69,6 +69,9 @@ export function SyncManager() {
       );
       const mergedFavs = Array.from(new Set([...cloudFavs, ...localFavs]));
       useFavoritesStore.getState().setIds(mergedFavs);
+
+      // Auto-sync de badges al iniciar sesión (idempotente).
+      fetch('/api/badges/sync', { method: 'POST' }).catch(() => {});
     })();
 
     return () => {

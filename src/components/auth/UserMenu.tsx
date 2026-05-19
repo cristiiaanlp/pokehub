@@ -142,6 +142,14 @@ export function UserMenu({ variant = 'desktop' }: Props) {
             </div>
             <div className="p-1.5">
               <Link
+                href="/me"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-ink-soft hover:bg-white/[0.06] hover:text-ink"
+              >
+                👤 Mi perfil
+                <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-40" />
+              </Link>
+              <Link
                 href="/favorites"
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-ink-soft hover:bg-white/[0.06] hover:text-ink"
