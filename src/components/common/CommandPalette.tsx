@@ -46,6 +46,7 @@ const ACTIONS: Action[] = [
   { id: 'speed-tier', label: 'Speed Tier Visualizer', Icon: BoltIcon, href: '/tools/speed-tier', keywords: 'velocidad ev nature scarf', section: 'Navegación' },
   { id: 'damage-calc', label: 'Damage Calculator', Icon: FireIcon, href: '/tools/damage-calc', keywords: 'damage calc calculadora ohko 2hko', section: 'Navegación' },
   { id: 'favorites', label: 'Favoritos', Icon: HeartIcon, href: '/favorites', section: 'Navegación' },
+  { id: 'support', label: 'Apoyar el proyecto ☕', Icon: HeartIcon, href: '/support', keywords: 'donar donate kofi sponsors paypal cafe café apoyar', section: 'Navegación' },
   { id: 'meta', label: 'Meta Hub', Icon: TrendingUpIcon, href: '/meta', keywords: 'smogon usage', section: 'Meta' },
   { id: 'champions', label: 'Pokémon Champions', Icon: FireIcon, href: '/meta/champions', keywords: 'reg ma', section: 'Meta' },
   { id: 'teams-explorer', label: 'Explorador de equipos (curados)', Icon: TrophyIcon, href: '/meta/teams', section: 'Meta' },

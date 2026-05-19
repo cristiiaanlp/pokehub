@@ -255,6 +255,36 @@ export function ResultScreen({
           </Button>
         </Link>
       </div>
+
+      {acc >= 80 && summary.totalQuestions >= 10 && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="card-base p-5 relative overflow-hidden border-pink-400/20"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 via-orange-500/5 to-transparent pointer-events-none" />
+          <div className="relative flex items-center gap-3 flex-wrap">
+            <div className="text-3xl shrink-0">☕</div>
+            <div className="flex-1 min-w-0">
+              <div className="font-display font-bold text-sm">
+                ¡Buen run! Si la app te mola, puedes invitarme a un café
+              </div>
+              <div className="text-[11px] text-ink-dim mt-0.5">
+                PokéHub es gratis sin anuncios. Las donaciones mantienen el
+                hosting + features nuevas.
+              </div>
+            </div>
+            <Link
+              href="/support"
+              className="shrink-0 inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-gradient-to-r from-pink-500 to-orange-400 text-white text-xs font-bold shadow-[0_0_15px_-3px_rgba(244,114,182,0.5)] hover:scale-[1.04] active:scale-[0.98] transition-transform"
+            >
+              Apoyar
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 }

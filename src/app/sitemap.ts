@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/favorites',
     '/legal',
     '/login',
+    '/support',
   ];
 
   const staticEntries: MetadataRoute.Sitemap = routes.map((r) => ({

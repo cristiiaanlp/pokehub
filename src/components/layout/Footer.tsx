@@ -14,15 +14,13 @@ export function Footer() {
           </p>
 
           {SITE.kofiUsername && (
-            <a
-              href={`https://ko-fi.com/${SITE.kofiUsername}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/support"
               className="inline-flex items-center gap-2 h-10 px-4 rounded-xl bg-gradient-to-r from-pink-500 to-orange-400 text-white font-bold text-sm shadow-[0_0_20px_-5px_rgba(244,114,182,0.5)] hover:scale-[1.03] active:scale-[0.98] transition-transform"
             >
               <span>☕</span>
-              Invitarme a un café
-            </a>
+              Apoyar el proyecto
+            </Link>
           )}
 
           <div className="flex items-center gap-3 text-xs text-ink-faint pt-1">

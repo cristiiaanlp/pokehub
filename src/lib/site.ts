@@ -1,4 +1,4 @@
-// Central site config used in metadata, sitemap, OG.
+// Central site config used in metadata, sitemap, OG, donation methods.
 // NEXT_PUBLIC_SITE_URL set on Vercel to https://pokehub.app (or whatever domain).
 export const SITE = {
   name: 'PokéHub',
@@ -26,9 +26,27 @@ export const SITE = {
   author: 'Cristian López',
   authorGithub: 'https://github.com/cristiiaanlp',
   repo: 'https://github.com/cristiiaanlp/pokehub',
-  // ─── DONACIONES ──────────────────────────────────────────────────────
-  // Cuando crees tu cuenta en https://ko-fi.com sustituye '' por tu
-  // username. Si lo dejas vacío, el botón "Buy Me a Coffee" NO aparece.
-  // Cuando lo rellenes, push y Vercel redespliega automáticamente.
-  kofiUsername: 'cristiiaanlp', // ej: 'cristiiaanlp'
-} as const;
+
+  // ═════════════════════════════════════════════════════════════════════
+  //  DONACIONES · activa solo los métodos que quieras usar
+  // ═════════════════════════════════════════════════════════════════════
+  //  Cada método solo aparece en la UI cuando su valor NO está vacío.
+  //  Si rellenas varios, los usuarios verán las opciones lado a lado.
+  // ═════════════════════════════════════════════════════════════════════
+  support: {
+    /** Ko-fi username · https://ko-fi.com/settings */
+    kofiUsername: 'cristiiaanlp',
+    /** GitHub Sponsors username (deja vacío hasta solicitar acceso al programa) */
+    githubSponsors: '' as string, // ej: 'cristiiaanlp'
+    /** PayPal.me link directo · https://paypal.me/settings */
+    paypalMe: '' as string, // ej: 'cristiiaanlp' → https://paypal.me/cristiiaanlp
+    /** Stripe Payment Link público · solo si activas Stripe Checkout */
+    stripeLink: '' as string, // ej: 'https://buy.stripe.com/xxxx'
+    /** Texto del goal mensual (déjalo vacío para no mostrar) */
+    monthlyGoalLabel: 'Cubrir hosting + Anthropic API',
+    monthlyGoalEur: 25,
+  },
+
+  // Backwards-compat: el footer antiguo lee SITE.kofiUsername
+  kofiUsername: 'cristiiaanlp',
+};
