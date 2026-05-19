@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from './AuthProvider';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight } from '@/components/ui/Icon';
+import { isAdminEmail } from '@/lib/admin';
 
 interface Props {
   variant?: 'desktop' | 'mobile';
@@ -165,6 +166,18 @@ export function UserMenu({ variant = 'desktop' }: Props) {
                 <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-40" />
               </Link>
             </div>
+            {isAdminEmail(email) && (
+              <div className="p-1.5 border-t border-white/[0.06]">
+                <Link
+                  href="/admin"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-accent-yellow hover:bg-accent-yellow/10 font-semibold"
+                >
+                  👑 Admin Panel
+                  <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-60" />
+                </Link>
+              </div>
+            )}
             <div className="p-1.5 border-t border-white/[0.06]">
               <button
                 onClick={handleSignOut}
