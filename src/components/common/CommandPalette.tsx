@@ -18,6 +18,7 @@ import {
   TargetIcon,
   FireIcon,
   ChartIcon,
+  BoltIcon,
 } from '@/components/ui/Icon';
 import {
   getPokedexIndex,
@@ -41,7 +42,8 @@ interface Action {
 const ACTIONS: Action[] = [
   { id: 'home', label: 'Inicio', Icon: HomeIcon, href: '/', section: 'Navegación' },
   { id: 'pokedex', label: 'Pokédex', Icon: GridIcon, href: '/pokedex', keywords: 'lista pokemon', section: 'Navegación' },
-  { id: 'team-builder', label: 'Team Builder', Icon: UsersIcon, href: '/team-builder', keywords: 'equipos crear', section: 'Navegación' },
+  { id: 'team-builder', label: 'Team Builder', Icon: UsersIcon, href: '/team-builder', keywords: 'equipos crear amenazas heatmap', section: 'Navegación' },
+  { id: 'speed-tier', label: 'Speed Tier Visualizer', Icon: BoltIcon, href: '/tools/speed-tier', keywords: 'velocidad ev nature scarf', section: 'Navegación' },
   { id: 'favorites', label: 'Favoritos', Icon: HeartIcon, href: '/favorites', section: 'Navegación' },
   { id: 'meta', label: 'Meta Hub', Icon: TrendingUpIcon, href: '/meta', keywords: 'smogon usage', section: 'Meta' },
   { id: 'champions', label: 'Pokémon Champions', Icon: FireIcon, href: '/meta/champions', keywords: 'reg ma', section: 'Meta' },

@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '',
     '/pokedex',
     '/team-builder',
+    '/tools/speed-tier',
     '/typemaster',
     '/typemaster/play',
     '/typemaster/learn',
@@ -20,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/casual/randomizer',
     '/casual/nuzlocke',
     '/favorites',
+    '/legal',
     '/login',
   ];
 
