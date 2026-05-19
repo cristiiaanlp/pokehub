@@ -17,6 +17,8 @@ import {
   HomeIcon,
   GamepadIcon,
   BookOpenIcon,
+  BoltIcon,
+  BrainIcon,
 } from '@/components/ui/Icon';
 import type { ComponentType, SVGProps } from 'react';
 import { useUIStore } from '@/stores/uiStore';
@@ -36,8 +38,10 @@ const NAV_LINKS: NavLink[] = [
   { href: '/pokedex', labelKey: 'pokedex', Icon: GridIcon },
   { href: '/typemaster', labelKey: 'typemaster', Icon: GamepadIcon, badge: 'NEW' },
   { href: '/team-builder', labelKey: 'teamBuilder', Icon: UsersIcon },
+  { href: '/tools', labelKey: 'tools', Icon: BoltIcon, badge: 'NEW' },
+  { href: '/coach', labelKey: 'coach', Icon: BrainIcon, badge: 'AI' },
   { href: '/meta', labelKey: 'metaHub', Icon: TrendingUpIcon },
-  { href: '/guides', labelKey: 'guides', Icon: BookOpenIcon, badge: 'NEW' },
+  { href: '/guides', labelKey: 'guides', Icon: BookOpenIcon },
   { href: '/casual', labelKey: 'casual', Icon: SparklesIcon },
   { href: '/favorites', labelKey: 'favorites', Icon: HeartIcon },
 ];

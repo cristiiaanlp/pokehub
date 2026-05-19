@@ -4,6 +4,8 @@
 // sugerencias de team / counter / set generadas por Claude.
 
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit, getRateLimitKey } from '@/lib/rate-limit';
+import { getSupabaseServer } from '@/lib/supabase-server';
 
 export const runtime = 'nodejs';
 
@@ -16,6 +18,22 @@ interface RecommendBody {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit estricto: el endpoint llama a Anthropic y CUESTA dinero.
+  // 10 peticiones / 10 min por user. Anónimo: 3/10min.
+  const sb = getSupabaseServer();
+  const userId = sb ? (await sb.auth.getUser()).data.user?.id : null;
+  const limit = userId ? 10 : 3;
+  const rl = await rateLimit(`ai:${getRateLimitKey(req, userId)}`, limit, 600);
+  if (!rl.ok) {
+    return NextResponse.json(
+      {
+        error: 'rate_limited',
+        message: `Demasiadas consultas a la IA. Espera ${rl.resetIn}s.`,
+      },
+      { status: 429, headers: { 'retry-after': String(rl.resetIn) } }
+    );
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
