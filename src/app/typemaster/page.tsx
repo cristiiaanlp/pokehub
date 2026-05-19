@@ -189,6 +189,32 @@ export default function TypeMasterHub() {
         </Link>
       </section>
 
+      <Link
+        href="/typemaster/meta-daily"
+        className="block relative overflow-hidden rounded-2xl border border-accent-yellow/30 hover:border-accent-yellow/50 transition-colors p-5 sm:p-6 group"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-yellow/15 via-orange-500/10 to-brand/10" />
+        <div className="absolute -top-16 -right-12 w-44 h-44 rounded-full bg-accent-yellow/20 blur-3xl" />
+        <div className="relative flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-accent-yellow/20 text-accent-yellow inline-flex items-center justify-center shrink-0">
+            <ChartIcon className="w-6 h-6" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-accent-yellow font-bold mb-1">
+              📊 NUEVO · Meta Daily Quiz
+            </div>
+            <div className="font-display text-lg font-bold">
+              ¿Sabes quién manda en Champions hoy?
+            </div>
+            <div className="text-xs text-ink-dim mt-0.5">
+              6 preguntas sobre el meta actual usando datos vivos de Pikalytics.
+              Una vez al día.
+            </div>
+          </div>
+          <ArrowRight className="w-4 h-4 text-ink-faint group-hover:translate-x-1 transition-transform shrink-0" />
+        </div>
+      </Link>
+
       <section>
         <h2 className="font-display text-2xl font-bold mb-4">Badges</h2>
         <BadgeGrid />

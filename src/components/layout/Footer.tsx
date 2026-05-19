@@ -73,6 +73,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/community/teams" className="hover:text-ink">
+                Comunidad
+              </Link>
+            </li>
+            <li>
               <Link href="/casual" className="hover:text-ink">
                 Modo Casual
               </Link>
