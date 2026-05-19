@@ -14,6 +14,8 @@ import { AuthProvider } from '@/components/auth/AuthProvider';
 import { SyncManager } from '@/components/auth/SyncManager';
 import { OnboardingModal } from '@/components/auth/OnboardingModal';
 import { CommandPalette } from '@/components/common/CommandPalette';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -143,6 +145,8 @@ export default async function LocaleLayout({
             <Footer />
           </AuthProvider>
         </NextIntlClientProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

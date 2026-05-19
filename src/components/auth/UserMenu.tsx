@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from '@/i18n/routing';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from './AuthProvider';
 import { Button } from '@/components/ui/Button';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function UserMenu({ variant = 'desktop' }: Props) {
+  const t = useTranslations('Auth');
   const { user, isLoading, signOut } = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -57,14 +59,14 @@ export function UserMenu({ variant = 'desktop' }: Props) {
           href="/login"
           className="block text-center text-sm font-semibold h-11 inline-flex items-center justify-center w-full rounded-xl bg-brand text-white shadow-glow"
         >
-          Iniciar sesión
+          {t('signIn')}
         </Link>
       );
     }
     return (
       <Link href="/login">
         <Button variant="ghost" size="sm">
-          Iniciar sesión
+          {t('signIn')}
         </Button>
       </Link>
     );
@@ -74,7 +76,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
     (user.user_metadata?.full_name as string | undefined)?.trim() || '';
   const email = user.email ?? '';
   const displayLetter = (fullName || email || '?').charAt(0).toUpperCase();
-  const displayName = fullName || email.split('@')[0] || 'Entrenador';
+  const displayName = fullName || email.split('@')[0] || t('trainer');
 
   const handleSignOut = async () => {
     setOpen(false);
@@ -99,7 +101,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
           onClick={handleSignOut}
           className="block w-full text-center text-sm font-semibold h-11 rounded-xl bg-accent-red/15 text-accent-red hover:bg-accent-red/25"
         >
-          Cerrar sesión
+          {t('signOut')}
         </button>
       </div>
     );
@@ -109,7 +111,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label="Menú de usuario"
+        aria-label={t('myAccount')}
         className="relative h-10 w-10 rounded-full bg-gradient-to-br from-brand to-brand-glow flex items-center justify-center text-white font-bold text-sm shadow-glow hover:scale-105 transition-transform"
       >
         {displayLetter}
@@ -146,7 +148,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-ink-soft hover:bg-white/[0.06] hover:text-ink"
               >
-                👤 Mi perfil
+                👤 {t('myProfile')}
                 <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-40" />
               </Link>
               <Link
@@ -154,7 +156,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-ink-soft hover:bg-white/[0.06] hover:text-ink"
               >
-                ❤️ Mis favoritos
+                ❤️ {t('myFavorites')}
                 <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-40" />
               </Link>
               <Link
@@ -162,7 +164,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-ink-soft hover:bg-white/[0.06] hover:text-ink"
               >
-                ⚔️ Mis equipos
+                ⚔️ {t('myTeams')}
                 <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-40" />
               </Link>
               <Link
@@ -170,7 +172,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-ink-soft hover:bg-white/[0.06] hover:text-ink"
               >
-                📊 Mis stats TypeMaster
+                📊 {t('myStats')}
                 <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-40" />
               </Link>
             </div>
@@ -181,7 +183,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-accent-yellow hover:bg-accent-yellow/10 font-semibold"
                 >
-                  👑 Admin Panel
+                  👑 {t('adminPanel')}
                   <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-60" />
                 </Link>
               </div>
@@ -191,7 +193,7 @@ export function UserMenu({ variant = 'desktop' }: Props) {
                 onClick={handleSignOut}
                 className="w-full flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-accent-red hover:bg-accent-red/15"
               >
-                ⏏️ Cerrar sesión
+                ⏏️ {t('signOut')}
               </button>
             </div>
           </motion.div>

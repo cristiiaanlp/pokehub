@@ -44,7 +44,7 @@ export async function POST(req: Request, ctx: { params: { id: string } }) {
   if (!user) return NextResponse.json({ error: 'unauthenticated' }, { status: 401 });
 
   // Max 30 likes/min per user (toggles count too) — más que suficiente para uso normal
-  const rl = rateLimit(`likes:${getRateLimitKey(req, user.id)}`, 30, 60);
+  const rl = await rateLimit(`likes:${getRateLimitKey(req, user.id)}`, 30, 60);
   if (!rl.ok) {
     return NextResponse.json(
       { error: `Demasiados likes. Espera ${rl.resetIn}s.` },

@@ -72,7 +72,7 @@ export async function POST(req: Request, ctx: { params: { id: string } }) {
   if (!user) return NextResponse.json({ error: 'unauthenticated' }, { status: 401 });
 
   // Max 10 comments/min per user → previene spam
-  const rl = rateLimit(`comments:${getRateLimitKey(req, user.id)}`, 10, 60);
+  const rl = await rateLimit(`comments:${getRateLimitKey(req, user.id)}`, 10, 60);
   if (!rl.ok) {
     return NextResponse.json(
       { error: `Demasiados comentarios. Espera ${rl.resetIn}s.` },

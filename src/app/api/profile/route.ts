@@ -27,7 +27,7 @@ export async function PATCH(req: Request) {
   if (!user) return NextResponse.json({ error: 'unauthenticated' }, { status: 401 });
 
   // 20 profile updates / 5 min — uso normal son 1-2, evita ataques de username squatting
-  const rl = rateLimit(`profile:${getRateLimitKey(req, user.id)}`, 20, 300);
+  const rl = await rateLimit(`profile:${getRateLimitKey(req, user.id)}`, 20, 300);
   if (!rl.ok) {
     return NextResponse.json(
       { error: `Demasiadas actualizaciones de perfil. Espera ${rl.resetIn}s.` },

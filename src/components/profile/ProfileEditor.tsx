@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { artworkFor } from '@/lib/pokeapi';
 import { CheckIcon, ArrowRight } from '@/components/ui/Icon';
@@ -28,6 +29,7 @@ export function ProfileEditor({
   initial: Profile;
   email: string;
 }) {
+  const t = useTranslations('Profile');
   const router = useRouter();
   const [username, setUsername] = useState(initial.username ?? '');
   const [displayName, setDisplayName] = useState(initial.display_name ?? '');
@@ -59,7 +61,7 @@ export function ProfileEditor({
         setErr(data.error ?? res.statusText);
         return;
       }
-      setMsg('Perfil guardado.');
+      setMsg(t('saved'));
       // Re-fetch del layout para actualizar el badge en el menú.
       router.refresh();
     } finally {
@@ -71,7 +73,7 @@ export function ProfileEditor({
     <div className="space-y-5">
       {/* Avatar */}
       <div className="card-base p-5">
-        <h2 className="font-display font-bold text-sm mb-3">Avatar</h2>
+        <h2 className="font-display font-bold text-sm mb-3">{t('avatar')}</h2>
         <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-3">
           {SUGGESTED_AVATARS.map((id) => (
             <button
@@ -92,7 +94,7 @@ export function ProfileEditor({
           ))}
         </div>
         <label className="text-xs flex items-center gap-2">
-          <span className="text-ink-dim">O pega un ID de Pokédex:</span>
+          <span className="text-ink-dim">{t('byPokeId')}</span>
           <input
             type="number"
             min={1}
@@ -108,7 +110,7 @@ export function ProfileEditor({
               onClick={() => setAvatarId(null)}
               className="text-ink-faint hover:text-ink ml-2"
             >
-              quitar
+              {t('removeAvatar')}
             </button>
           )}
         </label>
@@ -126,7 +128,7 @@ export function ProfileEditor({
         </label>
         <label className="block text-sm">
           <span className="text-ink-dim text-xs">
-            Username (visible en /u/ — 3-20 chars, minúsculas/números/_-)
+            {t('username')} — {t('usernameHint')}
           </span>
           <input
             value={username}
@@ -141,7 +143,7 @@ export function ProfileEditor({
         </label>
         <label className="block text-sm">
           <span className="text-ink-dim text-xs">
-            Nombre visible (cómo te ven los demás)
+            {t('displayName')} — {t('displayNameHint')}
           </span>
           <input
             value={displayName}
@@ -152,12 +154,12 @@ export function ProfileEditor({
           />
         </label>
         <label className="block text-sm">
-          <span className="text-ink-dim text-xs">Bio (máx 200 chars)</span>
+          <span className="text-ink-dim text-xs">{t('bio')} (max 200)</span>
           <textarea
             value={bio}
             onChange={(e) => setBio(e.target.value.slice(0, 200))}
             rows={3}
-            placeholder="Mi tipo favorito es planta, vivo en VGC Reg G…"
+            placeholder={t('bioPlaceholder')}
             className="mt-1 w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06] text-sm resize-y"
           />
           <div className="text-[10px] text-ink-faint text-right mt-1">
@@ -182,7 +184,7 @@ export function ProfileEditor({
               href={`/u/${username}`}
               className="text-xs text-brand-glow hover:text-brand-hover inline-flex items-center gap-1"
             >
-              Ver mi perfil
+              {t('viewMy')}
               <ArrowRight className="w-3 h-3" />
             </Link>
           )}
@@ -191,7 +193,7 @@ export function ProfileEditor({
             disabled={saving}
             className="h-10 px-5 rounded-lg bg-brand text-white text-xs font-bold uppercase tracking-widest shadow-glow hover:bg-brand-hover disabled:opacity-50"
           >
-            {saving ? 'Guardando…' : 'Guardar perfil'}
+            {saving ? t('saving') : t('save')}
           </button>
         </div>
       </div>

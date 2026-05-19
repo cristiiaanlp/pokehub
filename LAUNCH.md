@@ -25,6 +25,17 @@ En **Settings → Environment Variables**, asegúrate de tener (Production + Pre
 - [ ] `NEXT_PUBLIC_ADMIN_EMAILS` (tu email separado por coma si hay varios)
 - [ ] `ANTHROPIC_API_KEY` (opcional, solo si quieres `/api/recommend`)
 
+### Opcionales (recomendadas para producción seria)
+
+- [ ] `NEXT_PUBLIC_SENTRY_DSN` — Sentry para tracking de errores cliente
+  - Crear cuenta en [sentry.io](https://sentry.io) → New project → Next.js
+  - Copia el DSN
+  - Opcional: añadir también `SENTRY_AUTH_TOKEN` (Settings → Auth Tokens) para que el build suba source maps
+- [ ] `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` — rate limit distribuido
+  - Crear DB free en [console.upstash.com](https://console.upstash.com)
+  - Copia REST URL + Token
+  - Sin esto, el rate limit funciona pero es por-instancia (memoria local)
+
 Tras añadirlas, **Redeploy con "Use existing Build Cache" DESACTIVADO**
 (las `NEXT_PUBLIC_*` se hornean en build time).
 
@@ -115,13 +126,35 @@ Abre el sitio publicado en navegador limpio (modo incógnito) y verifica:
 
 ## 6. Monitorización post-launch
 
-- [ ] Activar Vercel Analytics (gratis hasta 100k events/mes)
-- [ ] Configurar Sentry o similar para errores en producción
+- [x] **Vercel Analytics + Speed Insights** ya wired en código (auto-activa en deploy)
+- [x] **Sentry** ya wired — solo necesita el DSN en env vars
+- [x] **Upstash rate limit** ya wired con fallback in-memory
 - [ ] Revisar `/admin/system` cada semana — los pings a Pikalytics/Smogon deben ser verdes
 - [ ] Revisar `/admin/audit` para detectar abusos
 - [ ] Backup de la BBDD: Supabase Pro tiene PITR; Free tier tiene snapshot diario
 
-## 7. Cosas que YA están bien
+## 7. Tests e2e
+
+```bash
+# Instalar el navegador la primera vez (solo dev)
+npm run test:e2e:install
+
+# Correr los 25+ tests
+npm run test:e2e
+
+# UI mode interactivo (mejor DX)
+npm run test:e2e:ui
+```
+
+Los tests cubren:
+- Landing carga + CTAs + performance
+- Locale routing en los 5 idiomas
+- Sitemap multilang
+- Open redirect blocking + admin gate + API auth
+- Navegación a todas las páginas principales
+- API endpoints públicos sin auth
+
+## 8. Cosas que YA están bien
 
 - Seguridad fundamental (RLS, auth gates, no secrets expuestos)
 - 5 idiomas con locale routing + hreflang
@@ -131,7 +164,7 @@ Abre el sitio publicado en navegador limpio (modo incógnito) y verifica:
 - Audit log de toda acción admin
 - Sistema de roles admin con 3 capas de seguridad
 
-## 8. Limitaciones conocidas (no-bloqueantes)
+## 9. Limitaciones conocidas (no-bloqueantes)
 
 - Las 4 guías de SEO solo tienen contenido en español. EN/FR/DE/IT muestran la chrome traducida pero el cuerpo del artículo sigue en español. Mejora futura: añadir field `translations` a cada `Guide`.
 - Muchas páginas internas (pokédex/[id], typemaster/*, etc) tienen strings hardcoded en español que en /en/ pages no se traducen. Es trabajo de iteración (~200 strings).

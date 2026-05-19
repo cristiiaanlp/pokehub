@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { HeartIcon, TrashIcon } from '@/components/ui/Icon';
 import { artworkFor } from '@/lib/pokeapi';
@@ -19,6 +20,8 @@ interface Comment {
 }
 
 export function TeamSocial({ teamId }: { teamId: string }) {
+  const t = useTranslations('Teams');
+  const tAuth = useTranslations('Auth');
   const { user } = useAuth();
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
@@ -90,7 +93,7 @@ export function TeamSocial({ teamId }: { teamId: string }) {
   };
 
   const del = async (commentId: string) => {
-    if (!confirm('¿Borrar este comentario?')) return;
+    if (!confirm(t('deleteCommentConfirm'))) return;
     const prev = comments;
     setComments((c) => c.filter((x) => x.id !== commentId));
     const res = await fetch(`/api/teams/${teamId}/comments/${commentId}`, {
@@ -111,18 +114,18 @@ export function TeamSocial({ teamId }: { teamId: string }) {
               ? 'bg-accent-red/20 text-accent-red border border-accent-red/30'
               : 'glass hover:bg-white/[0.08]'
           } disabled:opacity-50`}
-          title={user ? '' : 'Inicia sesión para dar like'}
+          title={user ? '' : tAuth('loginToInteract')}
         >
           <HeartIcon className="w-4 h-4" filled={liked} />
-          {liked ? 'Te gusta' : 'Me gusta'}
+          {liked ? t('liked') : t('like')}
           <span className="tabular-nums text-xs opacity-80">· {likeCount}</span>
         </button>
         {!user && (
           <Link
-            href="/login?next=back"
+            href="/login"
             className="text-xs text-brand-glow hover:text-brand-hover"
           >
-            Inicia sesión para interactuar →
+            {tAuth('loginToInteract')} →
           </Link>
         )}
       </div>
@@ -130,7 +133,7 @@ export function TeamSocial({ teamId }: { teamId: string }) {
       {/* Comentarios */}
       <div>
         <h3 className="font-display font-bold text-base mb-3">
-          Comentarios{' '}
+          {t('comments')}{' '}
           <span className="text-ink-faint text-sm">
             ({loadingComments ? '…' : comments.length})
           </span>
@@ -142,7 +145,7 @@ export function TeamSocial({ teamId }: { teamId: string }) {
               value={draft}
               onChange={(e) => setDraft(e.target.value.slice(0, 1000))}
               rows={2}
-              placeholder="¿Qué te parece este equipo?"
+              placeholder={t('commentPlaceholder')}
               className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06] text-sm resize-y"
             />
             <div className="flex items-center justify-between mt-2">
@@ -154,32 +157,32 @@ export function TeamSocial({ teamId }: { teamId: string }) {
                 disabled={posting || !draft.trim()}
                 className="h-8 px-4 rounded-lg bg-brand text-white text-xs font-bold uppercase tracking-widest hover:bg-brand-hover disabled:opacity-50"
               >
-                {posting ? 'Publicando…' : 'Comentar'}
+                {posting ? t('posting') : t('postComment')}
               </button>
             </div>
           </div>
         ) : (
           <div className="card-base p-4 text-center text-sm text-ink-dim mb-3">
             <Link href="/login" className="text-brand-glow hover:text-brand-hover">
-              Inicia sesión
+              {tAuth('signIn')}
             </Link>{' '}
-            para dejar un comentario.
+            — {t('loginToComment')}
           </div>
         )}
 
         {loadingComments ? (
           <div className="text-sm text-ink-dim text-center py-6">
-            Cargando comentarios…
+            {t('loadingComments')}
           </div>
         ) : comments.length === 0 ? (
           <div className="text-sm text-ink-dim text-center py-6">
-            Sé el primero en comentar.
+            {t('firstToComment')}
           </div>
         ) : (
           <div className="space-y-2">
             {comments.map((c) => {
               const display =
-                c.author.display_name || c.author.username || 'Entrenador';
+                c.author.display_name || c.author.username || tAuth('trainer');
               const initial = (display || '?').charAt(0).toUpperCase();
               const avatar = c.author.avatar_pokemon_id
                 ? artworkFor(c.author.avatar_pokemon_id)
