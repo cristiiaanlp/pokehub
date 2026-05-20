@@ -84,7 +84,6 @@ const MORE_SECTIONS: NavSection[] = [
       { href: '/tools/synergy', label: 'Synergy Analyzer', Icon: TrendingUpIcon, badge: 'NEW' },
       { href: '/tools/ev-optimizer', label: 'EV Optimizer', Icon: TargetIcon },
       { href: '/tools/team-validator', label: 'Team Validator', Icon: ShieldIcon },
-      { href: '/tools/moveset-wizard', label: 'Moveset Wizard', Icon: SparklesIcon },
       { href: '/tools/tier-list', label: 'Tier List Maker', Icon: TrendingUpIcon },
       { href: '/coach', label: 'AI Coach', Icon: BrainIcon, badge: 'SOON' },
     ],

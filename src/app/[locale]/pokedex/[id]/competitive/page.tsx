@@ -203,12 +203,8 @@ export default async function CompetitivePage({ params }: PageProps) {
         </h2>
         {sets.length === 0 ? (
           <div className="card-base p-5 text-sm text-ink-dim text-center">
-            Aún no tenemos sets curados para este Pokémon. Mientras tanto,
-            puedes generar uno con nuestro{' '}
-            <Link href="/tools/moveset-wizard" className="text-brand-glow underline">
-              Moveset Wizard
-            </Link>
-            .
+            Aún no tenemos sets curados para este Pokémon. Vuelve pronto —
+            estamos añadiendo sets revisados constantemente.
           </div>
         ) : (
           <div className="space-y-3">
