@@ -46,3 +46,12 @@ export const MobileNavLazy = dynamic(
     })),
   { ssr: false }
 );
+
+// InstallPrompt: detecta beforeinstallprompt, no afecta SSR.
+export const InstallPromptLazy = dynamic(
+  () =>
+    import('@/components/common/InstallPrompt').then((m) => ({
+      default: m.InstallPrompt,
+    })),
+  { ssr: false }
+);

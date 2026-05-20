@@ -12,6 +12,7 @@ import {
   OnboardingModalLazy,
   AnnouncementBannerLazy,
   MobileNavLazy,
+  InstallPromptLazy,
 } from '@/components/layout/LayoutClientChrome';
 import { SITE } from '@/lib/site';
 import { AuthProvider } from '@/components/auth/AuthProvider';
@@ -145,6 +146,7 @@ export default async function LocaleLayout({
             <main id="main" className="pb-24 lg:pb-0">{children}</main>
             <BottomTabBar />
             <Footer />
+            <InstallPromptLazy />
           </AuthProvider>
         </NextIntlClientProvider>
         <Analytics />
