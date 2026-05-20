@@ -21,6 +21,10 @@ import {
   BrainIcon,
   ChartIcon,
   TrophyIcon,
+  FireIcon,
+  SwordIcon,
+  TargetIcon,
+  ShieldIcon,
 } from '@/components/ui/Icon';
 import type { ComponentType, SVGProps } from 'react';
 import { useUIStore } from '@/stores/uiStore';
@@ -30,47 +34,117 @@ import { NotificationsBell } from '@/components/auth/NotificationsBell';
 
 interface NavLink {
   href: string;
-  labelKey: string;
+  label: string;
   Icon: ComponentType<SVGProps<SVGSVGElement>>;
   badge?: string;
 }
 
-// Items que siempre se ven en el navbar (los 4 más importantes).
-const PRIMARY: NavLink[] = [
+interface NavSection {
+  title: string;
+  items: NavLink[];
+}
+
+// Items primarios SIEMPRE visibles en la barra (sin dropdown).
+const PRIMARY: { href: string; labelKey: string; Icon: ComponentType<SVGProps<SVGSVGElement>> }[] = [
   { href: '/pokedex', labelKey: 'pokedex', Icon: GridIcon },
   { href: '/team-builder', labelKey: 'teamBuilder', Icon: UsersIcon },
   { href: '/meta', labelKey: 'metaHub', Icon: TrendingUpIcon },
   { href: '/casual', labelKey: 'casual', Icon: SparklesIcon },
 ];
 
-// Items en el dropdown "Más" — herramientas, juegos y secciones de uso menos diario.
-const SECONDARY: NavLink[] = [
-  { href: '/tools', labelKey: 'tools', Icon: BoltIcon, badge: 'NEW' },
-  { href: '/coach', labelKey: 'coach', Icon: BrainIcon, badge: 'SOON' },
-  { href: '/database', labelKey: 'database', Icon: ChartIcon, badge: 'NEW' },
-  { href: '/best', labelKey: 'best', Icon: TrophyIcon, badge: 'NEW' },
-  { href: '/typemaster', labelKey: 'typemaster', Icon: GamepadIcon },
-  { href: '/guides', labelKey: 'guides', Icon: BookOpenIcon },
-  { href: '/favorites', labelKey: 'favorites', Icon: HeartIcon },
+// Daily dropdown — 3 retos diarios.
+const DAILY_ITEMS: NavLink[] = [
+  {
+    href: '/daily/whos-that',
+    label: '¿Quién es ese Pokémon?',
+    Icon: GamepadIcon,
+    badge: 'NEW',
+  },
+  {
+    href: '/daily/wordle',
+    label: 'PokéWordle',
+    Icon: ChartIcon,
+    badge: 'NEW',
+  },
+  {
+    href: '/typemaster/meta-daily',
+    label: 'Meta Daily Quiz',
+    Icon: FireIcon,
+  },
 ];
+
+// Más dropdown — todo lo demás, agrupado.
+const MORE_SECTIONS: NavSection[] = [
+  {
+    title: 'Herramientas',
+    items: [
+      { href: '/tools', label: 'Todas las herramientas', Icon: BoltIcon },
+      { href: '/tools/damage-calc', label: 'Damage Calculator', Icon: SwordIcon },
+      { href: '/tools/damage-vs-meta', label: 'Damage vs Meta', Icon: SwordIcon, badge: 'NEW' },
+      { href: '/tools/synergy', label: 'Synergy Analyzer', Icon: TrendingUpIcon, badge: 'NEW' },
+      { href: '/tools/ev-optimizer', label: 'EV Optimizer', Icon: TargetIcon },
+      { href: '/tools/team-validator', label: 'Team Validator', Icon: ShieldIcon },
+      { href: '/tools/moveset-wizard', label: 'Moveset Wizard', Icon: SparklesIcon },
+      { href: '/tools/tier-list', label: 'Tier List Maker', Icon: TrendingUpIcon },
+      { href: '/coach', label: 'AI Coach', Icon: BrainIcon, badge: 'SOON' },
+    ],
+  },
+  {
+    title: 'Datos',
+    items: [
+      { href: '/database', label: 'Database (moves/abilities/items)', Icon: ChartIcon },
+      { href: '/guides', label: 'Guías competitivas', Icon: BookOpenIcon },
+      { href: '/best', label: 'Best Pokémon listas', Icon: TrophyIcon, badge: 'NEW' },
+    ],
+  },
+  {
+    title: 'Comunidad',
+    items: [
+      { href: '/community/teams', label: 'Equipos compartidos', Icon: UsersIcon },
+      { href: '/compare', label: 'Comparar Pokémon', Icon: TrendingUpIcon },
+      { href: '/favorites', label: 'Mis favoritos', Icon: HeartIcon },
+      { href: '/favorites/vs-meta', label: 'Favorito vs Meta', Icon: SwordIcon },
+    ],
+  },
+  {
+    title: 'Diversión',
+    items: [
+      { href: '/typemaster', label: 'TypeMaster (juego)', Icon: GamepadIcon },
+      { href: '/random', label: 'Pokémon aleatorio', Icon: SparklesIcon },
+    ],
+  },
+];
+
+const ALL_MORE_HREFS = MORE_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
+const ALL_DAILY_HREFS = DAILY_ITEMS.map((i) => i.href).concat('/daily');
 
 export function Navbar() {
   const pathname = usePathname();
   const t = useTranslations('Nav');
   const setMobileNavOpen = useUIStore((s) => s.setMobileNavOpen);
   const [moreOpen, setMoreOpen] = useState(false);
+  const [dailyOpen, setDailyOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
+  const dailyRef = useRef<HTMLDivElement>(null);
 
-  // Close "Más" dropdown on outside click
   useEffect(() => {
-    if (!moreOpen) return;
     const onClick = (e: MouseEvent) => {
-      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+      if (moreOpen && moreRef.current && !moreRef.current.contains(e.target as Node)) {
         setMoreOpen(false);
+      }
+      if (
+        dailyOpen &&
+        dailyRef.current &&
+        !dailyRef.current.contains(e.target as Node)
+      ) {
+        setDailyOpen(false);
       }
     };
     const onEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMoreOpen(false);
+      if (e.key === 'Escape') {
+        setMoreOpen(false);
+        setDailyOpen(false);
+      }
     };
     document.addEventListener('mousedown', onClick);
     document.addEventListener('keydown', onEsc);
@@ -78,13 +152,13 @@ export function Navbar() {
       document.removeEventListener('mousedown', onClick);
       document.removeEventListener('keydown', onEsc);
     };
-  }, [moreOpen]);
+  }, [moreOpen, dailyOpen]);
 
   const isActive = (href: string) =>
     pathname === href || (href !== '/' && pathname.startsWith(href));
 
-  // Si alguna de las rutas secundarias está activa, marcamos "Más" como activo.
-  const secondaryActive = SECONDARY.some((s) => isActive(s.href));
+  const moreActive = ALL_MORE_HREFS.some((h) => isActive(h));
+  const dailyActive = ALL_DAILY_HREFS.some((h) => isActive(h));
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-xl bg-bg-950/70 border-b border-white/[0.05]">
@@ -111,66 +185,88 @@ export function Navbar() {
               );
             })}
 
-            {/* "Más" dropdown */}
+            {/* Daily dropdown */}
+            <div className="relative" ref={dailyRef}>
+              <button
+                onClick={() => {
+                  setDailyOpen((v) => !v);
+                  setMoreOpen(false);
+                }}
+                className={cn(
+                  'px-3 h-9 inline-flex items-center gap-2 rounded-lg text-sm font-medium transition-colors',
+                  dailyActive || dailyOpen
+                    ? 'text-ink bg-white/[0.06]'
+                    : 'text-ink-dim hover:text-ink hover:bg-white/[0.03]'
+                )}
+              >
+                <FireIcon className="w-4 h-4 text-accent-red" />
+                Retos diarios
+                <ChevronDown open={dailyOpen} />
+              </button>
+              {dailyOpen && (
+                <div className="absolute left-0 mt-2 w-64 rounded-xl bg-bg-900 border border-white/[0.08] shadow-card-hover overflow-hidden z-50 p-1.5">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-ink-faint px-2 pt-1 pb-1.5">
+                    🔥 Reta tu memoria
+                  </div>
+                  {DAILY_ITEMS.map((item) => (
+                    <DropdownLink
+                      key={item.href}
+                      item={item}
+                      active={isActive(item.href)}
+                      onClick={() => setDailyOpen(false)}
+                    />
+                  ))}
+                  <div className="border-t border-white/[0.04] mt-1 pt-1">
+                    <Link
+                      href="/daily"
+                      onClick={() => setDailyOpen(false)}
+                      className="flex items-center gap-2 px-3 h-9 rounded-lg text-xs text-brand-glow hover:bg-white/[0.06]"
+                    >
+                      Ver hub de retos diarios
+                      <ArrowRight className="w-3 h-3 ml-auto" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* "Más" dropdown con secciones */}
             <div className="relative" ref={moreRef}>
               <button
-                onClick={() => setMoreOpen((v) => !v)}
+                onClick={() => {
+                  setMoreOpen((v) => !v);
+                  setDailyOpen(false);
+                }}
                 className={cn(
                   'px-3 h-9 inline-flex items-center gap-1.5 rounded-lg text-sm font-medium transition-colors',
-                  secondaryActive || moreOpen
+                  moreActive || moreOpen
                     ? 'text-ink bg-white/[0.06]'
                     : 'text-ink-dim hover:text-ink hover:bg-white/[0.03]'
                 )}
               >
                 Más
-                <svg
-                  className={cn(
-                    'w-3 h-3 transition-transform',
-                    moreOpen && 'rotate-180'
-                  )}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
+                <ChevronDown open={moreOpen} />
               </button>
               {moreOpen && (
-                <div className="absolute left-0 mt-2 w-56 rounded-xl bg-bg-900 border border-white/[0.08] shadow-card-hover overflow-hidden z-50 p-1">
-                  {SECONDARY.map((link) => {
-                    const active = isActive(link.href);
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setMoreOpen(false)}
-                        className={cn(
-                          'flex items-center gap-2.5 px-3 h-10 rounded-lg text-sm font-medium transition-colors',
-                          active
-                            ? 'bg-brand/10 text-brand-glow'
-                            : 'text-ink-soft hover:bg-white/[0.06] hover:text-ink'
-                        )}
-                      >
-                        <link.Icon className="w-4 h-4" />
-                        <span className="flex-1">{t(link.labelKey)}</span>
-                        {link.badge && (
-                          <span
-                            className={cn(
-                              'text-[9px] font-bold px-1.5 py-0.5 rounded-md',
-                              link.badge === 'SOON'
-                                ? 'bg-accent-yellow/15 text-accent-yellow'
-                                : 'bg-brand text-white'
-                            )}
-                          >
-                            {link.badge}
-                          </span>
-                        )}
-                      </Link>
-                    );
-                  })}
+                <div className="absolute right-0 mt-2 w-[420px] max-h-[80vh] overflow-y-auto rounded-xl bg-bg-900 border border-white/[0.08] shadow-card-hover z-50 p-2">
+                  <div className="grid grid-cols-2 gap-x-2">
+                    {MORE_SECTIONS.map((section) => (
+                      <div key={section.title} className="py-1">
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-ink-faint px-2 pb-1">
+                          {section.title}
+                        </div>
+                        {section.items.map((item) => (
+                          <DropdownLink
+                            key={item.href}
+                            item={item}
+                            active={isActive(item.href)}
+                            onClick={() => setMoreOpen(false)}
+                            compact
+                          />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -221,5 +317,62 @@ export function Navbar() {
         </div>
       </div>
     </header>
+  );
+}
+
+function ChevronDown({ open }: { open: boolean }) {
+  return (
+    <svg
+      className={cn('w-3 h-3 transition-transform', open && 'rotate-180')}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
+function DropdownLink({
+  item,
+  active,
+  onClick,
+  compact,
+}: {
+  item: NavLink;
+  active: boolean;
+  onClick: () => void;
+  compact?: boolean;
+}) {
+  return (
+    <Link
+      href={item.href}
+      onClick={onClick}
+      className={cn(
+        'flex items-center gap-2 px-2 rounded-lg transition-colors',
+        compact ? 'h-8 text-xs' : 'h-10 text-sm',
+        active
+          ? 'bg-brand/10 text-brand-glow'
+          : 'text-ink-soft hover:bg-white/[0.06] hover:text-ink'
+      )}
+    >
+      <item.Icon className={cn(compact ? 'w-3.5 h-3.5' : 'w-4 h-4')} />
+      <span className="flex-1 truncate font-medium">{item.label}</span>
+      {item.badge && (
+        <span
+          className={cn(
+            'text-[8px] font-bold px-1 py-0.5 rounded',
+            item.badge === 'SOON'
+              ? 'bg-accent-yellow/15 text-accent-yellow'
+              : 'bg-brand text-white'
+          )}
+        >
+          {item.badge}
+        </span>
+      )}
+    </Link>
   );
 }
