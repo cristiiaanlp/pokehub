@@ -5,6 +5,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
+import { logActivity } from '@/lib/activity';
 
 export const runtime = 'nodejs';
 
@@ -104,7 +105,7 @@ export async function POST() {
       .update({ badges: next, updated_at: new Date().toISOString() })
       .eq('id', user.id);
 
-    // Notif por cada badge nuevo
+    // Notif + activity por cada badge nuevo
     if (newlyEarned.length > 0) {
       await admin.from('notifications').insert(
         newlyEarned.map((b) => ({
@@ -115,6 +116,10 @@ export async function POST() {
           link_url: '/me',
         }))
       );
+      // Log en activity feed para que aparezca en el perfil público
+      for (const b of newlyEarned) {
+        await logActivity(user.id, 'badge_earned', { badgeId: b });
+      }
     }
   }
 

@@ -5,6 +5,7 @@ import { getProfileByUsername } from '@/lib/profiles';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { BADGES } from '@/lib/badges';
 import { artworkFor } from '@/lib/pokeapi';
+import { ActivityFeed } from '@/components/profile/ActivityFeed';
 import {
   TrophyIcon,
   HeartIcon,
@@ -174,6 +175,9 @@ export default async function ProfilePage({ params }: PageProps) {
           </div>
         </section>
       )}
+
+      {/* Activity feed */}
+      <ActivityFeed userId={profile.id} />
 
       {/* Equipos */}
       <section>

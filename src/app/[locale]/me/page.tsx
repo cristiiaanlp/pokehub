@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { getProfileById } from '@/lib/profiles';
 import { ProfileEditor } from '@/components/profile/ProfileEditor';
+import { TrainerCardPreview } from '@/components/profile/TrainerCardPreview';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,6 +48,7 @@ export default async function MePage() {
         </p>
       </header>
       <ProfileEditor initial={profile} email={user.email ?? ''} />
+      {profile.username && <TrainerCardPreview username={profile.username} />}
     </div>
   );
 }

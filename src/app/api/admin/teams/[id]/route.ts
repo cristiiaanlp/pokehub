@@ -8,6 +8,7 @@ import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/admin-guard';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { logAdminAction } from '@/lib/admin-audit';
+import { logActivity } from '@/lib/activity';
 
 export const runtime = 'nodejs';
 
@@ -115,6 +116,21 @@ export async function PATCH(
       target_id: ctx.params.id,
       details: patch,
     });
+  }
+
+  // Si lo destacaron, registra el evento en el activity feed del dueño
+  if (body.is_featured === true) {
+    const { data: t } = await admin
+      .from('teams')
+      .select('user_id, name')
+      .eq('id', ctx.params.id)
+      .maybeSingle();
+    if (t) {
+      await logActivity(t.user_id, 'team_featured', {
+        teamId: ctx.params.id,
+        teamName: t.name,
+      });
+    }
   }
 
   return NextResponse.json({ ok: true });
