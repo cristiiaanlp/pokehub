@@ -59,6 +59,14 @@ const TOOLS = [
     color: 'bg-accent-red/15 text-accent-red',
   },
   {
+    href: '/tools/damage-vs-meta',
+    label: 'Damage vs Meta',
+    desc: 'Tu atacante vs los top 10 del meta de un vistazo. OHKO/2HKO marcados auto.',
+    Icon: SwordIcon,
+    color: 'bg-accent-red/15 text-accent-red',
+    badge: 'NEW',
+  },
+  {
     href: '/tools/ev-optimizer',
     label: 'EV Optimizer',
     desc: 'Encuentra los EVs mínimos para outspeedear o resistir un golpe.',
