@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/tools/stat-calc',
     '/tools/ev-optimizer',
     '/tools/team-validator',
+    '/tools/moveset-wizard',
     '/coach',
     '/typemaster',
     '/typemaster/play',

@@ -9,6 +9,7 @@ import {
   BrainIcon,
   GridIcon,
   ArrowRight,
+  SparklesIcon,
 } from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
@@ -32,6 +33,14 @@ const TOOLS = [
     desc: 'Comprueba si tu equipo es legal en VGC Reg G/H, OU, Ubers, Monotype.',
     Icon: ShieldIcon,
     color: 'bg-accent-green/15 text-accent-green',
+    badge: 'NEW',
+  },
+  {
+    href: '/tools/moveset-wizard',
+    label: 'Moveset Wizard',
+    desc: 'Elige Pokémon + rol y te generamos un set de 4 moves competitivos. Sin IA, lógica determinista.',
+    Icon: SparklesIcon,
+    color: 'bg-purple-500/15 text-purple-300',
     badge: 'NEW',
   },
   {
