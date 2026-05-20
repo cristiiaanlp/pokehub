@@ -5,15 +5,17 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server';
 import { locales, type Locale } from '@/i18n/config';
 import { Navbar } from '@/components/layout/Navbar';
-import { MobileNav } from '@/components/layout/MobileNav';
 import { BottomTabBar } from '@/components/layout/BottomTabBar';
 import { Footer } from '@/components/layout/Footer';
-import { AnnouncementBanner } from '@/components/layout/AnnouncementBanner';
+import {
+  CommandPaletteLazy,
+  OnboardingModalLazy,
+  AnnouncementBannerLazy,
+  MobileNavLazy,
+} from '@/components/layout/LayoutClientChrome';
 import { SITE } from '@/lib/site';
 import { AuthProvider } from '@/components/auth/AuthProvider';
 import { SyncManager } from '@/components/auth/SyncManager';
-import { OnboardingModal } from '@/components/auth/OnboardingModal';
-import { CommandPalette } from '@/components/common/CommandPalette';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -135,11 +137,11 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider>
             <SyncManager />
-            <OnboardingModal />
-            <CommandPalette />
-            <AnnouncementBanner />
+            <OnboardingModalLazy />
+            <CommandPaletteLazy />
+            <AnnouncementBannerLazy />
             <Navbar />
-            <MobileNav />
+            <MobileNavLazy />
             <main id="main" className="pb-24 lg:pb-0">{children}</main>
             <BottomTabBar />
             <Footer />

@@ -6,6 +6,7 @@ import { PokemonPicker } from '@/components/team-builder/PokemonPicker';
 import { Link } from '@/i18n/routing';
 import { TeamAnalysis } from '@/components/team-builder/TeamAnalysis';
 import { TeamHeatmap } from '@/components/team-builder/TeamHeatmap';
+import { TeraOptimizer } from '@/components/team-builder/TeraOptimizer';
 import { ThreatsView } from '@/components/team-builder/ThreatsView';
 import { SavedTeams } from '@/components/team-builder/SavedTeams';
 import { BoltIcon, FireIcon, ArrowRight } from '@/components/ui/Icon';
@@ -37,6 +38,8 @@ export default function TeamBuilderPage() {
       <TeamAnalysis />
 
       <TeamHeatmap />
+
+      <TeraOptimizer />
 
       <ThreatsView />
 
