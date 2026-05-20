@@ -1,7 +1,8 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { FilterIcon } from '@/components/ui/Icon';
+import { FilterIcon, SaveIcon } from '@/components/ui/Icon';
+import { toCsv, downloadCsv } from '@/lib/csv';
 
 export interface AuditRow {
   id: string;
@@ -106,6 +107,15 @@ export function AuditTable({ rows }: { rows: AuditRow[] }) {
         <span className="ml-auto text-ink-faint">
           {filtered.length} / {rows.length}
         </span>
+        <button
+          onClick={() => exportAuditCsv(filtered)}
+          disabled={filtered.length === 0}
+          className="h-8 px-3 inline-flex items-center gap-1.5 rounded-md bg-accent-green/15 text-accent-green text-xs font-bold uppercase tracking-widest hover:bg-accent-green/25 disabled:opacity-50"
+          title={`Exportar ${filtered.length} eventos a CSV`}
+        >
+          <SaveIcon className="w-3.5 h-3.5" />
+          CSV
+        </button>
       </div>
 
       {filtered.length === 0 ? (
@@ -152,4 +162,21 @@ export function AuditTable({ rows }: { rows: AuditRow[] }) {
       )}
     </div>
   );
+}
+
+function exportAuditCsv(rows: AuditRow[]) {
+  const csv = toCsv(rows, [
+    { header: 'event_id', get: (r) => r.id },
+    { header: 'created_at', get: (r) => r.created_at },
+    { header: 'admin_email', get: (r) => r.admin_email },
+    { header: 'action', get: (r) => r.action },
+    { header: 'target_type', get: (r) => r.target_type },
+    { header: 'target_id', get: (r) => r.target_id },
+    {
+      header: 'details_json',
+      get: (r) => (r.details ? JSON.stringify(r.details) : ''),
+    },
+  ]);
+  const date = new Date().toISOString().slice(0, 10);
+  downloadCsv(`pokehub-audit-${date}.csv`, csv);
 }

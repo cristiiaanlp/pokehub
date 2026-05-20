@@ -1,7 +1,8 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { TrashIcon, SearchIcon, CheckIcon } from '@/components/ui/Icon';
+import { TrashIcon, SearchIcon, CheckIcon, SaveIcon } from '@/components/ui/Icon';
+import { toCsv, downloadCsv } from '@/lib/csv';
 
 export interface AdminUser {
   id: string;
@@ -68,6 +69,15 @@ export function UsersTable({ initialUsers }: { initialUsers: AdminUser[] }) {
             limpiar
           </button>
         )}
+        <button
+          onClick={() => exportUsersCsv(filtered)}
+          disabled={filtered.length === 0}
+          className="h-8 px-3 inline-flex items-center gap-1.5 rounded-md bg-accent-green/15 text-accent-green text-xs font-bold uppercase tracking-widest hover:bg-accent-green/25 disabled:opacity-50"
+          title={`Exportar ${filtered.length} usuarios a CSV`}
+        >
+          <SaveIcon className="w-3.5 h-3.5" />
+          CSV
+        </button>
       </div>
 
       {filtered.length === 0 ? (
@@ -145,4 +155,18 @@ export function UsersTable({ initialUsers }: { initialUsers: AdminUser[] }) {
       )}
     </div>
   );
+}
+
+function exportUsersCsv(users: AdminUser[]) {
+  const csv = toCsv(users, [
+    { header: 'user_id', get: (u) => u.id },
+    { header: 'email', get: (u) => u.email },
+    { header: 'confirmed', get: (u) => u.confirmed },
+    { header: 'created_at', get: (u) => u.created_at },
+    { header: 'last_sign_in_at', get: (u) => u.last_sign_in_at },
+    { header: 'teams_count', get: (u) => u.teams_count },
+    { header: 'favorites_count', get: (u) => u.favorites_count },
+  ]);
+  const date = new Date().toISOString().slice(0, 10);
+  downloadCsv(`pokehub-users-${date}.csv`, csv);
 }
