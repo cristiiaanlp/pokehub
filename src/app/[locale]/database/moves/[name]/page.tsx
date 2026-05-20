@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { fetchMoveDetail } from '@/lib/pokeapi-database';
-import { artworkFor } from '@/lib/pokeapi';
+import { artworkFor, getPokemon } from '@/lib/pokeapi';
 import { TypeBadge } from '@/components/ui/TypeBadge';
 import { ArrowRight, BookOpenIcon } from '@/components/ui/Icon';
+import { getMoveDetail, slugifyMove } from '@/lib/moves-detail';
+import { formatPokemonName } from '@/lib/utils';
 
 export const revalidate = 604800;
 
@@ -15,9 +17,11 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const move = await fetchMoveDetail(params.name);
   if (!move) return { title: 'Movimiento no encontrado' };
+  const curated = getMoveDetail(params.name);
   return {
     title: `${move.displayName} · Movimiento Pokémon`,
     description:
+      curated?.description ||
       move.shortEffect ||
       `${move.displayName}: ${move.type} ${move.damageClass}${
         move.power ? ` ${move.power} BP` : ''
@@ -28,6 +32,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function MoveDetailPage({ params }: PageProps) {
   const move = await fetchMoveDetail(params.name);
   if (!move) notFound();
+
+  // Overlay competitive deep dive si tenemos data curada
+  const curated = getMoveDetail(params.name);
+  const notableUsers = curated
+    ? await Promise.all(
+        curated.notableUsers.map(async (id) => {
+          try {
+            const p = await getPokemon(id);
+            return { id, name: formatPokemonName(p.name), types: p.types };
+          } catch {
+            return null;
+          }
+        })
+      ).then((arr) => arr.filter((u): u is NonNullable<typeof u> => u !== null))
+    : [];
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 lg:py-12 space-y-6">
@@ -108,6 +127,69 @@ export default async function MoveDetailPage({ params }: PageProps) {
           <p className="text-sm text-ink-dim italic leading-relaxed">
             "{move.flavorText}"
           </p>
+        </section>
+      )}
+
+      {/* Análisis competitivo curado — solo si tenemos data */}
+      {curated && (
+        <section className="card-base p-5 relative overflow-hidden">
+          <div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-brand/15 blur-3xl pointer-events-none" />
+          <div className="relative space-y-4">
+            <h2 className="font-display text-lg font-bold flex items-center gap-2">
+              <BookOpenIcon className="w-5 h-5 text-brand-glow" />
+              Análisis competitivo
+              <span className="text-[10px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-brand/20 text-brand-glow">
+                NEW
+              </span>
+            </h2>
+            <p className="text-sm text-ink-soft leading-relaxed">
+              {curated.description}
+            </p>
+            {curated.notes && (
+              <div className="border-l-4 border-l-brand-glow bg-brand/[0.04] rounded-r-lg p-3">
+                <div className="text-xs font-bold text-brand-glow mb-1">
+                  💡 Tip
+                </div>
+                <p className="text-xs text-ink-soft leading-relaxed">
+                  {curated.notes}
+                </p>
+              </div>
+            )}
+            {notableUsers.length > 0 && (
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-ink-faint mb-2">
+                  Usuarios destacados
+                </h3>
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                  {notableUsers.map((u) => (
+                    <Link
+                      key={u.id}
+                      href={`/pokedex/${u.id}`}
+                      className="card-base card-hover p-2 text-center group"
+                    >
+                      <img
+                        src={artworkFor(u.id)}
+                        alt={u.name}
+                        className="w-12 h-12 mx-auto object-contain group-hover:scale-110 transition-transform"
+                        loading="lazy"
+                      />
+                      <div className="text-[10px] font-bold mt-1 truncate">
+                        {u.name}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex justify-end">
+              <Link
+                href={`/tools/damage-calc?m=${encodeURIComponent(curated.data.name)}`}
+                className="text-xs font-bold text-brand-glow hover:text-brand-hover inline-flex items-center gap-1"
+              >
+                Calcular daño →
+              </Link>
+            </div>
+          </div>
         </section>
       )}
 

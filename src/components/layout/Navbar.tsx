@@ -91,7 +91,7 @@ const MORE_SECTIONS: NavSection[] = [
       { href: '/tools/ev-optimizer', label: 'EV Optimizer', Icon: TargetIcon },
       { href: '/tools/team-validator', label: 'Team Validator', Icon: ShieldIcon },
       { href: '/tools/tier-list', label: 'Tier List Maker', Icon: TrendingUpIcon },
-      { href: '/coach', label: 'AI Coach', Icon: BrainIcon, badge: 'SOON' },
+      { href: '/coach', label: 'Pokémon Coach', Icon: BrainIcon, badge: 'NEW' },
     ],
   },
   {

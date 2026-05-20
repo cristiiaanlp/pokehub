@@ -6,6 +6,7 @@ import { GLOSSARY } from '@/lib/glossary';
 import { ALL_COUNTER_IDS } from '@/lib/meta/counters-detail';
 import { ALL_ARCHETYPES } from '@/lib/trainer-quiz';
 import { ALL_HISTORY_IDS } from '@/lib/gen-history';
+import { getAllMoveSlugs } from '@/lib/moves-detail';
 import { locales, defaultLocale } from '@/i18n/config';
 
 // Para cada locale generamos las mismas rutas. El default (es) NO lleva
@@ -190,6 +191,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
+  // Move detail pages — capta "earthquake pokemon", "knock off explained" etc
+  const moveEntries: MetadataRoute.Sitemap = [];
+  for (const slug of getAllMoveSlugs()) {
+    for (const l of locales) {
+      moveEntries.push({
+        url: urlFor(l, `/database/moves/${slug}`),
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
+      });
+    }
+  }
+
   return [
     ...staticEntries,
     ...pokemonEntries,
@@ -200,5 +214,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...counterEntries,
     ...trainerEntries,
     ...historyEntries,
+    ...moveEntries,
   ];
 }
