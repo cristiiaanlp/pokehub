@@ -8,6 +8,7 @@ import {
   typeChecks,
   getSpecificCounters,
 } from '@/lib/meta/counters';
+import { hasCounterDetail } from '@/lib/meta/counters-detail';
 import { effectivenessAgainst } from '@/lib/type-effectiveness';
 import { TypeBadge } from '@/components/ui/TypeBadge';
 import { bst, formatPokemonName, padId } from '@/lib/utils';
@@ -318,9 +319,20 @@ export default async function CompetitivePage({ params }: PageProps) {
       {/* Counters */}
       {specificCounterIds.length > 0 && (
         <section>
-          <h2 className="font-display text-xl font-bold mb-3 flex items-center gap-2">
-            <SwordIcon className="w-5 h-5 text-accent-red" /> Counters meta
-          </h2>
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-3">
+            <h2 className="font-display text-xl font-bold flex items-center gap-2">
+              <SwordIcon className="w-5 h-5 text-accent-red" /> Counters meta
+            </h2>
+            {hasCounterDetail(pokemon.id) && (
+              <Link
+                href={`/pokedex/${pokemon.id}/counters`}
+                className="text-xs text-brand-glow hover:text-brand-hover font-bold inline-flex items-center gap-1"
+              >
+                Ver análisis completo
+                <ArrowRight className="w-3 h-3" />
+              </Link>
+            )}
+          </div>
           <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
             {specificCounterIds.map((cid) => (
               <Link

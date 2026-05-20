@@ -71,6 +71,12 @@ const DAILY_ITEMS: NavLink[] = [
     label: 'Meta Daily Quiz',
     Icon: FireIcon,
   },
+  {
+    href: '/daily/trivia',
+    label: 'Trivia competitiva',
+    Icon: BrainIcon,
+    badge: 'NEW',
+  },
 ];
 
 // Más dropdown — todo lo demás, agrupado.
@@ -112,6 +118,7 @@ const MORE_SECTIONS: NavSection[] = [
     items: [
       { href: '/typemaster', label: 'TypeMaster (juego)', Icon: GamepadIcon },
       { href: '/random', label: 'Pokémon aleatorio', Icon: SparklesIcon },
+      { href: '/quiz/trainer-type', label: '¿Qué entrenador eres?', Icon: SparklesIcon, badge: 'NEW' },
     ],
   },
 ];

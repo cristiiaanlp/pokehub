@@ -3,6 +3,9 @@ import { SITE } from '@/lib/site';
 import { GUIDES } from '@/lib/guides';
 import { BEST_LISTS } from '@/lib/best-lists';
 import { GLOSSARY } from '@/lib/glossary';
+import { ALL_COUNTER_IDS } from '@/lib/meta/counters-detail';
+import { ALL_ARCHETYPES } from '@/lib/trainer-quiz';
+import { ALL_HISTORY_IDS } from '@/lib/gen-history';
 import { locales, defaultLocale } from '@/i18n/config';
 
 // Para cada locale generamos las mismas rutas. El default (es) NO lleva
@@ -55,6 +58,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/daily',
     '/daily/whos-that',
     '/daily/wordle',
+    '/daily/trivia',
+    '/quiz/trainer-type',
     '/guides',
     '/best',
     '/glossary',
@@ -146,6 +151,45 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
+  // Counters: 1 URL × locale × Pokémon (capta "counters to X", "how to beat X")
+  const counterEntries: MetadataRoute.Sitemap = [];
+  for (const id of ALL_COUNTER_IDS) {
+    for (const l of locales) {
+      counterEntries.push({
+        url: urlFor(l, `/pokedex/${id}/counters`),
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      });
+    }
+  }
+
+  // Trainer quiz results — 6 arquetipos × locale (viral via OG image)
+  const trainerEntries: MetadataRoute.Sitemap = [];
+  for (const arch of ALL_ARCHETYPES) {
+    for (const l of locales) {
+      trainerEntries.push({
+        url: urlFor(l, `/quiz/trainer-type/${arch}`),
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
+      });
+    }
+  }
+
+  // Historia por gen × Pokémon — capta queries "garchomp gen 4 vs gen 9"
+  const historyEntries: MetadataRoute.Sitemap = [];
+  for (const id of ALL_HISTORY_IDS) {
+    for (const l of locales) {
+      historyEntries.push({
+        url: urlFor(l, `/pokedex/${id}/history`),
+        lastModified: now,
+        changeFrequency: 'yearly' as const,
+        priority: 0.5,
+      });
+    }
+  }
+
   return [
     ...staticEntries,
     ...pokemonEntries,
@@ -153,5 +197,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...bestEntries,
     ...competitiveEntries,
     ...glossaryEntries,
+    ...counterEntries,
+    ...trainerEntries,
+    ...historyEntries,
   ];
 }
