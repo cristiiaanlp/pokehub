@@ -35,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/meta/champions',
     '/meta/teams',
     '/community/teams',
+    '/compare',
     '/database',
     '/database/moves',
     '/database/abilities',
