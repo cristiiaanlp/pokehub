@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { TeamCard } from '@/components/meta/TeamCard';
 import { TeamSocial } from '@/components/teams/TeamSocial';
+import { TeamRating } from '@/components/teams/TeamRating';
 import { fetchPublicTeamBySlug } from '@/lib/sync/cloud';
 import type { SavedTeam } from '@/stores/teamStore';
 import type { SampleTeam, SampleTeamMember } from '@/lib/champions/data';
@@ -155,6 +156,8 @@ export default function PublicTeamPage() {
       </motion.div>
 
       <TeamCard team={savedToSample(team)} expanded />
+
+      <TeamRating teamId={team.id} />
 
       <TeamSocial teamId={team.id} />
 

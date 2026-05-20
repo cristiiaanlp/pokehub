@@ -6,6 +6,7 @@ import { getSupabaseServer } from '@/lib/supabase-server';
 import { BADGES } from '@/lib/badges';
 import { artworkFor } from '@/lib/pokeapi';
 import { ActivityFeed } from '@/components/profile/ActivityFeed';
+import { FollowButton } from '@/components/profile/FollowButton';
 import {
   TrophyIcon,
   HeartIcon,
@@ -119,6 +120,9 @@ export default async function ProfilePage({ params }: PageProps) {
             <div className="mt-3 text-[11px] text-ink-faint flex items-center gap-2">
               <ClockIcon className="w-3.5 h-3.5" />
               Desde {new Date(profile.created_at).toLocaleDateString()}
+            </div>
+            <div className="mt-3">
+              <FollowButton targetUserId={profile.id} />
             </div>
           </div>
         </div>
