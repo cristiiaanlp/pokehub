@@ -20,6 +20,8 @@ const CATEGORY_COLORS: Record<string, string> = {
   OU: 'bg-accent-green/15 text-accent-green border-accent-green/30',
   Estrategia: 'bg-accent-yellow/15 text-accent-yellow border-accent-yellow/30',
   Casual: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
+  Mecánicas: 'bg-accent-red/15 text-accent-red border-accent-red/30',
+  Principiante: 'bg-accent-green/15 text-accent-green border-accent-green/30',
 };
 
 export default function GuidesIndexPage() {

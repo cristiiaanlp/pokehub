@@ -13,6 +13,8 @@ import {
   ArrowRight,
   SparklesIcon,
   UsersIcon,
+  SearchIcon,
+  XIcon,
 } from '@/components/ui/Icon';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/components/auth/AuthProvider';
@@ -30,7 +32,22 @@ export default function CommunityTeamsPage() {
   const [error, setError] = useState<string | null>(null);
   const [format, setFormat] = useState<string | null>(null);
   const [sort, setSort] = useState<'recent' | 'oldest'>('recent');
+  const [search, setSearch] = useState('');
   const { isConfigured, user } = useAuth();
+
+  // Filtra client-side por nombre de Pokémon (substring case-insensitive)
+  // contra cualquier miembro del equipo. Vacío = sin filtro.
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return teams;
+    return teams.filter((t) =>
+      t.members.some(
+        (m) =>
+          m.name.toLowerCase().includes(q) ||
+          String(m.pokemonId) === q
+      )
+    );
+  }, [teams, search]);
 
   useEffect(() => {
     if (!isConfigured) {
@@ -78,6 +95,32 @@ export default function CommunityTeamsPage() {
           )
         }
       />
+
+      {/* Search por Pokémon */}
+      <div className="card-base p-3 flex items-center gap-2">
+        <SearchIcon className="w-4 h-4 text-ink-faint shrink-0" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Buscar equipos que usen… (ej: Garchomp, Charizard, 6)"
+          className="flex-1 bg-transparent text-sm outline-none placeholder:text-ink-faint"
+        />
+        {search && (
+          <button
+            onClick={() => setSearch('')}
+            aria-label="Limpiar búsqueda"
+            className="h-7 w-7 inline-flex items-center justify-center rounded-md hover:bg-white/[0.06] text-ink-faint hover:text-ink"
+          >
+            <XIcon className="w-3.5 h-3.5" />
+          </button>
+        )}
+        {search && !loading && (
+          <span className="text-xs text-ink-faint tabular-nums shrink-0">
+            {filtered.length} / {teams.length}
+          </span>
+        )}
+      </div>
 
       {/* Filters */}
       <div className="card-base p-4 flex flex-wrap items-center gap-3 justify-between">
@@ -172,10 +215,17 @@ export default function CommunityTeamsPage() {
         </div>
       )}
 
-      {!loading && teams.length > 0 && (
+      {!loading && teams.length > 0 && filtered.length === 0 && (
+        <div className="card-base p-8 text-center text-sm text-ink-dim">
+          Ningún equipo contiene <strong className="text-ink">"{search}"</strong>.
+          Prueba con otro nombre o limpia la búsqueda.
+        </div>
+      )}
+
+      {!loading && filtered.length > 0 && (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {teams.map((t, i) => (
-            <TeamGridCard team={t} key={t.id} index={i} />
+          {filtered.map((t, i) => (
+            <TeamGridCard team={t} key={t.id} index={i} highlight={search} />
           ))}
         </div>
       )}
@@ -183,7 +233,19 @@ export default function CommunityTeamsPage() {
   );
 }
 
-function TeamGridCard({ team, index }: { team: SavedTeam; index: number }) {
+function TeamGridCard({
+  team,
+  index,
+  highlight,
+}: {
+  team: SavedTeam;
+  index: number;
+  highlight?: string;
+}) {
+  const q = (highlight ?? '').trim().toLowerCase();
+  const isMatch = (memberName: string, id: number) =>
+    q.length > 0 &&
+    (memberName.toLowerCase().includes(q) || String(id) === q);
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -210,18 +272,27 @@ function TeamGridCard({ team, index }: { team: SavedTeam; index: number }) {
             {team.name}
           </h3>
           <div className="flex flex-wrap gap-1.5 mt-3">
-            {team.members.slice(0, 6).map((m) => (
-              <img
-                key={m.pokemonId}
-                src={artworkFor(m.pokemonId)}
-                alt={m.name}
-                className="w-12 h-12 object-contain rounded-md bg-white/[0.03] group-hover:scale-110 transition-transform"
-                loading="lazy"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = m.sprite;
-                }}
-              />
-            ))}
+            {team.members.slice(0, 6).map((m) => {
+              const matched = isMatch(m.name, m.pokemonId);
+              return (
+                <img
+                  key={m.pokemonId}
+                  src={artworkFor(m.pokemonId)}
+                  alt={m.name}
+                  title={m.name}
+                  className={cn(
+                    'w-12 h-12 object-contain rounded-md group-hover:scale-110 transition-transform',
+                    matched
+                      ? 'bg-brand/20 ring-2 ring-brand-glow shadow-glow'
+                      : 'bg-white/[0.03]'
+                  )}
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = m.sprite;
+                  }}
+                />
+              );
+            })}
           </div>
           <div className="mt-3 pt-3 border-t border-white/[0.05] flex items-center justify-between text-xs">
             <span className="text-ink-faint">
