@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/site';
 import { GUIDES } from '@/lib/guides';
 import { BEST_LISTS } from '@/lib/best-lists';
+import { GLOSSARY } from '@/lib/glossary';
 import { locales, defaultLocale } from '@/i18n/config';
 
 // Para cada locale generamos las mismas rutas. El default (es) NO lleva
@@ -57,6 +58,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/daily/wordle',
     '/guides',
     '/best',
+    '/glossary',
     '/legal',
     '/login',
     '/support',
@@ -132,11 +134,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
+  // Glossary: 1 URL × locale × término (capta queries "qué es STAB", "qué es OHKO")
+  const glossaryEntries: MetadataRoute.Sitemap = [];
+  for (const term of GLOSSARY) {
+    for (const l of locales) {
+      glossaryEntries.push({
+        url: urlFor(l, `/glossary/${term.slug}`),
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+      });
+    }
+  }
+
   return [
     ...staticEntries,
     ...pokemonEntries,
     ...guideEntries,
     ...bestEntries,
     ...competitiveEntries,
+    ...glossaryEntries,
   ];
 }

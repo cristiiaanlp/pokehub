@@ -94,7 +94,8 @@ const MORE_SECTIONS: NavSection[] = [
     items: [
       { href: '/database', label: 'Database (moves/abilities/items)', Icon: ChartIcon },
       { href: '/guides', label: 'Guías competitivas', Icon: BookOpenIcon },
-      { href: '/best', label: 'Best Pokémon listas', Icon: TrophyIcon, badge: 'NEW' },
+      { href: '/best', label: 'Best Pokémon listas', Icon: TrophyIcon },
+      { href: '/glossary', label: 'Glosario competitivo', Icon: BookOpenIcon, badge: 'NEW' },
     ],
   },
   {
@@ -104,6 +105,7 @@ const MORE_SECTIONS: NavSection[] = [
       { href: '/compare', label: 'Comparar Pokémon', Icon: TrendingUpIcon },
       { href: '/favorites', label: 'Mis favoritos', Icon: HeartIcon },
       { href: '/favorites/vs-meta', label: 'Favorito vs Meta', Icon: SwordIcon },
+      { href: '/me/collection', label: 'Mi Living Pokédex', Icon: GridIcon, badge: 'NEW' },
     ],
   },
   {

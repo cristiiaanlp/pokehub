@@ -160,6 +160,16 @@ export function UserMenu({ variant = 'desktop' }: Props) {
                 <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-40" />
               </Link>
               <Link
+                href="/me/collection"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-ink-soft hover:bg-white/[0.06] hover:text-ink"
+              >
+                📚 Mi Living Pokédex
+                <span className="text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-brand text-white ml-auto">
+                  NEW
+                </span>
+              </Link>
+              <Link
                 href="/team-builder"
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 px-3 h-10 rounded-lg text-sm text-ink-soft hover:bg-white/[0.06] hover:text-ink"
