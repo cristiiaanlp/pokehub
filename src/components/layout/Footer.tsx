@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { Logo } from './Logo';
+import { NewsletterSignup } from './NewsletterSignup';
 import { SITE } from '@/lib/site';
 
 export function Footer() {
@@ -41,6 +42,9 @@ export function Footer() {
             <Link href="/legal" className="hover:text-ink-soft">
               {t('legal')}
             </Link>
+          </div>
+          <div className="pt-2 max-w-sm">
+            <NewsletterSignup />
           </div>
         </div>
         <div>

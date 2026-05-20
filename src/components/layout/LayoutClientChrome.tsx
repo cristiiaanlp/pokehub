@@ -55,3 +55,12 @@ export const InstallPromptLazy = dynamic(
     })),
   { ssr: false }
 );
+
+// Service Worker registrar — solo client, no SSR.
+export const ServiceWorkerRegisterLazy = dynamic(
+  () =>
+    import('@/components/common/ServiceWorkerRegister').then((m) => ({
+      default: m.ServiceWorkerRegister,
+    })),
+  { ssr: false }
+);
