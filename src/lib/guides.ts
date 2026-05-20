@@ -748,6 +748,334 @@ export const GUIDES: Guide[] = [
       },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // BEGINNER GUIDES — top-of-funnel SEO en español
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    slug: 'como-empezar-pokemon-competitivo',
+    title: 'Cómo empezar en Pokémon competitivo desde cero',
+    description:
+      'Guía completa para principiantes: qué necesitas, formatos disponibles, dónde jugar gratis (Showdown) y los primeros pasos para construir tu primer equipo competitivo.',
+    category: 'Principiante',
+    readingTime: '10 min',
+    publishedAt: '2026-05-20',
+    heroPokemon: [445, 887, 6],
+    intro:
+      'Pokémon competitivo intimida al principio. Hay términos raros (EVs, IVs, STAB, Tera), formatos que no entiendes (VGC, OU, Ubers) y cientos de Pokémon con stats que parecen sacados de una hoja de cálculo. **Buenas noticias**: se puede empezar gratis, sin comprar nada, y en 2 semanas ya puedes jugar partidas reales contra gente del mundo entero. Esta guía te lleva de cero a tu primera victoria.',
+    sections: [
+      {
+        heading: '1. ¿Qué es Pokémon competitivo realmente?',
+        body:
+          'No es como la campaña. En competitivo todos los Pokémon están a **nivel 50 o 100**, con stats igualadas. La diferencia entre ganar y perder está en: qué Pokémon eliges, qué moves les pones, sus EVs (stat investments), sus items y tus decisiones turno a turno. **Lo importante es el cerebro, no las horas grindeadas.**',
+      },
+      {
+        heading: '2. Dónde se juega (y por qué Showdown lo cambia todo)',
+        body:
+          'Tienes dos opciones principales:',
+        bullets: [
+          '**Scarlet/Violet (juego oficial)**: Battle Stadium online, formatos VGC oficiales. Necesitas el juego (~$60), entrenar Pokémon con EVs, etc.',
+          '**Pokémon Showdown (gratis)**: simulador web. Te dejas elegir cualquier Pokémon ya competitive-ready, prueba builds al instante. **Es donde el 95% del meta competitivo se juega.**',
+          '**Recomendación**: empieza en Showdown. Pruebas equipos sin gastar horas entrenando. Cuando sepas qué te gusta, llevas el equipo al juego oficial si quieres jugar torneos físicos.',
+        ],
+      },
+      {
+        heading: '3. Los formatos principales explicados',
+        body:
+          'Cada formato es un "mini juego" con reglas distintas. Los más importantes:',
+        bullets: [
+          '**VGC (Video Game Championships)**: formato OFICIAL de Pokémon. Doubles (2v2 simultáneo), nivel 50. Regulación cambia cada temporada (actualmente Reg G/H).',
+          '**Smogon OU (OverUsed)**: el formato comunitario más popular. Singles (1v1), nivel 100. Lista de banned Pokémon definida por la comunidad.',
+          '**Smogon Ubers**: como OU pero permite legendarios broken.',
+          '**Monotype**: tu equipo tiene que ser todo del mismo tipo. Reto extra divertido.',
+          '**Random Battle**: equipo aleatorio. Perfecto para empezar — no necesitas saber nada de teambuilding.',
+        ],
+      },
+      {
+        heading: '4. Los términos que TIENES que saber',
+        body:
+          'Antes de entrar a Showdown, internaliza estos:',
+        bullets: [
+          '**EVs (Effort Values)**: stats extra que repartes en tus Pokémon. Máximo 510 totales, 252 por stat. Generalmente vas all-in en 2 stats (atk + speed, o hp + def).',
+          '**IVs (Individual Values)**: stats "innatas" (0-31). En competitivo todas son 31 normalmente. No te preocupes mucho — Showdown te las da maxed por defecto.',
+          '**STAB**: Same Type Attack Bonus. Si usas un move del mismo tipo que tú, hace ×1.5 daño.',
+          '**OHKO / 2HKO**: One/Two Hit KO. Vocabulario para "puedo matarlo en 1/2 turnos".',
+          '**Sweeper / Wall / Pivot**: roles de equipo. Sweeper = pega fuerte. Wall = tanquea. Pivot = cambia.',
+          '**Tera**: mecánica de Gen 9. Cambias el tipo de tu Pokémon una vez por partida. Estrategia clave.',
+        ],
+      },
+      {
+        heading: '5. Tu primera semana — qué hacer en orden',
+        body:
+          'Olvida construir teams desde cero. Sigue este orden:',
+        bullets: [
+          '**Día 1-2**: Juega 10 partidas Random Battle en Showdown. Familiarízate con la interfaz, mira los Pokémon que ves, lee descripciones de moves.',
+          '**Día 3-5**: Pásate a Random Battle Doubles y/o Random Battle Monotype. Mismo formato pero diferentes reglas — ves nuevas dinámicas.',
+          '**Día 6-7**: Importa un equipo "Sample" de Smogon (smogon.com/forums/threads/sv-ou-sample-teams). Cópialo, pégalo en Showdown teambuilder. Juega 10 partidas con él.',
+          '**Día 8-10**: Empieza a hacer tweaks pequeños — cambia un Pokémon, un item, un EV spread. Observa cómo cambia tu winrate.',
+          '**Día 11-14**: Construye tu primer equipo desde cero. No tiene que ser perfecto. La práctica es lo que enseña.',
+        ],
+      },
+      {
+        heading: '6. Herramientas que necesitas (todas gratis)',
+        body:
+          'Para no jugar a ciegas:',
+        bullets: [
+          '**[PokéHub](/)** (estás aquí): pokédex con datos competitivos, damage calc, team builder, glosario.',
+          '**Pokémon Showdown**: el simulador. Inevitable.',
+          '**Smogon.com**: dex con análisis competitivos profundos por Pokémon.',
+          '**Pikalytics**: usage stats actualizadas del meta VGC/OU.',
+          '**Damage Calc** (PokéHub o el de Showdown): SIEMPRE calcula antes de atacar. La diferencia entre principiante y intermedio es: el principiante apuesta, el intermedio calcula.',
+        ],
+      },
+      {
+        heading: '7. Los errores que TODOS cometemos',
+        body:
+          'Para que tú no:',
+        bullets: [
+          '**Quedarte mirando un Pokémon roto y subir LP sin tradear**: si solo usas un Pokémon, te quedas sin él y pierdes.',
+          '**No usar hazards**: Stealth Rock le quita 12-50% HP al rival al entrar. No usarlo es regalar daño gratis.',
+          '**Tera turno 1**: Tera es tu último recurso. Reservarlo para tu win-con cambia partidas.',
+          '**No calcular damage**: "creo que lo mato" no es estrategia. Calcula.',
+          '**Tilt después de hax**: critical hits y flinches existen y son random. No te frustres, juega la siguiente partida.',
+        ],
+      },
+      {
+        heading: 'Siguiente paso',
+        body:
+          'Cuando hayas hecho tus primeras 50 partidas y entiendas las bases, lee nuestras guías más avanzadas: análisis de counters, builds de sweepers, estrategias por arquetipo. **Lo importante**: jugar mucho, perder mucho al principio, revisar tus replays. En 1 mes ya serás intermedio.',
+      },
+    ],
+  },
+
+  {
+    slug: 'que-es-vgc-guia-completa',
+    title: '¿Qué es VGC? Guía completa al formato oficial de Pokémon',
+    description:
+      'VGC explicado: formato doubles oficial de Nintendo, las reglas, los torneos World Championship, las regulaciones (Reg G/H) y cómo prepararte para competir.',
+    category: 'Principiante',
+    readingTime: '8 min',
+    publishedAt: '2026-05-21',
+    heroPokemon: [727, 898, 1017],
+    intro:
+      '**VGC** son las siglas de **Video Game Championships** — el formato oficial de Pokémon competitivo organizado por The Pokémon Company. Si has visto videos de torneos con premios de $25.000+ en YouTube, eso es VGC. Es donde se decide quién es "el mejor jugador del mundo" cada año.',
+    sections: [
+      {
+        heading: 'Las reglas que definen VGC',
+        body:
+          'Lo que hace VGC distinto de otros formatos:',
+        bullets: [
+          '**Doubles**: 2v2 simultáneos. Distinto a Singles (1v1) — la sinergia entre tus 2 Pokémon activos importa muchísimo.',
+          '**Nivel 50**: todos los Pokémon están al mismo nivel. No hay grindfest.',
+          '**Bring 6, Pick 4**: llevas equipo de 6 Pokémon, pero solo eliges 4 al inicio de cada partida. **Decisión clave**: qué 4 eliges según el equipo del rival (team preview).',
+          '**Cronómetro**: 7 minutos totales por jugador + 45 segundos por turno. La presión de tiempo es real.',
+          '**Series 3 partidas**: BO3 en torneos importantes — puedes ajustar tu pick entre partidas.',
+        ],
+      },
+      {
+        heading: 'Regulaciones (Reg G, Reg H, etc.)',
+        body:
+          'VGC cambia las reglas cada temporada para refrescar el meta. Cada conjunto se llama "Regulación":',
+        bullets: [
+          '**Reg G (actual hasta agosto 2026)**: 2 Restricted Pokémon permitidos (Calyrex, Miraidon, Koraidon, etc.). El más broken meta de la historia.',
+          '**Reg H**: Sin Paradox Pokémon, sin formas de Treasures of Ruin, sin legendarios — el formato "purist" más balanceado.',
+          '**Reg I, J...**: vendrán después de Worlds 2026.',
+          '**Importante**: no asumas que un Pokémon "siempre vale" — chequea la regulación actual antes de teambuilding.',
+        ],
+      },
+      {
+        heading: 'La estructura competitiva — del local a Worlds',
+        body:
+          'VGC tiene un circuito anual:',
+        bullets: [
+          '**Local Challenges**: torneos pequeños en tu ciudad/país. Ideal para empezar a competir presencialmente.',
+          '**Regionals**: ~10 al año por región (Europa, NA, Latam, Asia). Pool 500-1500 jugadores.',
+          '**Internationals**: 4 al año, uno por continente. Pool de 1500-2500. CP (Championship Points) más altos.',
+          '**World Championships (Worlds)**: agosto, una vez al año. Solo los top X jugadores con más CP entran. **El torneo definitivo.**',
+        ],
+      },
+      {
+        heading: '¿Cuánto cuesta competir?',
+        body:
+          'Depende de tu nivel:',
+        bullets: [
+          '**Online (Battle Stadium / Ladder)**: gratis si ya tienes el juego.',
+          '**Locales**: $10-20 de inscripción.',
+          '**Regionals**: $30-50 + viaje + hotel (puede ser $200-500/torneo).',
+          '**Worlds**: invitation only — si calificas, gastas en viaje internacional. Premios de Worlds: $25k al campeón Masters.',
+        ],
+      },
+      {
+        heading: 'Cómo empezar en VGC ahora mismo',
+        body:
+          'Plan realista para tu primer torneo:',
+        bullets: [
+          '**1**: Aprende Showdown VGC Doubles primero (gratis, no necesitas el juego).',
+          '**2**: Cuando ganes consistentemente partidas online, mira sample teams de top players en VGCPastes.com.',
+          '**3**: Llévalo al juego oficial (Scarlet/Violet) — necesitas entrenar tus Pokémon. Usa Auction House en Pokémon HOME para conseguir las naturalezas/abilities que necesitas.',
+          '**4**: Juega Online Competitions oficiales — torneos mensuales donde compites por puntos.',
+          '**5**: Tu primer torneo presencial: busca un Local Challenge cerca. La comunidad VGC es muy welcoming a newcomers.',
+        ],
+      },
+      {
+        heading: 'Diferencias clave con Smogon OU',
+        body:
+          'Si vienes de OU, ajusta tu mentalidad:',
+        bullets: [
+          '**Speed control reina**: Tailwind, Trick Room, Icy Wind. Outspeed manual gana partidas.',
+          '**Fake Out + Intimidate**: dominan el meta. Incineroar es el Pokémon más usado del juego por una razón.',
+          '**Pokémon "OU-trash" son VGC OP**: Amoonguss (spore + redirect), Pelipper (rain setter), Cresselia (Lunar Dance) — pueden ser tier S aquí.',
+          '**Hazards casi no existen**: las partidas duran 8-12 turnos, Stealth Rock no compensa.',
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: 'smogon-ou-vs-vgc-diferencias',
+    title: 'Smogon OU vs VGC: diferencias y cuál jugar',
+    description:
+      'Comparativa completa: Smogon (singles, comunitario) vs VGC (doubles, oficial Nintendo). Reglas, meta, cultura, costes y cómo elegir tu formato.',
+    category: 'Principiante',
+    readingTime: '6 min',
+    publishedAt: '2026-05-22',
+    heroPokemon: [983, 727, 887],
+    intro:
+      '"¿Smogon o VGC?" es la primera pregunta que se hace todo nuevo jugador competitivo. La respuesta corta: **son dos juegos completamente distintos** que comparten Pokémon como recurso. Aquí están las diferencias reales y cómo elegir.',
+    sections: [
+      {
+        heading: 'Tabla resumen rápida',
+        body:
+          'Si solo tienes 30 segundos, esto es lo que necesitas saber:',
+        bullets: [
+          '**Smogon OU**: Singles 1v1, comunitario, jugado mayormente online en Showdown. Free.',
+          '**VGC**: Doubles 2v2, oficial Nintendo, torneos presenciales con premios reales. Requiere el juego.',
+          '**Pool**: Smogon banea Pokémon por tier system. VGC banea por Regulation oficial.',
+          '**Cultura**: Smogon = teórico/data-driven. VGC = social/torneos.',
+        ],
+      },
+      {
+        heading: 'Smogon en detalle',
+        body:
+          'Smogon es la comunidad competitiva más vieja de Pokémon (~20 años). Sus formatos:',
+        bullets: [
+          '**Tiers basados en usage**: OU (top), UU (no usados en OU), RU (no usados en UU), NU, PU. Si tu Pokémon es muy usado en un tier, sube. Si no, baja.',
+          '**Ubers / AG**: los Pokémon prohibidos en OU juegan allí. Mewtwo, Calyrex, Koraidon — los broken.',
+          '**Decisiones de banlist** se hacen por **tier councils** (representantes elegidos por la comunidad). Vota la comunidad.',
+          '**Sin premios oficiales**: torneos comunitarios con prestige, no dinero. SPL (Smogon Premier League) es el "Champions League" del formato.',
+        ],
+      },
+      {
+        heading: 'VGC en detalle',
+        body:
+          'VGC existe desde 2008. Lo organiza directamente The Pokémon Company:',
+        bullets: [
+          '**Formato único: Doubles** (no hay tier system). Sí hay regulaciones (Reg G, Reg H) que cambian qué está permitido.',
+          '**Torneos presenciales** con premios serios: $25k al campeón Worlds Masters Division.',
+          '**Restricted system**: cada regulación permite 0-2 "Restricted" Pokémon (legendarios fuertes). Cambia mucho el meta.',
+          '**Comunidad más pequeña pero más social**: te conoces a la gente en torneos físicos.',
+        ],
+      },
+      {
+        heading: 'Qué formato es para ti',
+        body:
+          'Elige según tu personalidad:',
+        bullets: [
+          '**Smogon OU si**: te gusta la teoría, jugar online sin gastar, formatos variados (PU, Monotype, AG), comunidad data-driven.',
+          '**VGC si**: te motiva los torneos físicos, quieres premios reales, prefieres doubles más interactivo, te gusta el ambiente social.',
+          '**Ambos si**: no son mutuamente excluyentes. Muchos top players juegan los dos. Comparten conocimiento de mecánicas.',
+        ],
+      },
+      {
+        heading: 'Diferencias en gameplay que no esperabas',
+        body:
+          'Cosas que te van a sorprender al cambiar de uno a otro:',
+        bullets: [
+          '**En VGC, el Stealth Rock raramente importa**: partidas de 8-12 turnos, no compensa.',
+          '**En Smogon OU, Fake Out es casi inútil**: solo hit en doubles.',
+          '**Intimidate vale 10× más en VGC**: pega a los 2 activos.',
+          '**Tera Stellar funciona distinto**: en VGC se ven más sets defensivos, en OU más ofensivos.',
+          '**Choice items (Scarf/Specs/Band) dominan en Smogon, no tanto en VGC**: en doubles cambias más, los Choice locks duelen.',
+        ],
+      },
+      {
+        heading: 'Recomendación de PokéHub',
+        body:
+          'Si dudas, **empieza por Smogon OU en Showdown**. Razones: gratis, instantáneo (no entrenar), singles es más fácil de aprender que doubles para principiantes, y la comunidad online es enorme. Cuando entiendas las bases, prueba VGC para ver si te enganchan los torneos físicos. **No te encasilles** — los mejores jugadores juegan ambos.',
+      },
+    ],
+  },
+
+  {
+    slug: '10-errores-principiantes-competitivos',
+    title: 'Los 10 errores más comunes de principiantes en Pokémon competitivo',
+    description:
+      'Lista de los 10 errores que cometes en tus primeras 100 partidas y cómo evitarlos. Desde Tera turno 1 hasta no calcular damage — la guía honesta.',
+    category: 'Principiante',
+    readingTime: '7 min',
+    publishedAt: '2026-05-23',
+    heroPokemon: [658, 887, 983],
+    intro:
+      'Estos errores los he cometido yo, los has cometido tú, los comete TODO el mundo en sus primeras 100 partidas. La diferencia entre quedarte en bronze y subir a plata: identificarlos y corregirlos rápido. Aquí los 10 más típicos en orden de frecuencia.',
+    sections: [
+      {
+        heading: '1. Tera en turno 1 sin razón',
+        body:
+          'Tera es **el recurso más valioso de la partida** — solo puedes usarlo una vez en todo el match. Activarlo en T1 por "obligación de moda" pierde flexibilidad para el resto. **Cuándo SÍ usar Tera T1**: si necesitas resistir un hit específico que perderías sin él (típico de leads matchup). **Cuándo NO**: nunca por defecto. Espera a que tu sweeper esté listo para setupear o que el rival comprometa su Tera primero.',
+      },
+      {
+        heading: '2. No calcular damage antes de atacar',
+        body:
+          '"Creo que lo mato" no es estrategia. Cada vez que dudas, **calcula con el damage calculator**. Saber si tu Earthquake 252+ Atk Garchomp + Life Orb mata o solo 2HKO a Skarmory cambia totalmente tu decisión. Los pros calculan antes de cada attacking move, especialmente en moves clave.',
+      },
+      {
+        heading: '3. Ignorar los hazards',
+        body:
+          'Stealth Rock le quita al rival 12.5%-50% HP cada vez que entra un Pokémon. En una partida de 20 turnos donde el rival cambia 8 veces, eso es **100-400% de damage acumulado gratis**. No usar hazards = tirar partidas. **Setea SIEMPRE** salvo que tu equipo no pueda permitírselo (typical hyper-offense).',
+      },
+      {
+        heading: '4. Quedarse con un solo Pokémon hasta el final',
+        body:
+          'Tu Garchomp está a 30% HP, has hecho 4 KOs con él, te enamoras. **No sacrifiques 5 Pokémon más para "morir con él"**. Pivotalo fuera, deja que tanquee con otro, vuelve a sacarlo cuando puedas hacer KO. La gestión de recursos es lo que separa a buenos jugadores.',
+      },
+      {
+        heading: '5. No leer Team Preview',
+        body:
+          'Antes de pulsar "Battle", tienes ~30 segundos para ver los 6 Pokémon del rival. **Úsalos**. Identifica: ¿quién es su win-con? ¿qué Pokémon mío gana 6-0 si no muere? ¿hay un Choice Scarf escondido? La mitad de la partida se juega aquí. Si entras a Team Preview pensando "ya veré qué hace", vas a perder.',
+      },
+      {
+        heading: '6. Predict everything',
+        body:
+          'Predict (anticipar el move del rival) es divertido pero arriesgado. Si predict mal una vez, regalas turno gratis al rival. **Regla**: predict solo si la EV (expected value) es claramente positiva. "Switch al Skarmory porque va a pegar EQ" tiene sentido si el rival lleva claramente Garchomp ofensivo. Si es un set defensivo con Roost, te comes Roost y pierdes momentum.',
+      },
+      {
+        heading: '7. No revisar tus replays',
+        body:
+          'Pokémon Showdown te guarda TODOS tus replays. Cuando pierdas una partida importante, **vuelve a verla**. Identifica el turno exacto donde la perdiste. ¿Switch malo en T4? ¿Predict equivocado en T7? Aprende de errores específicos en lugar de "tilt y siguiente partida". **PokéHub tiene una herramienta gratis** (/tools/replay-analyzer) que te resume las jugadas clave + coaching automático.',
+      },
+      {
+        heading: '8. Tilt después de hax',
+        body:
+          'Critical hits, flinches, missed Stone Edges — el RNG existe y va a pasarte. **No es personal**. Si pierdes una partida por un crit, no juegues 10 partidas seguidas tilteado intentando "recuperar". Cierra Showdown, da una vuelta, vuelve cuando estés calm. El tilt te hace cometer los 7 errores de arriba al mismo tiempo.',
+      },
+      {
+        heading: '9. Copiar sample teams sin entender',
+        body:
+          'Los sample teams de Smogon están optimizados para jugadores que **saben jugarlos**. Si copias un team de stall sin entender cómo se juega stall, vas a perder con Pokémon que en teoría son top tier. **Lee la guía del team** o adapta uno más simple a tu nivel. Hyper Offense es más fácil de pilotar que Balance.',
+      },
+      {
+        heading: '10. No entender tus moves',
+        body:
+          '"Mi Garchomp tiene Earthquake porque es Tierra". Vale, pero ¿por qué Stone Edge y no Iron Head? ¿Por qué Adamant y no Jolly? Cada decisión en tu set tiene una razón. Si copias sin entender, no vas a saber adaptarlo cuando el meta cambie. **Lee descripciones de los moves** (PokéHub tiene página por move en /database/moves/[name]), entiende por qué cada item/EV spread está ahí.',
+      },
+      {
+        heading: 'Bonus: la regla 80/20',
+        body:
+          'El 80% de tus victorias vienen del 20% de tus decisiones bien jugadas. Las decisiones que más impacto tienen: **lead selection en team preview, cuándo Tera, cuándo NO atacar (switching), cuándo gastar Choice item, cuándo apostar al predict**. Domina estas 5 y subes 200 ELO. Las demás (qué move usar en cada turno) son obvias el 90% del tiempo.',
+      },
+    ],
+  },
 ];
 
 export function getGuideBySlug(slug: string): Guide | undefined {

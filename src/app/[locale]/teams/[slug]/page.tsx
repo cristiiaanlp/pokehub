@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 import { TeamCard } from '@/components/meta/TeamCard';
 import { TeamSocial } from '@/components/teams/TeamSocial';
 import { TeamRating } from '@/components/teams/TeamRating';
+import { TeamQrCode } from '@/components/teams/TeamQrCode';
 import { fetchPublicTeamBySlug } from '@/lib/sync/cloud';
 import type { SavedTeam } from '@/stores/teamStore';
 import type { SampleTeam, SampleTeamMember } from '@/lib/champions/data';
@@ -158,6 +159,8 @@ export default function PublicTeamPage() {
       <TeamCard team={savedToSample(team)} expanded />
 
       <TeamRating teamId={team.id} />
+
+      <TeamQrCode slug={slug} teamName={team.name} />
 
       <TeamSocial teamId={team.id} />
 
