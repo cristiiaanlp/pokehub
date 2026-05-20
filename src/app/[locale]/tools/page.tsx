@@ -44,6 +44,14 @@ const TOOLS = [
     badge: 'NEW',
   },
   {
+    href: '/tools/tier-list',
+    label: 'Tier List Maker',
+    desc: 'Arrastra Pokémon a tiers S/A/B/C/D. URL única para compartir tu lista.',
+    Icon: TrendingUpIcon,
+    color: 'bg-accent-red/15 text-accent-red',
+    badge: 'NEW',
+  },
+  {
     href: '/tools/damage-calc',
     label: 'Damage Calculator',
     desc: 'Calcula daños exactos Gen 9 con todas las mecánicas (Tera, Booster, items).',

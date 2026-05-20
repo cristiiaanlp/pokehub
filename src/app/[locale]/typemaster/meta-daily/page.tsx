@@ -19,6 +19,7 @@ import {
   TrophyIcon,
   FireIcon,
 } from '@/components/ui/Icon';
+import { DailyStreak, recordDailyCompletion } from '@/components/typemaster/DailyStreak';
 
 const STORAGE_KEY = 'pokehub-meta-daily';
 
@@ -114,6 +115,7 @@ export default function MetaDailyPage() {
       total: questions.length,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    recordDailyCompletion();  // marca el día como completado para el streak
     setPhase('finished');
   };
 
@@ -162,6 +164,7 @@ export default function MetaDailyPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 lg:py-12 space-y-5">
+      <DailyStreak />
       <div className="flex items-center justify-between gap-3">
         <Link
           href="/typemaster"
