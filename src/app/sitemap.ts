@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/site';
 import { GUIDES } from '@/lib/guides';
+import { BEST_LISTS } from '@/lib/best-lists';
 import { locales, defaultLocale } from '@/i18n/config';
 
 // Para cada locale generamos las mismas rutas. El default (es) NO lleva
@@ -49,6 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/favorites',
     '/favorites/vs-meta',
     '/guides',
+    '/best',
     '/legal',
     '/login',
     '/support',
@@ -97,5 +99,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  return [...staticEntries, ...pokemonEntries, ...guideEntries];
+  // Best lists: 1 URL × locale × lista
+  const bestEntries: MetadataRoute.Sitemap = [];
+  for (const list of BEST_LISTS) {
+    for (const l of locales) {
+      bestEntries.push({
+        url: urlFor(l, `/best/${list.slug}`),
+        lastModified: new Date(list.updatedAt),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      });
+    }
+  }
+
+  // Competitive analysis: 1 URL × locale × Pokémon featured (los del
+  // pokemonEntries para no inflar el sitemap a 5000+ URLs)
+  const competitiveEntries: MetadataRoute.Sitemap = [];
+  for (const id of featuredPokemon) {
+    for (const l of locales) {
+      competitiveEntries.push({
+        url: urlFor(l, `/pokedex/${id}/competitive`),
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      });
+    }
+  }
+
+  return [
+    ...staticEntries,
+    ...pokemonEntries,
+    ...guideEntries,
+    ...bestEntries,
+    ...competitiveEntries,
+  ];
 }

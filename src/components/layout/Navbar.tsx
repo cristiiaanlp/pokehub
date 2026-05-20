@@ -20,6 +20,7 @@ import {
   BoltIcon,
   BrainIcon,
   ChartIcon,
+  TrophyIcon,
 } from '@/components/ui/Icon';
 import type { ComponentType, SVGProps } from 'react';
 import { useUIStore } from '@/stores/uiStore';
@@ -47,6 +48,7 @@ const SECONDARY: NavLink[] = [
   { href: '/tools', labelKey: 'tools', Icon: BoltIcon, badge: 'NEW' },
   { href: '/coach', labelKey: 'coach', Icon: BrainIcon, badge: 'SOON' },
   { href: '/database', labelKey: 'database', Icon: ChartIcon, badge: 'NEW' },
+  { href: '/best', labelKey: 'best', Icon: TrophyIcon, badge: 'NEW' },
   { href: '/typemaster', labelKey: 'typemaster', Icon: GamepadIcon },
   { href: '/guides', labelKey: 'guides', Icon: BookOpenIcon },
   { href: '/favorites', labelKey: 'favorites', Icon: HeartIcon },
