@@ -39,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/database',
     '/database/moves',
     '/database/abilities',
+    '/database/items',
     '/casual',
     '/casual/shiny',
     '/casual/randomizer',

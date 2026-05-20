@@ -8,6 +8,7 @@ import { TeamAnalysis } from '@/components/team-builder/TeamAnalysis';
 import { TeamHeatmap } from '@/components/team-builder/TeamHeatmap';
 import { TeraOptimizer } from '@/components/team-builder/TeraOptimizer';
 import { ThreatsView } from '@/components/team-builder/ThreatsView';
+import { ShowdownIO } from '@/components/team-builder/ShowdownIO';
 import { SavedTeams } from '@/components/team-builder/SavedTeams';
 import { BoltIcon, FireIcon, ArrowRight } from '@/components/ui/Icon';
 
@@ -34,6 +35,8 @@ export default function TeamBuilderPage() {
           <TeamSlot key={i} member={m} index={i} />
         ))}
       </div>
+
+      <ShowdownIO />
 
       <TeamAnalysis />
 

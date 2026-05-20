@@ -31,6 +31,14 @@ const DATABASES = [
     color: 'bg-accent-yellow/15 text-accent-yellow',
   },
   {
+    href: '/database/items',
+    label: 'Items',
+    desc: 'Held items, berries, evolution stones, medicinas. Con efectos, precios y Pokémon que los llevan.',
+    count: '1500+',
+    Icon: SparklesIcon,
+    color: 'bg-accent-green/15 text-accent-green',
+  },
+  {
     href: '/pokedex',
     label: 'Pokémon',
     desc: '1.025 Pokémon Gen 1-9 con stats, evoluciones, sprites y datos completos.',
