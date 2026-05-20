@@ -39,7 +39,7 @@ const NAV_LINKS: NavLink[] = [
   { href: '/typemaster', labelKey: 'typemaster', Icon: GamepadIcon, badge: 'NEW' },
   { href: '/team-builder', labelKey: 'teamBuilder', Icon: UsersIcon },
   { href: '/tools', labelKey: 'tools', Icon: BoltIcon, badge: 'NEW' },
-  { href: '/coach', labelKey: 'coach', Icon: BrainIcon, badge: 'AI' },
+  { href: '/coach', labelKey: 'coach', Icon: BrainIcon, badge: 'SOON' },
   { href: '/meta', labelKey: 'metaHub', Icon: TrendingUpIcon },
   { href: '/guides', labelKey: 'guides', Icon: BookOpenIcon },
   { href: '/casual', labelKey: 'casual', Icon: SparklesIcon },

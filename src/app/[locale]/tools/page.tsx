@@ -21,10 +21,10 @@ const TOOLS = [
   {
     href: '/coach',
     label: 'AI Coach',
-    desc: 'Tu entrenador competitivo personal. Pídele counters, sets, equipos o análisis.',
+    desc: 'Tu entrenador competitivo personal con Claude. En desarrollo — vuelve pronto.',
     Icon: BrainIcon,
     color: 'bg-brand/15 text-brand-glow',
-    badge: 'NEW',
+    badge: 'SOON',
   },
   {
     href: '/tools/team-validator',

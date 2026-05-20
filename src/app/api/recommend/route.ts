@@ -18,6 +18,20 @@ interface RecommendBody {
 }
 
 export async function POST(req: NextRequest) {
+  // Kill switch: si NEXT_PUBLIC_AI_COACH_ENABLED no está a 'true',
+  // bloqueamos el endpoint completamente para no consumir tokens.
+  // Aunque el flag tenga prefijo NEXT_PUBLIC_, lo leemos también en server.
+  if (process.env.NEXT_PUBLIC_AI_COACH_ENABLED !== 'true') {
+    return NextResponse.json(
+      {
+        error: 'coach_disabled',
+        message:
+          'El AI Coach está deshabilitado temporalmente. Vuelve pronto.',
+      },
+      { status: 503 }
+    );
+  }
+
   // Rate limit estricto: el endpoint llama a Anthropic y CUESTA dinero.
   // 10 peticiones / 10 min por user. Anónimo: 3/10min.
   const sb = getSupabaseServer();
