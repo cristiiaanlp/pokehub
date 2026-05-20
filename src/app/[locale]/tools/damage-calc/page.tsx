@@ -7,9 +7,14 @@ import { PageHeader } from '@/components/common/PageHeader';
 import { PokemonSelectModal } from '@/components/common/PokemonSelectModal';
 import { TypeBadge } from '@/components/ui/TypeBadge';
 import { Button } from '@/components/ui/Button';
-import { SearchIcon, BoltIcon, FireIcon } from '@/components/ui/Icon';
+import { SearchIcon, BoltIcon, FireIcon, CheckIcon } from '@/components/ui/Icon';
 import { getPokemon, artworkFor } from '@/lib/pokeapi';
 import { formatPokemonName, padId } from '@/lib/utils';
+import {
+  encodeCalcState,
+  decodeCalcState,
+  type SharedCalcState,
+} from '@/lib/damage/share';
 import {
   calculateDamage,
   type BattlerInput,
@@ -89,10 +94,133 @@ export default function DamageCalcPage() {
   const [pickerFor, setPickerFor] = useState<'attacker' | 'defender' | null>(null);
   const [loadingPick, setLoadingPick] = useState(false);
 
+  // Share
+  const [justCopied, setJustCopied] = useState(false);
+  const [hydrating, setHydrating] = useState(false);
+
+  // Hidratar desde URL al montar (deep-link compartido)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const sp = new URLSearchParams(window.location.search);
+    if (!sp.has('a') && !sp.has('d')) return;
+    const s = decodeCalcState(sp);
+    setHydrating(true);
+
+    (async () => {
+      try {
+        if (s.a) {
+          const data = await getPokemon(s.a);
+          setAttacker({
+            speciesId: data.id,
+            name: data.name,
+            types: data.types,
+            baseStats: {
+              hp: data.stats.hp,
+              atk: data.stats.attack,
+              def: data.stats.defense,
+              spa: data.stats.specialAttack,
+              spd: data.stats.specialDefense,
+              spe: data.stats.speed,
+            },
+          });
+        }
+        if (s.d) {
+          const data = await getPokemon(s.d);
+          setDefender({
+            speciesId: data.id,
+            name: data.name,
+            types: data.types,
+            baseStats: {
+              hp: data.stats.hp,
+              atk: data.stats.attack,
+              def: data.stats.defense,
+              spa: data.stats.specialAttack,
+              spd: data.stats.specialDefense,
+              spe: data.stats.speed,
+            },
+          });
+        }
+      } catch {
+        // si falla la carga, dejamos defaults
+      }
+      if (s.al !== undefined) setAtkLevel(s.al);
+      if (s.an) setAtkNature(s.an);
+      if (s.aae !== undefined) setAtkAtkEv(s.aae);
+      if (s.ase !== undefined) setAtkSpaEv(s.ase);
+      if (s.aa) setAtkAbility(s.aa as AbilityId);
+      if (s.ai) setAtkItem(s.ai as ItemId);
+      if (s.ag !== undefined) setAtkStage(s.ag);
+      if (s.dl !== undefined) setDefLevel(s.dl);
+      if (s.dn) setDefNature(s.dn);
+      if (s.dhe !== undefined) setDefHpEv(s.dhe);
+      if (s.dde !== undefined) setDefDefEv(s.dde);
+      if (s.dse !== undefined) setDefSpdEv(s.dse);
+      if (s.da) setDefAbility(s.da as AbilityId);
+      if (s.di) setDefItem(s.di as ItemId);
+      if (s.dg !== undefined) setDefStage(s.dg);
+      if (s.dhp !== undefined) setDefHpPct(s.dhp);
+      if (s.m) setMoveName(s.m);
+      if (s.w) setWeather(s.w as FieldInput['weather']);
+      if (s.t) setTerrain(s.t as FieldInput['terrain']);
+      if (s.c !== undefined) setCritical(s.c === 1);
+      if (s.r !== undefined) setReflect(s.r === 1);
+      if (s.ls !== undefined) setLightScreen(s.ls === 1);
+      setHydrating(false);
+    })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const move: MoveData | undefined = useMemo(
     () => COMPETITIVE_MOVES.find((m) => m.name === moveName),
     [moveName]
   );
+
+  const shareUrl = useMemo(() => {
+    if (typeof window === 'undefined') return '';
+    const state: SharedCalcState = {
+      a: attacker.speciesId,
+      al: atkLevel,
+      an: atkNature,
+      aae: atkAtkEv,
+      ase: atkSpaEv,
+      aa: atkAbility,
+      ai: atkItem,
+      ag: atkStage,
+      d: defender.speciesId,
+      dl: defLevel,
+      dn: defNature,
+      dhe: defHpEv,
+      dde: defDefEv,
+      dse: defSpdEv,
+      da: defAbility,
+      di: defItem,
+      dg: defStage,
+      dhp: defHpPct,
+      m: moveName,
+      w: weather ?? 'none',
+      t: terrain ?? 'none',
+      c: critical ? 1 : 0,
+      r: reflect ? 1 : 0,
+      ls: lightScreen ? 1 : 0,
+    };
+    return `${window.location.origin}${window.location.pathname}?${encodeCalcState(state)}`;
+  }, [
+    attacker.speciesId, atkLevel, atkNature, atkAtkEv, atkSpaEv, atkAbility, atkItem, atkStage,
+    defender.speciesId, defLevel, defNature, defHpEv, defDefEv, defSpdEv, defAbility, defItem, defStage, defHpPct,
+    moveName, weather, terrain, critical, reflect, lightScreen,
+  ]);
+
+  const copyShare = async () => {
+    if (!shareUrl) return;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setJustCopied(true);
+      setTimeout(() => setJustCopied(false), 2000);
+    } catch {
+      // fallback: select prompt
+      window.prompt('Copia este enlace:', shareUrl);
+    }
+  };
 
   const onPick = async (kind: 'attacker' | 'defender', speciesId: number) => {
     setLoadingPick(true);
@@ -161,9 +289,29 @@ export default function DamageCalcPage() {
         }
         subtitle="Calcula daño exacto Gen 9 con STAB, items, habilidades, weather, screens y crits. Conoce si haces OHKO antes de pulsar el botón."
         right={
-          <Link href="/team-builder" className="text-sm text-ink-faint hover:text-ink">
-            ← Team Builder
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={copyShare}
+              disabled={hydrating}
+              className={`text-xs font-bold h-9 px-3 rounded-lg inline-flex items-center gap-1.5 transition-colors ${
+                justCopied
+                  ? 'bg-accent-green/15 text-accent-green'
+                  : 'glass hover:bg-white/[0.08] text-ink-soft hover:text-ink'
+              }`}
+              aria-label="Copiar enlace compartible del cálculo"
+            >
+              {justCopied ? (
+                <>
+                  <CheckIcon className="w-3.5 h-3.5" /> Copiado
+                </>
+              ) : (
+                <>🔗 Compartir</>
+              )}
+            </button>
+            <Link href="/team-builder" className="text-sm text-ink-faint hover:text-ink">
+              ← Team Builder
+            </Link>
+          </div>
         }
       />
 

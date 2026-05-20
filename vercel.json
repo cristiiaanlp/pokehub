@@ -31,5 +31,11 @@
         { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
       ]
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/newsletter",
+      "schedule": "0 9 * * 1"
+    }
   ]
 }

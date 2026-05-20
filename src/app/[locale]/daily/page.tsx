@@ -5,6 +5,7 @@ import {
   GamepadIcon,
   ArrowRight,
   FireIcon,
+  BrainIcon,
 } from '@/components/ui/Icon';
 
 export const metadata: Metadata = {
@@ -36,6 +37,14 @@ const DAILIES = [
     desc: '8 preguntas sobre el meta competitivo actual. Pikalytics + Smogon en vivo.',
     Icon: FireIcon,
     color: 'bg-accent-red/15 text-accent-red',
+  },
+  {
+    href: '/daily/trivia',
+    label: 'Trivia competitiva',
+    desc: '5 preguntas sobre stats, mecánicas, tipos e historia. Aprende mientras juegas.',
+    Icon: BrainIcon,
+    color: 'bg-purple-500/15 text-purple-300',
+    badge: 'NEW',
   },
 ];
 

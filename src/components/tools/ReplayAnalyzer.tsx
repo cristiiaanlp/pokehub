@@ -1,14 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { ReplayAnalysis } from '@/lib/replay-parser';
-import { TrophyIcon, SwordIcon, BoltIcon } from '@/components/ui/Icon';
+import { analyzeForCoaching, type CoachingTip } from '@/lib/replay-coaching';
+import {
+  TrophyIcon,
+  SwordIcon,
+  BoltIcon,
+  BrainIcon,
+  BookOpenIcon,
+} from '@/components/ui/Icon';
 
 export function ReplayAnalyzer() {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [analysis, setAnalysis] = useState<ReplayAnalysis | null>(null);
   const [err, setErr] = useState<string | null>(null);
+
+  const coachingTips = useMemo(
+    () => (analysis ? analyzeForCoaching(analysis) : []),
+    [analysis]
+  );
 
   const analyze = async () => {
     if (!url.trim()) return;
@@ -107,6 +119,36 @@ export function ReplayAnalyzer() {
               />
             </div>
           </div>
+
+          {/* Coaching automático */}
+          {coachingTips.length > 0 && (
+            <div className="card-base p-5 relative overflow-hidden">
+              <div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-purple-500/15 blur-3xl pointer-events-none" />
+              <div className="relative">
+                <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+                  <h3 className="font-display font-bold text-lg inline-flex items-center gap-2">
+                    <BrainIcon className="w-5 h-5 text-purple-300" />
+                    Coaching automático
+                    <span className="text-[10px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">
+                      Beta
+                    </span>
+                  </h3>
+                  <span className="text-[10px] text-ink-faint">
+                    {coachingTips.length} {coachingTips.length === 1 ? 'tip' : 'tips'} detectados
+                  </span>
+                </div>
+                <p className="text-[11px] text-ink-dim mb-4">
+                  Análisis heurístico (no IA) — detecta patrones obvios en el
+                  replay. Toma estos tips como punto de partida, no como veredicto.
+                </p>
+                <div className="space-y-2">
+                  {coachingTips.map((tip, i) => (
+                    <CoachingTipCard key={i} tip={tip} players={analysis.players} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Equipos */}
           <div className="grid lg:grid-cols-2 gap-3">
@@ -236,6 +278,60 @@ function SummaryCard({
       <div className={`font-display text-lg font-bold mt-0.5 ${tone}`}>
         {value}
       </div>
+    </div>
+  );
+}
+
+function CoachingTipCard({
+  tip,
+  players,
+}: {
+  tip: CoachingTip;
+  players: readonly [ReplayAnalysis['players'][0], ReplayAnalysis['players'][1]];
+}) {
+  const sevCls =
+    tip.severity === 'critical'
+      ? 'border-l-accent-red bg-accent-red/[0.04]'
+      : tip.severity === 'warning'
+      ? 'border-l-accent-yellow bg-accent-yellow/[0.04]'
+      : 'border-l-brand-glow bg-brand/[0.04]';
+  const sevLabel =
+    tip.severity === 'critical' ? '⚠ Crítico' : tip.severity === 'warning' ? '⚡ Atención' : 'ℹ Info';
+
+  const playerLabel =
+    tip.player === 'general'
+      ? 'General'
+      : tip.player === 'both'
+      ? 'Ambos'
+      : tip.player === 'p1'
+      ? players[0].name
+      : players[1].name;
+
+  return (
+    <div className={`border-l-4 ${sevCls} rounded-r-lg p-3 space-y-1`}>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-center gap-2">
+          <span className="text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded bg-white/[0.06]">
+            {tip.category}
+          </span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-ink-soft">
+            {sevLabel}
+          </span>
+          {tip.turn !== undefined && (
+            <span className="text-[10px] font-mono text-ink-faint">
+              T{tip.turn}
+            </span>
+          )}
+        </div>
+        <span className="text-[10px] text-ink-faint truncate max-w-[40%]">
+          → {playerLabel}
+        </span>
+      </div>
+      <div className="font-display font-bold text-sm">{tip.title}</div>
+      <p className="text-xs text-ink-soft leading-relaxed inline-flex items-start gap-1">
+        <BookOpenIcon className="w-3.5 h-3.5 text-ink-faint shrink-0 mt-0.5" />
+        {tip.detail}
+      </p>
     </div>
   );
 }
