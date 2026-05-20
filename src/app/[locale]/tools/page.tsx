@@ -67,6 +67,14 @@ const TOOLS = [
     badge: 'NEW',
   },
   {
+    href: '/tools/synergy',
+    label: 'Synergy Analyzer',
+    desc: 'Selecciona 2 Pokémon → score 0-100 de qué tan bien funcionan juntos.',
+    Icon: TrendingUpIcon,
+    color: 'bg-purple-500/15 text-purple-300',
+    badge: 'NEW',
+  },
+  {
     href: '/tools/ev-optimizer',
     label: 'EV Optimizer',
     desc: 'Encuentra los EVs mínimos para outspeedear o resistir un golpe.',

@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/tools/team-validator',
     '/tools/moveset-wizard',
     '/tools/damage-vs-meta',
+    '/tools/synergy',
     '/tools/tier-list',
     '/random',
     '/coach',

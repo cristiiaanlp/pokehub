@@ -8,6 +8,7 @@ import { TeamAnalysis } from '@/components/team-builder/TeamAnalysis';
 import { TeamHeatmap } from '@/components/team-builder/TeamHeatmap';
 import { TeraOptimizer } from '@/components/team-builder/TeraOptimizer';
 import { CoverageAnalyzer } from '@/components/team-builder/CoverageAnalyzer';
+import { TeamChecklist } from '@/components/team-builder/TeamChecklist';
 import { ThreatsView } from '@/components/team-builder/ThreatsView';
 import { ShowdownIO } from '@/components/team-builder/ShowdownIO';
 import { SavedTeams } from '@/components/team-builder/SavedTeams';
@@ -46,6 +47,8 @@ export default function TeamBuilderPage() {
       <TeraOptimizer />
 
       <CoverageAnalyzer />
+
+      <TeamChecklist />
 
       <ThreatsView />
 
