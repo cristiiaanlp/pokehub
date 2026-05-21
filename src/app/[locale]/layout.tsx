@@ -14,6 +14,7 @@ import {
   MobileNavLazy,
   InstallPromptLazy,
   ServiceWorkerRegisterLazy,
+  CookiesBannerLazy,
 } from '@/components/layout/LayoutClientChrome';
 import { SITE } from '@/lib/site';
 import { AuthProvider } from '@/components/auth/AuthProvider';
@@ -149,6 +150,7 @@ export default async function LocaleLayout({
             <Footer />
             <InstallPromptLazy />
             <ServiceWorkerRegisterLazy />
+            <CookiesBannerLazy />
           </AuthProvider>
         </NextIntlClientProvider>
         <Analytics />

@@ -64,3 +64,12 @@ export const ServiceWorkerRegisterLazy = dynamic(
     })),
   { ssr: false }
 );
+
+// Cookies banner GDPR — solo aparece la primera visita, sin SSR.
+export const CookiesBannerLazy = dynamic(
+  () =>
+    import('@/components/layout/CookiesBanner').then((m) => ({
+      default: m.CookiesBanner,
+    })),
+  { ssr: false }
+);

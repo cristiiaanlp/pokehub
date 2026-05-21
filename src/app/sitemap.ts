@@ -65,6 +65,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/best',
     '/glossary',
     '/legal',
+    '/legal/terms',
     '/login',
     '/support',
   ];

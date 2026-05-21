@@ -227,6 +227,13 @@
     "about": "Información",
     "support": "Apóyanos",
     "legal": "Legal",
+    "terms": "Términos",
     "disclaimer": "PokéHub es un proyecto hecho por fans, sin afiliación con Nintendo, Game Freak ni The Pokémon Company. Pokémon y todos los nombres relacionados son marcas registradas de sus respectivos propietarios."
+  },
+  "Cookies": {
+    "title": "Usamos cookies",
+    "body": "PokéHub usa cookies estrictamente funcionales (sesión, preferencias). No vendemos tus datos. Más detalles en nuestra <privacy>página legal</privacy>.",
+    "accept": "Entendido",
+    "moreInfo": "Política completa"
   }
 }

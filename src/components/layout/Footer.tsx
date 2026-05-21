@@ -75,16 +75,37 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/[0.04] py-5 text-center text-xs text-ink-faint">
-        © {new Date().getFullYear()} {SITE.name} ·{' '}
-        <a
-          href={SITE.authorGithub}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-ink-soft"
-        >
-          {SITE.author}
-        </a>
+      {/* Disclaimer Pokémon prominente — visible en todas las páginas */}
+      <div className="border-t border-white/[0.04] bg-bg-950/40 py-4 px-4 sm:px-6">
+        <div className="mx-auto max-w-5xl text-center">
+          <p className="text-[11px] text-ink-faint leading-relaxed">
+            ⚠️ {t('disclaimer')}
+          </p>
+        </div>
+      </div>
+
+      <div className="border-t border-white/[0.04] py-5 px-4 sm:px-6 text-center text-xs text-ink-faint">
+        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          <span>
+            © {new Date().getFullYear()} {SITE.name} ·{' '}
+            <a
+              href={SITE.authorGithub}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-ink-soft"
+            >
+              {SITE.author}
+            </a>
+          </span>
+          <span className="opacity-40">·</span>
+          <Link href="/legal" className="hover:text-ink-soft">
+            {t('legal')}
+          </Link>
+          <span className="opacity-40">·</span>
+          <Link href="/legal/terms" className="hover:text-ink-soft">
+            {t('terms')}
+          </Link>
+        </div>
       </div>
     </footer>
   );
