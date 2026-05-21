@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { fetchItemDetail } from '@/lib/pokeapi-database';
-import { artworkFor } from '@/lib/pokeapi';
+import { artworkFor, getPokemon } from '@/lib/pokeapi';
 import { ArrowRight, BookOpenIcon } from '@/components/ui/Icon';
+import { getItemNote } from '@/lib/items-detail';
+import { formatPokemonName } from '@/lib/utils';
 
 export const revalidate = 604800;
 
@@ -14,15 +16,31 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const item = await fetchItemDetail(params.name);
   if (!item) return { title: 'Item no encontrado' };
+  const curated = getItemNote(params.name);
   return {
     title: `${item.displayName} · Item Pokémon`,
-    description: item.shortEffect || `${item.displayName} en Pokémon.`,
+    description: curated?.description || item.shortEffect || `${item.displayName} en Pokémon.`,
   };
 }
 
 export default async function ItemDetailPage({ params }: PageProps) {
   const item = await fetchItemDetail(params.name);
   if (!item) notFound();
+
+  // Overlay competitive curado
+  const curated = getItemNote(params.name);
+  const notableUsers = curated
+    ? await Promise.all(
+        curated.notableUsers.map(async (id) => {
+          try {
+            const p = await getPokemon(id);
+            return { id, name: formatPokemonName(p.name) };
+          } catch {
+            return null;
+          }
+        })
+      ).then((arr) => arr.filter((u): u is NonNullable<typeof u> => u !== null))
+    : [];
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 lg:py-12 space-y-6">
@@ -81,6 +99,61 @@ export default async function ItemDetailPage({ params }: PageProps) {
           <p className="text-sm text-ink-dim italic leading-relaxed">
             "{item.flavorText}"
           </p>
+        </section>
+      )}
+
+      {/* Análisis competitivo curado */}
+      {curated && (
+        <section className="card-base p-5 relative overflow-hidden">
+          <div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-brand/15 blur-3xl pointer-events-none" />
+          <div className="relative space-y-4">
+            <h2 className="font-display text-lg font-bold flex items-center gap-2">
+              <BookOpenIcon className="w-5 h-5 text-brand-glow" />
+              Análisis competitivo
+              {curated.tier && (
+                <span className={`text-[10px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded ${
+                  curated.tier === 'S' ? 'bg-accent-yellow/20 text-accent-yellow' :
+                  curated.tier === 'A' ? 'bg-accent-green/20 text-accent-green' :
+                  'bg-white/10 text-ink-soft'
+                }`}>
+                  Tier {curated.tier}
+                </span>
+              )}
+            </h2>
+            <p className="text-sm text-ink-soft leading-relaxed">
+              {curated.description}
+            </p>
+            {curated.notes && (
+              <div className="border-l-4 border-l-brand-glow bg-brand/[0.04] rounded-r-lg p-3">
+                <div className="text-xs font-bold text-brand-glow mb-1">💡 Tip</div>
+                <p className="text-xs text-ink-soft leading-relaxed">{curated.notes}</p>
+              </div>
+            )}
+            {notableUsers.length > 0 && (
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-ink-faint mb-2">
+                  Usuarios destacados
+                </h3>
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                  {notableUsers.map((u) => (
+                    <Link
+                      key={u.id}
+                      href={`/pokedex/${u.id}`}
+                      className="card-base card-hover p-2 text-center group"
+                    >
+                      <img
+                        src={artworkFor(u.id)}
+                        alt={u.name}
+                        className="w-12 h-12 mx-auto object-contain group-hover:scale-110 transition-transform"
+                        loading="lazy"
+                      />
+                      <div className="text-[10px] font-bold mt-1 truncate">{u.name}</div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </section>
       )}
 

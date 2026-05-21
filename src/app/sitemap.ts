@@ -7,6 +7,8 @@ import { ALL_COUNTER_IDS } from '@/lib/meta/counters-detail';
 import { ALL_ARCHETYPES } from '@/lib/trainer-quiz';
 import { ALL_HISTORY_IDS } from '@/lib/gen-history';
 import { getAllMoveSlugs } from '@/lib/moves-detail';
+import { getAllItemNoteSlugs } from '@/lib/items-detail';
+import { ALL_ABILITY_NOTE_SLUGS } from '@/lib/abilities-detail';
 import { locales, defaultLocale } from '@/i18n/config';
 
 // Para cada locale generamos las mismas rutas. El default (es) NO lleva
@@ -205,6 +207,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
+  // Items curados — capta "what is choice scarf", "best leftovers pokemon"
+  const itemEntries: MetadataRoute.Sitemap = [];
+  for (const slug of getAllItemNoteSlugs()) {
+    for (const l of locales) {
+      itemEntries.push({
+        url: urlFor(l, `/database/items/${slug}`),
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
+      });
+    }
+  }
+
+  // Abilities curadas — capta "what is intimidate", "supreme overlord explained"
+  const abilityEntries: MetadataRoute.Sitemap = [];
+  for (const slug of ALL_ABILITY_NOTE_SLUGS) {
+    for (const l of locales) {
+      abilityEntries.push({
+        url: urlFor(l, `/database/abilities/${slug}`),
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
+      });
+    }
+  }
+
   return [
     ...staticEntries,
     ...pokemonEntries,
@@ -216,5 +244,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...trainerEntries,
     ...historyEntries,
     ...moveEntries,
+    ...itemEntries,
+    ...abilityEntries,
   ];
 }

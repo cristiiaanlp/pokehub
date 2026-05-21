@@ -1076,6 +1076,410 @@ export const GUIDES: Guide[] = [
       },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // VGC ARCHETYPES — landing pages para queries "trick room team", "sun team"
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    slug: 'arquetipo-sun-teams-vgc',
+    title: 'Sun Teams en VGC: guía de arquetipo completo',
+    description:
+      'Cómo construir un equipo Sun en VGC SV: setters, abusers, sweepers de Protosynthesis. Cores meta + sample teams de Regulation G.',
+    category: 'VGC',
+    readingTime: '7 min',
+    publishedAt: '2026-05-24',
+    heroPokemon: [383, 991, 1003],
+    intro:
+      '**Sun teams** son uno de los arquetipos más letales del meta SV Regulation G. La sinergia entre **Drought + Protosynthesis** dispara el daño de Fire moves Y boostea las stats principales de tus Paradox del pasado. Aquí cómo construir uno.',
+    sections: [
+      {
+        heading: 'El setter: Groudon vs Torkoal',
+        body:
+          'Tienes dos opciones para activar sol:',
+        bullets: [
+          '**Groudon** (restricted en Reg G): BST 670, Drought + Precipice Blades. El setter más bestia disponible. Único contra solo permite 1 restricted por equipo.',
+          '**Torkoal**: BST 470, Drought + Eruption. No restricted — puedes meterlo en cualquier formato. Speed bajísima (20), perfect para Trick Room hybrid.',
+          '**Ninetales-Alola**: NO setea sol — setea Aurora Veil. No confundir.',
+        ],
+      },
+      {
+        heading: 'Los abusers principales',
+        body:
+          'Los Pokémon que más se benefician del sol:',
+        bullets: [
+          '**Walking Wake** (Paradox water/dragon): Hydro Steam en sol = 150 BP STAB sin la habitual penalización de 50% del Water en sol. Insano.',
+          '**Roaring Moon** (Paradox dragon/dark): Protosynthesis Atk en sol. Dragon Dance + Acrobatics = sweeper monstruoso.',
+          '**Iron Crown** (Paradox steel/psy): Versión futuro pero también boosta SpA en sol vía Booster Energy alternativa.',
+          '**Charizard / Chi-Yu / Cinderace**: Fire STAB con boost ×1.5 del sol = damage spreadable masivo.',
+        ],
+      },
+      {
+        heading: 'Core estándar (4 de 6)',
+        body:
+          'La columna vertebral que casi todos los Sun teams comparten:',
+        bullets: [
+          '1. **Groudon** (setter + win-con físico)',
+          '2. **Walking Wake** (special wallbreaker + Sun abuser)',
+          '3. **Incineroar** (pivot + Intimidate + Fake Out — universal)',
+          '4. **Rillaboom** (Grassy Surge cancela el Sun? NO — Drought sigue prioritario en switch. Rillaboom da Grassy + Fake Out para combo)',
+        ],
+      },
+      {
+        heading: 'Los 2 slots flex (elige según tu meta)',
+        body:
+          'Las opciones más comunes para los 2 últimos slots:',
+        bullets: [
+          '**Whimsicott** (Prankster Tailwind + Encore + Beat Up para Justified de Lucario)',
+          '**Amoonguss** (Spore + Rage Powder redirect — VGC support staple)',
+          '**Tornadus-Therian** (Prankster Tailwind alternativo + Bleakwind Storm)',
+          '**Iron Hands** (AV tank + Drain Punch — funciona pese a no abuser de sol)',
+          '**Roaring Moon** (segundo Paradox para win-con backup)',
+        ],
+      },
+      {
+        heading: 'Counters comunes que debes prever',
+        body:
+          'Pokémon que rompen los Sun teams:',
+        bullets: [
+          '**Pelipper / Politoed** (Drizzle cancela tu Drought — weather war)',
+          '**Rotom-Wash** (resists Fire + Hydro Pump rain-boosted)',
+          '**Heatran** (Flash Fire — Fire moves lo curan)',
+          '**Tyranitar** (Sand Stream cancela Sun)',
+        ],
+      },
+      {
+        heading: 'Tips de pilotaje',
+        body:
+          'Cómo jugar Sun correctamente:',
+        bullets: [
+          '**Setea sol turno 1**: sin Drought activo, no hay sinergia. Si Groudon muere antes de setear, tu equipo es 30% peor.',
+          '**Tera Fire en Walking Wake**: convierte Hydro Steam neutral en mega-boost (Tera Water + Sun = ×1.5 STAB + bonus). Tera-locked.',
+          '**Cuidado con Wide Guard**: spread moves (Eruption, Hydro Steam) son tu fuerza — Wide Guard los bloquea.',
+          '**Tailwind > Trick Room**: tu equipo es naturalmente rápido — TR te jode más que ayuda.',
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: 'arquetipo-rain-teams-vgc',
+    title: 'Rain Teams en VGC: guía completa del arquetipo',
+    description:
+      'Cómo construir un Rain team en VGC SV. Setters Pelipper/Politoed, Swift Swim abusers, sinergias y counters.',
+    category: 'VGC',
+    readingTime: '6 min',
+    publishedAt: '2026-05-25',
+    heroPokemon: [279, 991, 130],
+    intro:
+      '**Rain teams** son el arquetipo más viejo y consistente del competitivo. **Drizzle + Swift Swim + Hydro Pump boosted** es una fórmula que lleva ganando torneos desde Gen 5. Aquí cómo construir uno en VGC SV.',
+    sections: [
+      {
+        heading: 'El setter: Pelipper es king',
+        body:
+          'En VGC SV solo hay 1 opción realista:',
+        bullets: [
+          '**Pelipper** (Drizzle): BST 440. Volador/Agua. Sus Hurricane en lluvia hit 100% accuracy. Speed 65 — usa Wide Guard + Tailwind utility.',
+          '**Politoed** (Drizzle): Disponible en SV via DLC. Más bulky que Pelipper pero menos utility.',
+          '**Recomendación**: Pelipper. Mejor utility, mejor matchup vs el resto del meta.',
+        ],
+      },
+      {
+        heading: 'Los Swift Swim abusers',
+        body:
+          'En lluvia, Swift Swim duplica (×2) Speed. Los abusers principales:',
+        bullets: [
+          '**Barraskewda**: Speed 136 base × 2 = uno de los más rápidos del juego. Liquidation + Close Combat STAB.',
+          '**Floatzel**: Speed 115 base × 2. Versión slightly tankier.',
+          '**Ludicolo**: Lluvia abuser histórico. Surf + Energy Ball + Ice Beam coverage.',
+          '**Kingdra**: Swift Swim + Hydro Pump / Draco Meteor mixed. Tera Steel para sobrevivir Ice Shard.',
+        ],
+      },
+      {
+        heading: 'Los Pokémon que MEJOR aman la lluvia',
+        body:
+          'No son Swift Swim pero se benefician igualmente:',
+        bullets: [
+          '**Iron Bundle** (Quark Drive): Booster Energy Speed + Hydro Pump en lluvia = wallbreaker insano.',
+          '**Walking Wake** (Hydro Steam — irónicamente NO le va bien en lluvia, va mejor en sun!)',
+          '**Greninja**: Protean + lluvia Hydro Pump 100% acc = mata casi todo.',
+          '**Manaphy**: Tail Glow + lluvia Surf — sweeper especial roto.',
+        ],
+      },
+      {
+        heading: 'Core estándar (4 de 6)',
+        body: 'La columna vertebral:',
+        bullets: [
+          '1. **Pelipper** (Drizzle setter + utility)',
+          '2. **Barraskewda** (sweeper Swift Swim físico)',
+          '3. **Iron Bundle / Greninja** (special breaker)',
+          '4. **Incineroar** (pivot + Intimidate — universal en VGC)',
+        ],
+      },
+      {
+        heading: 'Counters a los Rain teams',
+        body:
+          'Lo que rompe la lluvia:',
+        bullets: [
+          '**Charizard / Cinderace con Drought / Sun setters**: cancelan lluvia',
+          '**Grass types fuertes** (Rillaboom Grassy Surge, Ogerpon)',
+          '**Toxapex** (Regenerator + walls Water hits)',
+          '**Tyranitar / Hippowdon** (Sand Stream)',
+        ],
+      },
+      {
+        heading: 'Tips de pilotaje',
+        body:
+          'Cómo jugar Rain en tournament:',
+        bullets: [
+          '**Setea lluvia turno 1**: Drizzle activa solo al entrar. Si Pelipper muere antes, eres equipo normal sin sinergia.',
+          '**Hurricane > Air Slash en Pelipper**: 100% accuracy en lluvia + 110 BP es absurdo.',
+          '**Tera Steel Barraskewda**: protege contra Ice Shard + Sucker Punch que te matarían al sweep.',
+          '**Wide Guard en Pelipper**: protege Surf de tu propio Iron Bundle si están juntos en doubles.',
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: 'arquetipo-trick-room-teams',
+    title: 'Trick Room Teams: cómo construir y pilotear',
+    description:
+      'Guía completa de Trick Room en VGC: setters, slow attackers, win-cons. Sample teams del meta Regulation G.',
+    category: 'VGC',
+    readingTime: '7 min',
+    publishedAt: '2026-05-26',
+    heroPokemon: [488, 776, 706],
+    intro:
+      '**Trick Room** invierte el orden de turnos: los Pokémon LENTOS se mueven primero. Si lo seteas correctamente, dominas el campo 5 turnos. Si fallas el setup, eres carne de cañón. Guía completa para no fallar.',
+    sections: [
+      {
+        heading: 'Los setters principales',
+        body:
+          'Cada setter tiene su nicho:',
+        bullets: [
+          '**Cresselia** (Levitate, BST 600): Lunar Dance heal + Mental Herb protege primer Taunt. El mejor setter defensivo.',
+          '**Indeedee-F** (Psychic Surge): SOLO en VGC restricted comp con Calyrex-Ice. Combo histórico desde Gen 8.',
+          '**Hatterene** (Magic Bounce): Rebota Taunt automáticamente. Mixed attacker decente entre setups.',
+          '**Porygon2** (Eviolite): Tankier que Cresselia, Recover propio, Tera Fairy popular para resistir Dragon.',
+        ],
+      },
+      {
+        heading: 'Los slow attackers (win-cons)',
+        body:
+          'Pokémon LENTOS con Atk/SpA altos — los que abusan TR:',
+        bullets: [
+          '**Calyrex-Ice** (restricted): Speed 50 + Glacial Lance spread 130 BP. La win-con TR #1 desde Gen 8.',
+          '**Ursaluna** (Bloodmoon en Reg G): Speed 55 + Earthquake + Facade burned. Tier S.',
+          '**Iron Hands**: Speed 50 + Drain Punch + Thunder Punch. Speedy abuser pese a no ser ultra-slow.',
+          '**Iron Bundle / Snorlax / Hatterene**: bulky con Speed bajo aprovechando TR.',
+        ],
+      },
+      {
+        heading: 'Core estándar',
+        body:
+          'Composición típica TR (6 slots):',
+        bullets: [
+          '1. **Setter principal** (Cresselia / Indeedee / Hatterene)',
+          '2. **Setter backup** (Porygon2 o Ursaluna con TR move)',
+          '3. **Win-con #1** (Calyrex-Ice / Ursaluna / Iron Hands)',
+          '4. **Win-con #2** (segundo slow attacker para revenge)',
+          '5. **Pivot** (Incineroar Intimidate sigue siendo king incluso en TR)',
+          '6. **Wide Guard / Speed control alternativo** (anti-spread)',
+        ],
+      },
+      {
+        heading: 'Cómo cancelar TR del rival',
+        body:
+          'Si te enfrentas a TR sin ser TR:',
+        bullets: [
+          '**Taunt T1 al setter**: bloquea Trick Room move. Riley con Prankster Taunt = clutch.',
+          '**Encore al setter en move pasivo**: si Cresselia usa Lunar Dance esperando setup, Encore la lockea.',
+          '**Mata al setter T1**: Bullet Punch / Sucker Punch del lead te puede dar el OHKO.',
+          '**Set tu propio TR**: TR cancela TR. Si rival setea T1, tú setear T2 = cancela los 5 turnos.',
+        ],
+      },
+      {
+        heading: 'Tips de pilotaje TR',
+        body:
+          'Errores comunes y cómo evitarlos:',
+        bullets: [
+          '**TR dura 5 turnos**: contad los turnos. Si seteas T1, los abusers van T2-T6. Después se invierte.',
+          '**NO subir Speed con setup**: tu win-con quiere ser LENTO. Calyrex con Dragon Dance pierde Speed advantage.',
+          '**Tera Fairy / Tera Normal típicos**: setters defensivos teran para evitar Dragon / Ghost.',
+          '**Mental Herb en setter**: te salva del primer Taunt — fundamental contra Riley/Whimsicott.',
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: 'arquetipo-hyper-offense-vgc',
+    title: 'Hyper Offense en VGC: pressure desde el turno 1',
+    description:
+      'Guía completa de Hyper Offense en VGC SV: leads agresivos, no defensive switching, win-cons. Composiciones meta Reg G.',
+    category: 'VGC',
+    readingTime: '6 min',
+    publishedAt: '2026-05-27',
+    heroPokemon: [1006, 887, 991],
+    intro:
+      '**Hyper Offense** (HO) es el polo opuesto de Stall: 6 atacantes, sin walls, sin pivots defensivos. Win-con: matar más rápido que el rival. Si no terminas la partida en T12, probablemente pierdes. Guía para HO en VGC SV.',
+    sections: [
+      {
+        heading: 'Filosofía del arquetipo',
+        body:
+          'HO se basa en 3 principios:',
+        bullets: [
+          '**Pressure constante**: cada turno tienes que estar amenazando KO. Sin presión, el rival te organiza y pierdes.',
+          '**Speed control prioritario**: Tailwind / Thunder Wave / Icy Wind. Outspeed siempre.',
+          '**Tera ofensivo**: tu Tera va al win-con para asegurar el sweep, NO defensivo.',
+        ],
+      },
+      {
+        heading: 'Los win-cons HO meta Reg G',
+        body:
+          'Los Pokémon que más HO juegan:',
+        bullets: [
+          '**Iron Valiant** (Quark Drive): Speed 116 + Booster = outspeeds CASI todo. Moonblast + Close Combat + Encore.',
+          '**Dragapult**: Speed 142 (más rápido sin items). Specs Draco Meteor spread = un KO + medio HP en doubles.',
+          '**Walking Wake**: en Sun teams HO, special breaker definitivo.',
+          '**Roaring Moon**: Dragon Dance + Tera Flying Acrobatics. Setup speedy.',
+          '**Iron Bundle**: Special HO breaker en lluvia o con Booster.',
+        ],
+      },
+      {
+        heading: 'Los speed control essentials',
+        body:
+          'HO sin speed control = pierdes contra Choice Scarf:',
+        bullets: [
+          '**Whimsicott** (Prankster Tailwind + Encore): el speed control HO #1.',
+          '**Tornadus-Therian** (Prankster Tailwind alternative)',
+          '**Smeargle** (Tailwind + Spore + Fake Out — gimmicky pero efectivo)',
+          '**Iron Bundle** (Icy Wind como secondary speed control)',
+        ],
+      },
+      {
+        heading: 'Sample team Reg G HO',
+        body:
+          'Una composición HO competitiva actual:',
+        bullets: [
+          '1. **Iron Valiant** (Booster Speed, Tera Steel) — Moonblast / CC / Encore / Protect',
+          '2. **Whimsicott** (Covert Cloak, Tera Fairy) — Tailwind / Moonblast / Encore / Fake Tears',
+          '3. **Walking Wake** (Choice Specs, Tera Fire) — Hydro Steam / Draco / Flamethrower / Sun?',
+          '4. **Roaring Moon** (Booster Atk, Tera Flying) — DD / Acrobatics / Knock Off / Protect',
+          '5. **Incineroar** (Safety Goggles, Tera Ghost) — Fake Out / Knock Off / Parting Shot / Will-O',
+          '6. **Iron Hands** (Assault Vest, Tera Grass) — Drain Punch / Thunder Punch / Ice Punch / Fake Out',
+        ],
+      },
+      {
+        heading: 'Counters al HO',
+        body:
+          'Lo que rompe los HO teams:',
+        bullets: [
+          '**Bulky Offense con Intimidate spam**: Incineroar + Landorus Intimidate doble corta tu damage.',
+          '**Trick Room defensivo**: si lo setean exitosamente, tus rapid sweepers son inútiles.',
+          '**Choice Scarf rotos** (Tyranitar / Garchomp Scarf): outspeed sin necesitar Tailwind.',
+          '**Priority spam**: Bullet Punch / Sucker Punch / Aqua Jet ignoran tu speed.',
+        ],
+      },
+      {
+        heading: 'Tips de pilotaje HO',
+        body:
+          'Cómo no perder con HO:',
+        bullets: [
+          '**Tailwind T1 si tienes Whimsicott**: las 4 turnos siguientes son tuyos.',
+          '**No defensive switches**: si tienes que retirar a un sweeper, ya perdiste momentum.',
+          '**Tera al primer setup**: NO esperes — usa Tera en el sweeper que tira Dragon Dance / Calm Mind y barre.',
+          '**Encore en setup move rival**: tu mejor anti-counter — bloqueas TR / Calm Mind y das otro turno gratis.',
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: 'arquetipo-balance-vgc',
+    title: 'Balance Teams en VGC: el arquetipo más flexible',
+    description:
+      'Cómo construir un Balance team en VGC SV: roles, sinergias, win-cons. La composición más versátil del meta para nuevos jugadores.',
+    category: 'VGC',
+    readingTime: '6 min',
+    publishedAt: '2026-05-28',
+    heroPokemon: [727, 445, 248],
+    intro:
+      '**Balance** es el arquetipo "do-it-all": mezcla offense + defense + pivots + utility. Cada Pokémon tiene un rol específico, ninguno es desechable. **El mejor arquetipo para empezar VGC** — no exige decisiones agresivas turno 1 y permite adaptarse al rival.',
+    sections: [
+      {
+        heading: 'Los 6 roles del Balance',
+        body:
+          'Un buen Balance team cubre estos roles (algunos Pokémon doblan rol):',
+        bullets: [
+          '**Pivot principal** (Incineroar — Intimidate + Fake Out + Parting Shot)',
+          '**Pivot secundario** (Rillaboom / Landorus / Tornadus para U-turn / Volt Switch)',
+          '**Speed control** (Whimsicott Tailwind, Icy Wind user, o Scarfer)',
+          '**Wallbreaker físico** (Garchomp, Iron Hands, Kingambit)',
+          '**Wallbreaker especial** (Iron Bundle, Walking Wake, Iron Crown)',
+          '**Win-con / late-game cleaner** (Kingambit Supreme Overlord o setup sweeper)',
+        ],
+      },
+      {
+        heading: 'Core estándar Balance Reg G',
+        body:
+          'La composición Balance más popular en torneos actuales:',
+        bullets: [
+          '1. **Incineroar** (pivot + Intimidate — universal)',
+          '2. **Garchomp** (físico wallbreaker — EQ spread + Stone Edge)',
+          '3. **Iron Bundle** (special breaker + Icy Wind speed control)',
+          '4. **Whimsicott** (Prankster Tailwind + Encore)',
+          '5. **Iron Hands** (AV tank + bulky attacker)',
+          '6. **Kingambit** (late-game cleaner Supreme Overlord)',
+        ],
+      },
+      {
+        heading: 'Sinergias clave',
+        body:
+          'Las combinaciones que hacen Balance funcionar:',
+        bullets: [
+          '**Intimidate (Incineroar) + bulky attackers (Iron Hands)**: el bulky encaja Atk - 1 hits + responde con damage.',
+          '**Fake Out + Setup ally**: Incineroar Fake Out bloquea rival 1 turno → tu Garchomp setea Swords Dance.',
+          '**Parting Shot + Win-con switch-in**: Incineroar baja Atk/SpA del rival, sale, entra Kingambit a tankear el siguiente hit.',
+          '**Tailwind + slow win-con**: Whimsicott Tailwind T1 → Iron Hands ahora outspeeds y barre.',
+        ],
+      },
+      {
+        heading: 'Speed control en Balance',
+        body:
+          'Diferentes opciones según tu meta:',
+        bullets: [
+          '**Tailwind (Whimsicott / Tornadus)**: 4 turnos de speed boost team-wide. El más común.',
+          '**Icy Wind (Iron Bundle)**: -1 Speed a ambos rivales. Útil para sustained pressure.',
+          '**Choice Scarf (Garchomp / Tyranitar)**: speed sin necesitar setup, pero pierdes flexibilidad.',
+          '**Thunder Wave (Whimsicott Prankster)**: paralisis = 50% Speed + 25% chance no atacar.',
+        ],
+      },
+      {
+        heading: 'Cuándo elegir Balance vs otros arquetipos',
+        body: 'Pros y contras:',
+        bullets: [
+          '✅ **Pro**: Flexible. Maneja casi cualquier matchup decentemente.',
+          '✅ **Pro**: Permite errores. Si pierdes 1 Pokémon, sigues teniendo plan B/C/D.',
+          '✅ **Pro**: Ideal para principiantes — no requiere decisiones agresivas turno 1.',
+          '❌ **Contra**: No domina nada extremo. Pierdes 50/50 vs HO bien jugado y Stall bien jugado.',
+          '❌ **Contra**: Requiere más decisión por turno (más opciones = más predicción).',
+        ],
+      },
+      {
+        heading: 'Tips para mejorar tu Balance',
+        body:
+          'Una vez tienes el core, mejora con estos consejos:',
+        bullets: [
+          '**Identifica tu win-con en team preview**: ¿es Kingambit late-game? ¿Garchomp +2? Sin un win-con claro, eres mediocre.',
+          '**Memoriza damage calcs clave**: Incineroar +0 Knock Off vs cada rival común. Ahorra tiempo decisión.',
+          '**Reserva Tera para win-con**: NO uses Tera en Incineroar/Whimsicott. Tu Kingambit o Garchomp lo necesita más.',
+          '**Practica matchup theory**: Balance vs HO = juega defensivo. Balance vs Stall = arrincónalos con Knock Off + setup.',
+        ],
+      },
+    ],
+  },
 ];
 
 export function getGuideBySlug(slug: string): Guide | undefined {
