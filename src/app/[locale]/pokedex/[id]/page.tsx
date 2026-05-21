@@ -6,6 +6,7 @@ import { formatPokemonName } from '@/lib/utils';
 import { fetchPokemonData, PIKA_FORMAT_LABELS } from '@/lib/pikalytics/client';
 import { enrichPikalyticsData } from '@/lib/pikalytics/enrich';
 import { TrophyIcon, ArrowRight } from '@/components/ui/Icon';
+import { RecentTracker } from '@/components/common/RecentTracker';
 
 export const revalidate = 86400;
 
@@ -63,6 +64,7 @@ export default async function PokemonPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 lg:py-12 space-y-5">
+      <RecentTracker id={data.id} name={data.name} />
       <PokemonDetailView
         data={data}
         live={enrichedLive}

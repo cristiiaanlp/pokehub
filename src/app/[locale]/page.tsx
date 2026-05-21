@@ -5,6 +5,7 @@ import { CTA } from '@/components/landing/CTA';
 import { ChampionsBanner } from '@/components/landing/ChampionsBanner';
 import { DailyPokemon } from '@/components/landing/DailyPokemon';
 import { FeaturedTeamsStrip } from '@/components/landing/FeaturedTeamsStrip';
+import { RecentlyViewed } from '@/components/common/RecentlyViewed';
 
 // 5min revalidate so featured changes appear without a full deploy.
 export const revalidate = 300;
@@ -13,6 +14,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <RecentlyViewed />
       <DailyPokemon />
       <ChampionsBanner />
       <FeaturedTeamsStrip />
